@@ -30,12 +30,10 @@ int main()
 		 * string para ser utilizada, e.g., nome de ficheiro, chave, etc.. */
 		command[strlen(command) - 1] = '\0';
 
-		if (equalsStringIgnoreCase(command, "QUIT"))
-		{
+		if (equalsStringIgnoreCase(command, "QUIT")){
 			quit = 1; /* vai provocar a saída do interpretador */
 		}
-		else
-		{
+		else{
 			printf("Command not found!\n");
 			waitFunction();
 		}
