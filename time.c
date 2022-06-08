@@ -33,3 +33,6 @@ int timeDiffSpecial(Time time1,Time time2) {
     return aux;
 }
 
+void printTime(Time t){
+    printf("%d:%d", t.hour, t.min);
+}
