@@ -26,3 +26,12 @@ int equalsStringIgnoreCase(char str1[], char str2[]) {
 	return (strcmp(str1Up, str2Up) == 0);
 }
 
+#include <string.h>
+void replace(char *str, char what, char by) {
+   int len = strlen(str);
+   for(int i=0; i<len; i++) {
+      if(str[i] == what) {
+         str[i] = by;
+      }
+   }
+}
