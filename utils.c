@@ -9,7 +9,7 @@
 #include "input.h"
 
 
-void strToUpper(const char *orig, char *dest) {
+static void strToUpper(const char *orig, char *dest) {
   int len = strlen(orig);
   for(int i=0; i<len; i++) {
     dest[i] = toupper(orig[i]);
@@ -24,4 +24,14 @@ int equalsStringIgnoreCase(char str1[], char str2[]) {
 	strToUpper(str1,str1Up);
 	strToUpper(str2,str2Up);
 	return (strcmp(str1Up, str2Up) == 0);
+}
+
+#include <string.h>
+void replace(char *str, char what, char by) {
+   int len = strlen(str);
+   for(int i=0; i<len; i++) {
+      if(str[i] == what) {
+         str[i] = by;
+      }
+   }
 }
