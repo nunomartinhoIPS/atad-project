@@ -42,6 +42,26 @@ int main()
 			flag = false;
 			waitFunction();
 		}
+
+		if (equalsStringIgnoreCase(command, "SHOWALL")){
+			    
+			printf("\nCOMMADS: ALL, SAMPLE, \n");
+    		printf("commad>");
+			
+			fgets(command, sizeof(command), stdin);
+			command[strlen(command) - 1] = '\0';
+
+    		if (equalsStringIgnoreCase(command, "ALL")){
+        		//paginas
+    		}
+			
+			if (equalsStringIgnoreCase(command, "SAMPLE")){
+        		//sample
+    		}
+
+			flag = false;
+			waitFunction();
+		}
 		if (equalsStringIgnoreCase(command, "QUIT")){
 			quit = 1; /* vai provocar a saída do interpretador */
 			flag = false;
