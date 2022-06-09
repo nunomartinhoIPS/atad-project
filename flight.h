@@ -17,3 +17,5 @@ typedef struct flight {
     Time arrivalTime;
     int arrivalDelay;
 } Flight;
+
+void flightPrint(Flight f);
