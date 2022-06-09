@@ -11,6 +11,5 @@ StringCode stringCodeCreate(char *str) {
 }
 
 void stringCodePrint(StringCode str) {
- printf(" %s ", str.code);
-
+    printf(" %s ", str.code);
 }

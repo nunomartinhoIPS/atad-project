@@ -25,4 +25,3 @@ int equalsStringIgnoreCase(char str1[], char str2[]) {
 	strToUpper(str2,str2Up);
 	return (strcmp(str1Up, str2Up) == 0);
 }
-

@@ -6,6 +6,7 @@
 #include "list.h"
 #include "map.h"
 #include "input.h"
+#include "loaders.h"
 
 void printCommandsMenu();
 void waitFunction();
@@ -21,19 +22,31 @@ int main()
 
 	setlocale(LC_ALL, "PT");
 
-	while (!quit)
-	{
+	// creating airlines array
+	int size;
+	sizeOfLoadAR(&size);
+	PtAirline airlines[size];
 
+	while (!quit){
 		printCommandsMenu();
+		bool flag = true;
 		fgets(command, sizeof(command), stdin);
 		/* descartar 'newline'. Utilizar esta técnica sempre que for lida uma
 		 * string para ser utilizada, e.g., nome de ficheiro, chave, etc.. */
 		command[strlen(command) - 1] = '\0';
-
+		if (equalsStringIgnoreCase(command, "LOADAR")){
+			
+			LoadAR(airlines, size);
+			for(int i = 0; i<size; i++)
+				airlinePrint(airlines[i]);
+			flag = false;
+			waitFunction();
+		}
 		if (equalsStringIgnoreCase(command, "QUIT")){
 			quit = 1; /* vai provocar a saída do interpretador */
+			flag = false;
 		}
-		else{
+		if(flag){
 			printf("Command not found!\n");
 			waitFunction();
 		}

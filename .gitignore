@@ -7,3 +7,5 @@
 # Ignore attr files
 
 **/*.attr
+
+.vscode/*

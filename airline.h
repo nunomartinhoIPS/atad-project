@@ -6,3 +6,7 @@ typedef struct airline {
 } Airline;
 
 typedef Airline *PtAirline;
+
+PtAirline airlineCreate(char * iatacode, char * name);
+
+void airlinePrint(PtAirline a);
