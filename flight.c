@@ -38,7 +38,11 @@ void showAllPaged(PtList list) {
         for (int i = page*20; i < (page+1)*20; i++) {
             listElemPrint(list->elements[i]);
         }
-        printf("\nPAGE [%d]", page);
+        if (page > 0)
+            printf("\n<------------PREV------------- PAGE [%d] ------------NEXT-------------> ", page);
+        else
+            printf("\n<------------EXIT------------- PAGE [%d] ------------NEXT-------------> ", page);
+        
         printf("\nCommands  (NEXT, PREV, EXIT)");
         printf("\ncommand> ");
         fgets(command, sizeof(command), stdin);
