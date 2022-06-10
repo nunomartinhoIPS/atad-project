@@ -1,8 +1,4 @@
-#include "airport.h"
-#include "flight.h"
-#include "airline.h"
-#include "map.h"
-#include "list.h"
+#include "model.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>

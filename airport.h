@@ -1,4 +1,5 @@
 #pragma once
+#include "map.h"
 
 typedef struct airport {
     char iataCode[4];
