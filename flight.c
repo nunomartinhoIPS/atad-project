@@ -31,8 +31,8 @@ void flightPrint(Flight f){
 
 void showF(PtList flights, char airport[4]){
     int count = 0;
-    int * size = 0;
-    listSize(flights, size);
+    int size = 0;
+    listSize(flights, &size);
     for(int i = 0; i<size; i++){
         Flight f;
         listGet(flights, i, &f);
