@@ -9,6 +9,7 @@
 #include "mapElem.h"
 #include <string.h>
 #include <stdio.h>
+#include "airport.h"
 
 
 void mapKeyPrint(MapKey key) {
@@ -16,7 +17,7 @@ void mapKeyPrint(MapKey key) {
 }
 
 void mapValuePrint(MapValue value) {
-	//TODO
+	airportPrint(value);
 }
 
 bool mapKeyEquals(MapKey key1, MapKey key2) {	

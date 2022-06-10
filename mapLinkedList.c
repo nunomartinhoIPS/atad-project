@@ -251,8 +251,9 @@ void mapPrint(PtMap map) {
 		printf("Map contents (key / value): \n");
 		PtNode current = map->header->next;
 		while (current != map->trailer) {
+			printf("key: ");
 			mapKeyPrint(current->element.key);
-			printf(" : \n");
+			printf(" \tvalue: ");
 			mapValuePrint(current->element.value);
 			printf("\n");
 

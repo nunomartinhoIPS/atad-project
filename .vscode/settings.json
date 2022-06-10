@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "string.h": "c"
+        "*.ejs": "html",
+        "string.h": "c",
+        "flight.h": "c"
     }
 }

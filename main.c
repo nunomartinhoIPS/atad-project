@@ -23,10 +23,14 @@ int main()
 	setlocale(LC_ALL, "PT");
 
 	// creating airlines array
-	int size;
-	sizeOfLoadAR(&size);
-	PtAirline airlines[size];
+	int sizeAirlines;
+	sizeOfLoadAR(&sizeAirlines);
+	PtAirline airlines[sizeAirlines];
 
+	// creating list for Airports
+	PtMap airports = mapCreate();
+	if(airports == NULL) printf("fodase");
+	
 	while (!quit){
 		printCommandsMenu();
 		bool flag = true;
@@ -35,11 +39,27 @@ int main()
 		 * string para ser utilizada, e.g., nome de ficheiro, chave, etc.. */
 		command[strlen(command) - 1] = '\0';
 		if (equalsStringIgnoreCase(command, "LOADAR")){
-			
-			LoadAR(airlines, size);
-			for(int i = 0; i<size; i++)
-				airlinePrint(airlines[i]);
+			int errorCode = loadAR(airlines, sizeAirlines);
+			if(errorCode == LOADER_OK)
+				printf("<%d> airline records imported\n", sizeAirlines);
+			if(errorCode == LOADER_FILE_NOT_FOUND)
+				printf("File not found");
 			flag = false;
+			waitFunction();
+		}
+		if(equalsStringIgnoreCase(command, "LOADAP")){
+			int errorCode = loadAP(airports), sizeMap;
+			int mapErrorcode = mapSize(airports, &sizeMap);
+			if(mapErrorcode!=MAP_OK) {
+				printf("Something went wrong with the Map of StringCode to Airports, error: %d\n", mapErrorcode);
+				continue;
+			}
+			if(errorCode == LOADER_OK)
+				printf("<%d> airport records imported\n", sizeMap);
+			if(errorCode == LOADER_FILE_NOT_FOUND)
+				printf("File not found");
+			flag = false;
+			mapPrint(airports);
 			waitFunction();
 		}
 		if (equalsStringIgnoreCase(command, "QUIT")){

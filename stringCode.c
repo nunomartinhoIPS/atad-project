@@ -6,8 +6,6 @@ StringCode stringCodeCreate(char *str) {
     StringCode strCode;
     strcpy(strCode.code,str);
     return strCode;
-
-
 }
 
 void stringCodePrint(StringCode str) {
