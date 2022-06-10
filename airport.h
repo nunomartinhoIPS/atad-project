@@ -9,3 +9,5 @@ typedef struct airport {
     float longitude;
     int timeZone;
 } Airport;
+
+void airportPrint(Airport a);

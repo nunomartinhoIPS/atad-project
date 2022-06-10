@@ -19,3 +19,16 @@ typedef struct flight {
 } Flight;
 
 void flightPrint(Flight f);
+/**
+ * @brief Shows all flights in a paged form.
+ * 
+ * @param list [ in ] list of flights
+ */
+void showAllPaged(PtList list);
+
+/**
+ * @brief Shows 100 random flights.
+ * 
+ * @param list [ in ] list of flights
+ */
+void showAllSample(PtList list);
