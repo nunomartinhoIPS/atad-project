@@ -12,3 +12,11 @@
  * @param flights list of all fligts
  */
 void listAP(PtMap airports, PtList flights);
+
+/**
+ * @brief Shows all airlines with flights
+ * 
+ * @param airlines array of airlines
+ * @param flights list of all flights
+ */
+void listAR(PtAirline airlines[], PtList flights);

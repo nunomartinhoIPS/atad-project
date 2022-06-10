@@ -22,3 +22,20 @@ void listAP(PtMap airports, PtList flights){
         }
     }
 }
+
+void listAR(PtAirline airlines[], PtList flights){
+    int aSize=0;
+    int fSize=0;
+    Flight f;
+    listSize(airlines, &aSize);
+    listSize(flights, &fSize);
+    for(int i = 0; i < aSize; i++){
+        for(int j = 0; j<fSize; j++){
+            listGet(flights, j, &f);
+            if(f.airline==airlines[i]->iatacode){
+                airlinePrint(airlines[i]);
+                break;
+            }
+        }
+    }
+}
