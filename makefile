@@ -4,3 +4,5 @@ clean:
 	rm -f prog
 run:
 	./prog
+debug:
+	valgrind --leak-check=full --show-reachable=yes --track-origins=yes ./prog

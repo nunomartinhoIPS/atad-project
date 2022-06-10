@@ -60,6 +60,24 @@ int main()
 				printf("File not found");
 			flag = false;
 			mapPrint(airports);
+
+		if (equalsStringIgnoreCase(command, "SHOWALL")){
+			    
+			printf("\nCOMMADS: ALL, SAMPLE, \n");
+    		printf("COMMAND>");
+			
+			fgets(command, sizeof(command), stdin);
+			command[strlen(command) - 1] = '\0';
+
+    		if (equalsStringIgnoreCase(command, "ALL")){
+        		//paginas
+    		}
+			
+			if (equalsStringIgnoreCase(command, "SAMPLE")){
+        		//sample
+    		}
+
+			flag = false;
 			waitFunction();
 		}
 		if (equalsStringIgnoreCase(command, "QUIT")){
@@ -75,8 +93,7 @@ int main()
 	printf("Good Bye! ...\n");
 }
 
-void printCommandsMenu()
-{
+void printCommandsMenu(){
 	printf("\n===================================================================================");
 	printf("\n                          PROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");
@@ -88,8 +105,7 @@ void printCommandsMenu()
 	printf("COMMAND> ");
 }
 
-void waitFunction()
-{
+void waitFunction(){
 	printf("\nPress enter to continue ...");
 	getchar();
 }
