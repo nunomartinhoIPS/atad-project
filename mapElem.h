@@ -17,7 +17,6 @@
 #pragma once
 
 #include <stdbool.h>
-
 #include "stringCode.h"
 #include "airport.h"
 #include <string.h>

@@ -39,4 +39,10 @@ void showAllPaged(PtList list);
  */
 void showAllSample(PtList list);
 
-void printFlightsMenu();
+/**
+ * @brief Shows all flight that have the passed airport has origin
+ * 
+ * @param flights [ in ] list of flights
+ * @param airport [ in ] airport iata
+ */
+void showF(PtList flights, char airport[4]);
