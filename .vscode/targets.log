@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun 11 02:03:08 2022
+# Make data base, printed on Sat Jun 11 11:19:29 2022
 
 # Variables
 
@@ -30,9 +30,6 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 PWD = /home/nunomartinho/atad/projeto-atad/pnormal-assignment-ap_pm_201901723
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
- 
-make: *** No rule to make target 'all'.  Stop.
-
 # environment
 XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
 # automatic
@@ -54,7 +51,7 @@ CURDIR := /home/nunomartinho/atad/projeto-atad/pnormal-assignment-ap_pm_20190172
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # automatic
@@ -97,12 +94,10 @@ MAKE = $(MAKE_COMMAND)
 PATH = /home/nunomartinho/.vscode-server/bin/4af164ea3a06f701fe3e89a2bcbb421d2026b68f/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files/WindowsApps/Microsoft.WindowsTerminal_1.12.10982.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/nunom/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/nunom/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Program Files/JetBrains/IntelliJ IDEA Community Edition 2022.1.1/bin:/snap/bin
 # default
 MAKEFILES := 
-# environment
-MOTD_SHOWN = update-motd
 # automatic
 ^F = $(notdir $^)
 # environment
-WT_SESSION = a0a0eac8-85ce-4b71-83d4-249d2edc64e8
+WT_SESSION = fcfd8294-31a6-47dc-88b7-bb698756be1a
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -134,7 +129,7 @@ VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 _ = /mnt/c/Users/nunom/AppData/Local/Programs/Microsoft VS Code/bin/code
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-2806d8f1-b735-4307-95be-da9bb52416a6.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-f58a83c6-f2c8-45b3-bd2a-85d9aee01e4e.sock
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -152,7 +147,7 @@ WSL_DISTRO_NAME = Ubuntu-22.04
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # variable set hash-table stats:
-# Load=69/1024=7%, Rehash=0, Collisions=2/99=2%
+# Load=68/1024=7%, Rehash=0, Collisions=2/98=2%
 
 # Pattern-specific Variable Values
 
@@ -160,9 +155,9 @@ WSL_DISTRO_NAME = Ubuntu-22.04
 
 # Directories
 
-# . (device 2, inode 3940649674258834): 38 files, no impossibilities.
+# . (device 2, inode 3940649674258834): 39 files, no impossibilities.
 
-# 38 files, no impossibilities in 1 directories.
+# 39 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -226,12 +221,14 @@ makefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 47 / storage = 438 B / avg = 9 B
-# current buf: size = 8162 B / used = 438 B / count = 47 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 48 / storage = 443 B / avg = 9 B
+# current buf: size = 8162 B / used = 443 B / count = 48 / avg = 9 B
 
-# strcache performance: lookups = 55 / hit rate = 14%
+# strcache performance: lookups = 56 / hit rate = 14%
 # hash-table stats:
-# Load=47/8192=1%, Rehash=0, Collisions=0/55=0%
-# Finished Make data base on Sat Jun 11 02:03:08 2022
+# Load=48/8192=1%, Rehash=0, Collisions=0/56=0%
+# Finished Make data base on Sat Jun 11 11:19:29 2022
 
  
+make: *** No rule to make target 'all'.  Stop.
+
