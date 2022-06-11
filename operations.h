@@ -20,3 +20,25 @@ void listAP(PtMap airports, PtList flights);
  * @param flights list of all flights
  */
 void listAR(PtAirline airlines[], PtList flights);
+
+/**
+ * @brief Shows all flights in a paged form.
+ * 
+ * @param list [in] list of flights
+ */
+void showAllPaged(PtList list);
+
+/**
+ * @brief Shows 100 random flights.
+ * 
+ * @param list [in] list of flights
+ */
+void showAllSample(PtList list);
+
+/**
+ * @brief Shows all flight that have the passed airport has origin
+ * 
+ * @param flights [ in ] list of flights
+ * @param airport [ in ] airport iata
+ */
+void showF(PtList flights, char airport[4]);

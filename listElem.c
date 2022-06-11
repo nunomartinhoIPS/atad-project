@@ -3,5 +3,5 @@
 #include "time.h"
 
 void listElemPrint(ListElem elem) {
-	flightPrint(elem);
+	flightPrint(&elem);
 }

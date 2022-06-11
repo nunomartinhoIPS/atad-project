@@ -7,13 +7,11 @@
 #include "map.h"
 #include "input.h"
 #include "loaders.h"
-
+#include "operations.h"
 void printCommandsMenu();
 void waitFunction();
 
-int main()
-{
-
+int main() {
 	srand(time(NULL));
 
 	/* commands interpreter */
@@ -70,11 +68,11 @@ int main()
 			command[strlen(command) - 1] = '\0';
 
     		if (equalsStringIgnoreCase(command, "ALL")){
-        		//paginas
+        		//showAllPaged();
     		}
 			
 			if (equalsStringIgnoreCase(command, "SAMPLE")){
-        		//sample
+        		//showAllSample();
     		}
 
 			flag = false;
@@ -92,8 +90,8 @@ int main()
 
 	printf("Good Bye! ...\n");
 }
-
-void printCommandsMenu();
+}
+void printCommandsMenu(){
 	printf("\n===================================================================================");
 	printf("\n                          PROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");
