@@ -4,6 +4,15 @@
 #include <stdlib.h>
 #include "mapElem.h"
 #include "stringCode.h"
+#include "utils.h"
+
+void printFlightsMenu() {
+    
+        system("cls"); // clear console.
+        printf("\n===================================================================================");
+        printf("\n                          ALL FLIGHTS");
+        printf("\n===================================================================================");
+}
 
 void listAP(PtMap airports, PtList flights){
     int aSize=0;
@@ -24,10 +33,9 @@ void listAP(PtMap airports, PtList flights){
 }
 
 void listAR(PtAirline airlines[], PtList flights){
-    int aSize=0;
-    int fSize=0;
+    int aSize = sizeof(*airlines)/sizeof(*airlines[0]);
+    int fSize;
     Flight f;
-    listSize(airlines, &aSize);
     listSize(flights, &fSize);
     for(int i = 0; i < aSize; i++){
         for(int j = 0; j<fSize; j++){
@@ -86,15 +94,15 @@ void showAllPaged(PtList list) {
         fgets(command, sizeof(command), stdin);
         command[strlen(command) - 1] = '\0';
         //problema e se chegar na ultima pagina?
-        if (equalsStringIgnoreCase(s, "NEXT")){
+        if (equalsStringIgnoreCase(command, "NEXT")){
             page++;
         }
 
-        if (equalsStringIgnoreCase(s, "PREV")){
+        if (equalsStringIgnoreCase(command, "PREV")){
             if (page > 0) page--;
         }
 
-        if (equalsStringIgnoreCase(s, "EXIT")){
+        if (equalsStringIgnoreCase(command, "EXIT")){
             exit = 1;
         }
 
@@ -113,9 +121,13 @@ void showAllSample(PtList list) {
     }
 }
 
-void printFlightsMenu() {
-        clrscr(); // clear console.
-        printf("\n===================================================================================");
-        printf("\n                          ALL FLIGHTS");
-        printf("\n===================================================================================");
+void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int sizeAirlines){
+
+    for (int i = 0; i < sizeAirlines; i++) {
+        free(airlines[i]);
+    }
+
+    mapDestroy(&ptAirports);
+    listDestroy(&ptFlights);
+
 }

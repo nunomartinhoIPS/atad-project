@@ -63,9 +63,9 @@ int loadAP(PtMap airports){
         char * timezone = strtok(NULL, ";");
         replace(latitude, ',', '.');
         replace(longitude, ',', '.');
-        PtAirport a = airportCreate(iata, name, city, state, atof(latitude), atof(longitude), atoi(timezone));
-        StringCode s = stringCodeCreate(a->iataCode);
-        if(mapPut(airports, s, *a)!=MAP_OK) return LOADER_MAP_ISSUE;
+        Airport a = airportCreate(iata, name, city, state, atof(latitude), atof(longitude), atoi(timezone));
+        StringCode s = stringCodeCreate(a.iataCode);
+        if(mapPut(airports, s, a)!=MAP_OK) return LOADER_MAP_ISSUE;
     }
     fclose(ptFile);
     return MAP_OK;
