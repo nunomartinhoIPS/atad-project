@@ -7,6 +7,7 @@ typedef struct airline {
 
 typedef Airline *PtAirline;
 
-PtAirline airlineCreate(char * iatacode, char * name);
+//deve ser Airline e nao um ponteiro.
+PtAirline airlineCreate(char* iatacode, char* name);
 
 void airlinePrint(PtAirline a);

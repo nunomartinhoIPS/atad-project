@@ -1,6 +1,5 @@
 #pragma once
 #include "time.h"
-#include "list.h"
 
 typedef struct flight {
     int day;
@@ -19,25 +18,9 @@ typedef struct flight {
     int arrivalDelay;
 } Flight;
 
-typedef Flight * PtFlight;
-/**
- * @brief Shows all flights in a paged form.
- * 
- * @param list [in] list of flights
- */
-void showAllPaged(PtList list);
+typedef Flight* PtFlight;
 
-/**
- * @brief Shows 100 random flights.
- * 
- * @param list [in] list of flights
- */
-void showAllSample(PtList list);
+void flightPrint(PtFlight flight);
 
-/**
- * @brief Shows all flight that have the passed airport has origin
- * 
- * @param flights [ in ] list of flights
- * @param airport [ in ] airport iata
- */
-void showF(PtList flights, char airport[4]);
+Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, char* originAirport, char* destinationAirport, 
+Time scheduledDeparture, Time departureTime, int departureDelay, int scheduledTravelTime, int distance, Time scheduledArrival, Time arrivalTime, int arrivalDelay);

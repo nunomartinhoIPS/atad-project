@@ -1,5 +1,4 @@
 #pragma once
-#include "map.h"
 
 
 typedef struct airport {

@@ -7,7 +7,7 @@
 #include "map.h"
 #include "input.h"
 #include "loaders.h"
-
+#include "operations.h"
 void printCommandsMenu();
 void waitFunction();
 
@@ -68,11 +68,11 @@ int main() {
 			command[strlen(command) - 1] = '\0';
 
     		if (equalsStringIgnoreCase(command, "ALL")){
-        		//paginas
+        		//showAllPaged();
     		}
 			
 			if (equalsStringIgnoreCase(command, "SAMPLE")){
-        		//sample
+        		//showAllSample();
     		}
 
 			flag = false;
