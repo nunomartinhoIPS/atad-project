@@ -17,7 +17,7 @@ void mapKeyPrint(MapKey key) {
 }
 
 void mapValuePrint(MapValue value) {
-	airportPrint(value);
+	airportPrint(&value);
 }
 
 bool mapKeyEquals(MapKey key1, MapKey key2) {	
