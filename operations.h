@@ -2,8 +2,15 @@
 #include "airport.h"
 #include "flight.h"
 #include "airline.h"
+#include "time.h"
 #include "map.h"
 #include "list.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "mapElem.h"
+#include "stringCode.h"
+#include "utils.h"
 
 /**
  * @brief Shows all airports with flights

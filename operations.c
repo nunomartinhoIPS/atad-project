@@ -1,10 +1,4 @@
 #include "operations.h"
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "mapElem.h"
-#include "stringCode.h"
-#include "utils.h"
 
 void printFlightsMenu() {
     
@@ -130,4 +124,30 @@ void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int size
     mapDestroy(&ptAirports);
     listDestroy(&ptFlights);
 
+}
+
+void topN(PtList flights, int n){
+    PtList flightsCopy = listCreate();
+    flightsCopy = flights;
+   
+}
+
+void sortByDelay(PtList flights){
+    int size = 0;
+    listSize(flights, &size);
+    Flight f1;
+    Flight f2;
+    for(int i = 0; i<size-1; i++){
+        int indexMin = i;
+        for(int j = i; j<size-1; j++){
+            listGet(flights, j, &f1);
+            listGet(flights, indexMin, &f2);
+            if(timeDiffSpecial(f1.scheduledArrival, f1.arrivalTime)>timeDiffSpecial(f2.scheduledArrival, f2.arrivalTime)){
+                indexMin = j;
+            }
+        }
+        Flight fAux;
+        listSet(flights, i, f1, &fAux);
+        listSet(flights, i, fAux, &f2);
+    }
 }
