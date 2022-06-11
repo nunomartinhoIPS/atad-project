@@ -1,5 +1,11 @@
 #pragma once
+
 #include "time.h"
+#include "list.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "stringCode.h"
 
 typedef struct flight {
     int day;
@@ -18,7 +24,7 @@ typedef struct flight {
     int arrivalDelay;
 } Flight;
 
-typedef Flight* PtFlight;
+typedef Flight * PtFlight;
 
 void flightPrint(PtFlight flight);
 

@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 typedef struct airport {
     char iataCode[4];
