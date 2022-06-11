@@ -7,26 +7,26 @@
 #include "listElem.h"
 #include "stringCode.h"
 
-void flightPrint(Flight f){
+void flightPrint(PtFlight f){
     printf(
-		"\nFlight: %d \nOrigin: %s \nDestination: %s \nAirline: %s \nDistance: %d \nDay: %d \nDay of the Week: %d \nScheduled Departure: ", 
-		f.flightNumber,
-		f.originAirport,
-		f.destinationAirport,
-		f.airline,
-		f.distance,
-		f.day,
-		f.dayOfWeek
+		"Flight: %d, \nOrigin: %s, \nDestination: %s, \nAirline: %s, \nDistance: %d, \nDay: %d, \nDay of the Week: %d, \nScheduled Departure: ", 
+		f->flightNumber,
+		f->originAirport,
+		f->destinationAirport,
+		f->airline,
+		f->distance,
+		f->day,
+		f->dayOfWeek
 	);
-	printTime(f.scheduledDeparture);
+	printTime(f->scheduledDeparture);
 	printf("\nDeparture Time: ");
-	printTime(f.departureTime);
-	printf("\nDeparture Delay: %d \nScheduled Travel Time: %d", f.departureDelay, f.scheduledTravelTime);
+	printTime(f->departureTime);
+	printf("\nDeparture Delay: %d, \nScheduled Travel Time: %d", f->departureDelay, f->scheduledTravelTime);
 	printf("\nScheduled Arrival: ");
-	printTime(f.scheduledArrival);
+	printTime(f->scheduledArrival);
 	printf("\nArrival Time: ");
-	printTime(f.arrivalTime);
-	printf("\nArrival Delay: %d", f.arrivalDelay);
+	printTime(f->arrivalTime);
+	printf("\nArrival Delay: %d", f->arrivalDelay);
 }
 
 void showF(PtList flights, char airport[4]){
@@ -34,9 +34,9 @@ void showF(PtList flights, char airport[4]){
     int size = 0;
     listSize(flights, &size);
     for(int i = 0; i<size; i++){
-        Flight f;
-        listGet(flights, i, &f);
-        if(f.originAirport == airport){
+        PtFlight f;
+        listGet(flights, i, f);
+        if(f->originAirport == airport){
             count++;
             flightPrint(f);
         }

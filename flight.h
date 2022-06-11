@@ -19,9 +19,7 @@ typedef struct flight {
     int arrivalDelay;
 } Flight;
 
-
-
-void flightPrint(Flight f);
+typedef Flight * PtFlight;
 /**
  * @brief Shows all flights in a paged form.
  * 

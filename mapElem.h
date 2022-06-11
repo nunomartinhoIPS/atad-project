@@ -24,7 +24,7 @@
 typedef StringCode MapKey;
 
 /** Value type definition. Change according to the use-case. */
-typedef Airport MapValue;
+typedef PtAirport MapValue;
 
 /**
  * @brief Prints a key.
