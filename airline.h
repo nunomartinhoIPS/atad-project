@@ -1,5 +1,7 @@
 #pragma once
 
+#define ARRAY_NULL			1
+
 typedef struct airline {
     char iatacode[3];
     char name[100];

@@ -21,7 +21,7 @@ int sizeOfLoadAR(int * size){
     return LOADER_OK;
 }
 
-int loadAR(PtAirline * airlines, int size){
+int loadAR(PtAirline* airlines, int size){
     if (airlines == NULL) return LOADER_ARRAY_ISSUE;
     FILE* ptFile;
     ptFile = fopen("./csv_data/airlines.csv", "r");

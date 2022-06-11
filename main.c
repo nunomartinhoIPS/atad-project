@@ -8,6 +8,7 @@
 #include "input.h"
 #include "loaders.h"
 #include "operations.h"
+
 void printCommandsMenu();
 void waitFunction();
 
@@ -20,15 +21,22 @@ int main() {
 
 	setlocale(LC_ALL, "PT");
 
-	// creating airlines array
+	/* creating airlines array */
 	int sizeAirlines;
 	sizeOfLoadAR(&sizeAirlines);
 	PtAirline airlines[sizeAirlines];
 
-	// creating list for Airports
+	/* creating map for Airports */
+	int sizeAirports;
 	PtMap airports = mapCreate();
-	if(airports == NULL) printf("fodase");
+	mapSize(airports, &sizeAirports);
+	//if(airports == NULL) printf("fodase");
 	
+	/* creating list for flights */
+	int sizeFlights;
+	PtList flights = listCreate();
+	listSize(flights, &sizeFlights);
+
 	while (!quit){
 		printCommandsMenu();
 		bool flag = true;
@@ -46,19 +54,20 @@ int main() {
 			waitFunction();
 		}
 		if(equalsStringIgnoreCase(command, "LOADAP")){
-			int errorCode = loadAP(airports), sizeMap;
-			int mapErrorcode = mapSize(airports, &sizeMap);
+			int errorCode = loadAP(airports);
+			int mapErrorcode = mapSize(airports, &sizeAirports);
 			if(mapErrorcode!=MAP_OK) {
 				printf("Something went wrong with the Map of StringCode to Airports, error: %d\n", mapErrorcode);
 				continue;
 			}
 			if(errorCode == LOADER_OK)
-				printf("<%d> airport records imported\n", sizeMap);
+				printf("<%d> airport records imported\n", sizeAirports);
 			if(errorCode == LOADER_FILE_NOT_FOUND)
 				printf("File not found");
 			flag = false;
-			mapPrint(airports);
-
+			//mapPrint(airports);
+			waitFunction();
+		}
 		if (equalsStringIgnoreCase(command, "SHOWALL")){
 			    
 			printf("\nCOMMADS: ALL, SAMPLE, \n");
@@ -78,7 +87,18 @@ int main() {
 			flag = false;
 			waitFunction();
 		}
+		if (equalsStringIgnoreCase(command, "CLEAR")){
+			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);
+			//free(&airlines);
+			mapDestroy(&airports);
+			listDestroy(&flights);
+			flag = false;
+			waitFunction();
+		}
 		if (equalsStringIgnoreCase(command, "QUIT")){
+			//free(&airlines);
+			mapDestroy(&airports);
+			listDestroy(&flights);
 			quit = 1; /* vai provocar a saída do interpretador */
 			flag = false;
 		}
@@ -90,7 +110,7 @@ int main() {
 
 	printf("Good Bye! ...\n");
 }
-}
+
 void printCommandsMenu(){
 	printf("\n===================================================================================");
 	printf("\n                          PROJECT: United States Domestics Flight Data");
