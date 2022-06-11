@@ -20,6 +20,6 @@ typedef Airport * PtAirport;
 #define AIRPORT_OK      0
 #define AIRPORT_NULL    1
 
-PtAirport airportCreate(char * iata, char * name, char * city, char * state, float latitude, float longitude, int timezone);
+Airport airportCreate(char * iata, char * name, char * city, char * state, float latitude, float longitude, int timezone);
 
 int airportPrint(PtAirport a);
