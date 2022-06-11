@@ -1,5 +1,11 @@
 #pragma once
+
 #include "time.h"
+#include "list.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "stringCode.h"
 
 typedef struct flight {
     int day;
@@ -32,3 +38,5 @@ void showAllPaged(PtList list);
  * @param list [ in ] list of flights
  */
 void showAllSample(PtList list);
+
+void printFlightsMenu();

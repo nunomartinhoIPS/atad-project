@@ -7,9 +7,6 @@
  */
 
 #include "mapElem.h"
-#include <string.h>
-#include <stdio.h>
-#include "airport.h"
 
 
 void mapKeyPrint(MapKey key) {

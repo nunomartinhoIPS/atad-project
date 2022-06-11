@@ -1,10 +1,6 @@
 #include "airport.h"
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-PtAirport airportCreate(char * iata, char * name, char * city, char * state, 
-                        float latitude, float longitude, int timezone){
+PtAirport airportCreate(char * iata, char * name, char * city, char * state, float latitude, float longitude, int timezone){
     PtAirport a = (PtAirport) malloc(sizeof(Airport));
     if(a == NULL) return NULL;
     strcpy(a->iataCode, iata);

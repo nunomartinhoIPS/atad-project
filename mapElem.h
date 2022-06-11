@@ -20,6 +20,8 @@
 
 #include "stringCode.h"
 #include "airport.h"
+#include <string.h>
+#include <stdio.h>
 
 /** Key type definition. Change according to the use-case. */
 typedef StringCode MapKey;

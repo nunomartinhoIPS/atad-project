@@ -93,7 +93,7 @@ int main()
 	printf("Good Bye! ...\n");
 }
 
-void printCommandsMenu(){
+void printCommandsMenu();
 	printf("\n===================================================================================");
 	printf("\n                          PROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");
