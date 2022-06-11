@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun 11 11:19:29 2022
+# Make data base, printed on Sat Jun 11 16:46:21 2022
 
 # Variables
 
@@ -51,7 +51,7 @@ CURDIR := /home/nunomartinho/atad/projeto-atad/pnormal-assignment-ap_pm_20190172
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # automatic
@@ -155,9 +155,9 @@ WSL_DISTRO_NAME = Ubuntu-22.04
 
 # Directories
 
-# . (device 2, inode 3940649674258834): 39 files, no impossibilities.
+# . (device 2, inode 3940649674258834): 38 files, no impossibilities.
 
-# 39 files, no impossibilities in 1 directories.
+# 38 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -170,7 +170,7 @@ default:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 2):
-	gcc -g -o prog main.c utils.c time.c listArrayList.c listElem.c mapElem.c mapLinkedList.c stringCode.c input.c loaders.c airline.c airport.c flight.c -lm && ./prog
+	gcc -g -o prog main.c utils.c time.c listArrayList.c listElem.c mapElem.c mapLinkedList.c stringCode.c input.c loaders.c airline.c airport.c flight.c operations.c -lm && ./prog
 
 debug:
 #  Implicit rule search has not been done.
@@ -209,7 +209,7 @@ run:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-11 02:02:58.2563057
+#  Last modified 2022-06-11 16:44:59.3358432
 #  File has been updated.
 #  Successfully updated.
 
@@ -221,13 +221,13 @@ makefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 48 / storage = 443 B / avg = 9 B
-# current buf: size = 8162 B / used = 443 B / count = 48 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 47 / storage = 438 B / avg = 9 B
+# current buf: size = 8162 B / used = 438 B / count = 47 / avg = 9 B
 
-# strcache performance: lookups = 56 / hit rate = 14%
+# strcache performance: lookups = 55 / hit rate = 14%
 # hash-table stats:
-# Load=48/8192=1%, Rehash=0, Collisions=0/56=0%
-# Finished Make data base on Sat Jun 11 11:19:29 2022
+# Load=47/8192=1%, Rehash=0, Collisions=0/55=0%
+# Finished Make data base on Sat Jun 11 16:46:21 2022
 
  
 make: *** No rule to make target 'all'.  Stop.

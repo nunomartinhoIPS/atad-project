@@ -56,9 +56,9 @@ void showF(PtList flights, char airport[4])
     listSize(flights, &size);
     for (int i = 0; i < size; i++)
     {
-        PtFlight f;
+        Flight f;
         listGet(flights, i, f);
-        if (f->originAirport == airport)
+        if (f.originAirport == airport)
         {
             count++;
             flightPrint(f);
@@ -141,7 +141,7 @@ void printFlightsMenu()
     printf("\n===================================================================================");
 }
 
-void oLoadAR(PtAirline * airlines, int sizeAirlines)
+void oLoadAR(PtAirline *airlines, int sizeAirlines)
 {
     int errorCode = loadAR(airlines, sizeAirlines);
     if (errorCode == LOADER_OK)
