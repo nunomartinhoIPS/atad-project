@@ -4,7 +4,10 @@ typedef struct time {
 	int hour, min;
 } Time;
 
-int timeDiff(Time time1,Time time2);
-int timeDiffSpecial(Time time1,Time time2);
-void printTime(Time t);
+Time timeCreate(int hour, int min);
 
+int timeDiff(Time time1,Time time2);
+
+int timeDiffSpecial(Time time1,Time time2);
+
+void timePrint(Time t);

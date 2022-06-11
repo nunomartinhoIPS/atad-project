@@ -8,6 +8,7 @@
 #include <float.h>
 #include "utils.h"
 #include "map.h"
+#include "time.h"
 
 int sizeOfLoadAR(int * size){
     FILE* ptFile = fopen("./csv_data/airlines.csv", "r");
@@ -68,5 +69,57 @@ int loadAP(PtMap airports){
         if(mapPut(airports, s, *a)!=MAP_OK) return LOADER_MAP_ISSUE;
     }
     fclose(ptFile);
-    return MAP_OK;
+    return LOADER_OK;
+}
+
+int loadF(PtList flights){
+    if(flights == NULL) return LOADER_LIST_ISSUE;
+    FILE * ptFile = fopen("./csv_data/flights.csv", "r");
+    if(ptFile == NULL) return LOADER_FILE_NOT_FOUND;
+    char s[256];
+    fgets(s, sizeof(s), ptFile);
+    int line =0;
+    while(fgets(s,sizeof(s), ptFile)!=NULL){
+        char * day = strtok(s, ";");
+        if(day == NULL) return LOADER_FILE_INCONSISTENCY;
+
+        char * dayWeek = strtok(NULL, ";");
+        if(dayWeek == NULL) return LOADER_FILE_INCONSISTENCY;
+
+        char * airline = strtok(NULL, ";");
+        if(airline == NULL) return LOADER_FILE_INCONSISTENCY;
+
+        char * flightNum = strtok(NULL, ";");
+        if(flightNum == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char * origAirport = strtok(NULL, ";");
+        if(origAirport == NULL) return LOADER_FILE_INCONSISTENCY;
+
+        char * destAirport = strtok(NULL, ";");
+        if(destAirport == NULL) return LOADER_FILE_INCONSISTENCY;
+
+        char * schedDep = strtok(NULL, ";");
+        if(schedDep == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char * depTime = strtok(NULL, ";");
+        if(depTime == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char * dist = strtok(NULL, ";");
+        if(dist == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char * schedArr = strtok(NULL, ";");
+        if(schedArr == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char * arrTime = strtok(NULL, ";");
+        if(arrTime == NULL) return LOADER_FILE_INCONSISTENCY;
+
+        char hour[3], min[3];
+        strncpy(hour, schedDep+0, 2-0);
+        strncpy(min, schedDep+2, 4-2);
+        printf("schedDep %s : %s\n", hour, min);
+        // Time depTime = timeCreate()
+        // Flight f = flightCreate(atoi(day), atoi(dayWeek), airline, atoi(flightNum), origAirport, destAirport, );
+    }
+    fclose(ptFile);
+    return LOADER_OK;
 }

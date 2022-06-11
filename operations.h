@@ -42,3 +42,10 @@ void showAllSample(PtList list);
  * @param airport [ in ] airport iata
  */
 void showF(PtList flights, char airport[4]);
+
+void oLoadAR(PtAirline *airlines, int sizeAirlines);
+
+void oLoadAP(PtMap airports);
+
+void oLoadF(PtList flights);
+
