@@ -1,10 +1,7 @@
 #include "flight.h"
-#include "list.h"
-#include "airport.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "listElem.h"
 #include "stringCode.h"
 
 void flightPrint(PtFlight f){
@@ -29,8 +26,8 @@ void flightPrint(PtFlight f){
 	printf("\nArrival Delay: %d", f->arrivalDelay);
 }
 
-Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, char* originAirport, char* destinationAirport, 
-Time scheduledDeparture, Time departureTime, int departureDelay, int scheduledTravelTime, int distance, Time scheduledArrival, Time arrivalTime, int arrivalDelay) {
+Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, char* originAirport, char* destinationAirport, Time scheduledDeparture, Time departureTime, 
+                    int departureDelay, int scheduledTravelTime, int distance, Time scheduledArrival, Time arrivalTime, int arrivalDelay) {
     Flight f;
     
     f.day = day;

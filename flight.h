@@ -1,6 +1,5 @@
 #pragma once
 #include "time.h"
-#include "list.h"
 
 typedef struct flight {
     int day;
