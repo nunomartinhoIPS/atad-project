@@ -1,7 +1,13 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "*.ejs": "html",
         "string.h": "c",
         "flight.h": "c"
     }
+=======
+        "string.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
+>>>>>>> 91570c3 (...)
 }

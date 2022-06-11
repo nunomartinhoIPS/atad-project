@@ -11,9 +11,7 @@
 void printCommandsMenu();
 void waitFunction();
 
-int main()
-{
-
+int main() {
 	srand(time(NULL));
 
 	/* commands interpreter */
@@ -92,7 +90,7 @@ int main()
 
 	printf("Good Bye! ...\n");
 }
-
+}
 void printCommandsMenu(){
 	printf("\n===================================================================================");
 	printf("\n                          PROJECT: United States Domestics Flight Data");

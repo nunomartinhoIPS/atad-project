@@ -1,4 +1,5 @@
-make.exe --dry-run --always-make --keep-going --print-directory
-'make.exe' is not recognized as an internal or external command,
-operable program or batch file.
-
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/nunomartinho/atad/projeto-atad/pnormal-assignment-ap_pm_201901723'
+gcc -g -o prog main.c utils.c time.c listArrayList.c listElem.c mapElem.c mapLinkedList.c stringCode.c input.c loaders.c airline.c airport.c flight.c -lm && ./prog
+make: Leaving directory '/home/nunomartinho/atad/projeto-atad/pnormal-assignment-ap_pm_201901723'
+ 
