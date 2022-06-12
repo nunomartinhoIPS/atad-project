@@ -114,7 +114,6 @@ int loadF(PtList flights){
         char * dist = strtok(NULL, ";");
         if(dist == NULL) return LOADER_FILE_INCONSISTENCY;
         
-        
         char * schedArr = strtok(NULL, ";");
         if(schedArr == NULL) return LOADER_FILE_INCONSISTENCY;
         
@@ -128,6 +127,4 @@ int loadF(PtList flights){
         min = strncpy(hour, schedDep + 2, 3-2);
         printf("sched Dep: %s\t\t%s:%s\n", schedDep, hour, min);
     }
-    fclose(ptFile);
-    return LOADER_OK;
 }

@@ -25,7 +25,6 @@ void flightPrint(PtFlight f){
 Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, char* originAirport, char* destinationAirport, Time scheduledDeparture, Time departureTime, 
                     int departureDelay, int scheduledTravelTime, int distance, Time scheduledArrival, Time arrivalTime, int arrivalDelay) {
     Flight f;
-    
     f.day = day;
     f.dayOfWeek = dayOfWeek;
     strcpy(f.airline, airline);

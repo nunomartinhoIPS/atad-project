@@ -11,8 +11,8 @@ void printFlightsMenu()
 
 void listAP(PtMap airports, PtList flights)
 {
-    int aSize = 0;
-    int fSize = 0;
+    int aSize;
+    int fSize;
     Flight f;
     mapSize(airports, &aSize);
     listSize(flights, &fSize);
@@ -51,19 +51,16 @@ void listAR(PtAirline airlines[], PtList flights)
     }
 }
 
-void showF(PtList flights, char airport[4])
-{
+void showF(PtList flights, char airport[4]) {
     int count = 0;
-    int size = 0;
+    int size;
     listSize(flights, &size);
-    for (int i = 0; i < size; i++)
-    {
-        PtFlight f;
-        listGet(flights, i, f);
-        if (f->originAirport == airport)
-        {
+    for(int i = 0; i<size; i++){
+        Flight f;
+        listGet(flights, i, &f);
+        if(f.originAirport == airport){
             count++;
-            flightPrint(f);
+            flightPrint(&f);
         }
     }
     if (count == 0)
@@ -147,17 +144,38 @@ void clearAll(PtAirline *airlines, PtMap ptAirports, PtList ptFlights, int sizeA
     listDestroy(&ptFlights);
 }
 
-void oLoadF(PtList flights)
+void oLoadAR(PtAirline *airlines, int sizeAirlines) {
+    int errorCode = loadAR(airlines, sizeAirlines);
+    if (errorCode == LOADER_OK)
+        printf("<%d> airline records imported\n", sizeAirlines);
+    if (errorCode == LOADER_FILE_NOT_FOUND)
+        printf("File not found\n");
+}
+
+void oLoadAP(PtMap airports)
 {
-    printf("testing --------------- oloadf\n");
-    int errorCode = loadF(flights), size, listErrorcode = listSize(flights, &size);
-    if (listErrorcode != LIST_OK)
+    int sizeAirports;
+    int errorCode = loadAP(airports);
+    int mapErrorcode = mapSize(airports, &sizeAirports);
+    if (mapErrorcode != MAP_OK)
     {
-        printf("Something went wrong with the Map of StringCode to Airports, error: %d\n", listErrorcode);
+        printf("Something went wrong with the Map of StringCode to Airports, error: %d\n", mapErrorcode);
         return;
     }
     if (errorCode == LOADER_OK)
-        printf("<%d> flight records imported\n", size);
+        printf("<%d> airport records imported\n", sizeAirports);
     if (errorCode == LOADER_FILE_NOT_FOUND)
+        printf("File not found\n");
+}
+
+void oLoadF(PtList flights){
+    int size, errorCode = loadF(flights), listErrorCode = listSize(flights, &size);
+    if(listErrorCode != LIST_OK){
+        printf("Something went wrong with the list of flights, error: %d\n", listErrorCode);
+        return;
+    }
+    if(errorCode == LOADER_OK)
+        printf("<%d> flight records imported\n", size);
+    if(errorCode == LOADER_FILE_NOT_FOUND)
         printf("File not found\n");
 }
