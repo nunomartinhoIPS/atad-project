@@ -15,8 +15,8 @@ void printFlightsMenu() {
 }
 
 void listAP(PtMap airports, PtList flights){
-    int aSize=0;
-    int fSize=0;
+    int aSize;
+    int fSize;
     Flight f;
     mapSize(airports, &aSize);
     listSize(flights, &fSize);
@@ -51,14 +51,14 @@ void listAR(PtAirline airlines[], PtList flights){
 
 void showF(PtList flights, char airport[4]){
     int count = 0;
-    int size = 0;
+    int size;
     listSize(flights, &size);
     for(int i = 0; i<size; i++){
-        PtFlight f;
-        listGet(flights, i, f);
-        if(f->originAirport == airport){
+        Flight f;
+        listGet(flights, i, &f);
+        if(f.originAirport == airport){
             count++;
-            flightPrint(f);
+            flightPrint(&f);
         }
     }
     if(count==0){
