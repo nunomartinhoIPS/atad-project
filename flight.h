@@ -23,7 +23,7 @@ typedef struct flight {
     int arrivalDelay;
 } Flight;
 
-typedef Flight * PtFlight;
+typedef struct flight* PtFlight;
 
 void flightPrint(PtFlight flight);
 
