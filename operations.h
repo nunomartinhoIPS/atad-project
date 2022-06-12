@@ -43,11 +43,13 @@ void showAllSample(PtList list);
  */
 void showF(PtList flights, char airport[4]);
 
+
 void oLoadAR(PtAirline *airlines, int sizeAirlines);
 
 void oLoadAP(PtMap airports);
 
-void oLoadF(PtList flights);
+void oLoadF(PtList flights); 
+
 
 /**
  * @brief Free all resources of map, list and array

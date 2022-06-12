@@ -52,12 +52,14 @@ int main() {
 		}
 		if(equalsStringIgnoreCase(command, "LOADAP")){
 			oLoadAP(airports);
+			mapSize(airports, &sizeAirports);
 			flag = false;
 			waitFunction();
 		}
 
 		if(equalsStringIgnoreCase(command, "LOADF")){
 			oLoadF(flights);
+			listSize(flights, &sizeFlights);
 			flag = false;
 			waitFunction();
 		}
@@ -83,17 +85,16 @@ int main() {
 		}
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);
-			if (airlines != NULL && mapIsEmpty(airports) && listIsEmpty(flights)) {
+			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
 				clearAll(airlines, airports, flights, sizeAirlines);
-    		}
+			}
 			flag = false;
 			waitFunction();
 		}
 		if (equalsStringIgnoreCase(command, "QUIT")){
-			
-	    if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
+			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
 				clearAll(airlines, airports, flights, sizeAirlines);
-    	}
+			}
 			quit = 1; /* vai provocar a saída do interpretador */
 			flag = false;
 		}

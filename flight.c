@@ -3,26 +3,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void flightPrint(Flight f){
+void flightPrint(PtFlight f){
     printf(
 		"Flight: %d, \nOrigin: %s, \nDestination: %s, \nAirline: %s, \nDistance: %d, \nDay: %d, \nDay of the Week: %d, \nScheduled Departure: ", 
-		f.flightNumber,
-		f.originAirport,
-		f.destinationAirport,
-		f.airline,
-		f.distance,
-		f.day,
-		f.dayOfWeek
+		f->flightNumber,
+		f->originAirport,
+		f->destinationAirport,
+		f->airline,
+		f->distance,
+		f->day,
+		f->dayOfWeek
 	);
-	timePrint(f.scheduledDeparture);
+	timePrint(f->scheduledDeparture);
 	printf("\nDeparture Time: ");
-	timePrint(f.departureTime);
-	printf("\nDeparture Delay: %d, \nScheduled Travel Time: %d", f.departureDelay, f.scheduledTravelTime);
+	timePrint(f->departureTime);
+	printf("\nDeparture Delay: %d, \nScheduled Travel Time: %d", f->departureDelay, f->scheduledTravelTime);
 	printf("\nScheduled Arrival: ");
-	timePrint(f.scheduledArrival);
+	timePrint(f->scheduledArrival);
 	printf("\nArrival Time: ");
-	timePrint(f.arrivalTime);
-	printf("\nArrival Delay: %d", f.arrivalDelay);
+	timePrint(f->arrivalTime);
+	printf("\nArrival Delay: %d", f->arrivalDelay);
 }
 
 Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, char* originAirport, char* destinationAirport, Time scheduledDeparture, Time departureTime, 

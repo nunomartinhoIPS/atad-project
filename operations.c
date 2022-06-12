@@ -5,11 +5,19 @@
 #include "mapElem.h"
 #include "stringCode.h"
 #include "loaders.h"
+#include "utils.h"
 
-void listAP(PtMap airports, PtList flights)
-{
-    int aSize = 0;
-    int fSize = 0;
+void printFlightsMenu() {
+    
+        system("cls"); // clear console.
+        printf("\n===================================================================================");
+        printf("\n                          ALL FLIGHTS");
+        printf("\n===================================================================================");
+}
+
+void listAP(PtMap airports, PtList flights){
+    int aSize;
+    int fSize;
     Flight f;
     mapSize(airports, &aSize);
     listSize(flights, &fSize);
@@ -30,10 +38,9 @@ void listAP(PtMap airports, PtList flights)
 
 void listAR(PtAirline airlines[], PtList flights)
 {
-    int aSize = 0;
-    int fSize = 0;
+    int aSize = sizeof(*airlines)/sizeof(*airlines[0]);
+    int fSize;
     Flight f;
-    listSize(airlines, &aSize);
     listSize(flights, &fSize);
     for (int i = 0; i < aSize; i++)
     {
@@ -49,19 +56,16 @@ void listAR(PtAirline airlines[], PtList flights)
     }
 }
 
-void showF(PtList flights, char airport[4])
-{
+void showF(PtList flights, char airport[4]) {
     int count = 0;
-    int size = 0;
+    int size;
     listSize(flights, &size);
-    for (int i = 0; i < size; i++)
-    {
+    for(int i = 0; i<size; i++){
         Flight f;
-        listGet(flights, i, f);
-        if (f.originAirport == airport)
-        {
+        listGet(flights, i, &f);
+        if(f.originAirport == airport){
             count++;
-            flightPrint(f);
+            flightPrint(&f);
         }
     }
     if (count == 0)
@@ -133,16 +137,18 @@ void showAllSample(PtList list)
     }
 }
 
-void printFlightsMenu()
-{
-    clrscr(); // clear console.
-    printf("\n===================================================================================");
-    printf("\n                          ALL FLIGHTS");
-    printf("\n===================================================================================");
-}
+void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int sizeAirlines){
 
-void oLoadAR(PtAirline *airlines, int sizeAirlines)
-{
+    for (int i = 0; i < sizeAirlines; i++) {
+        free(airlines[i]);
+    }
+
+    mapDestroy(&ptAirports);
+    listDestroy(&ptFlights);
+
+} 
+
+void oLoadAR(PtAirline *airlines, int sizeAirlines) {
     int errorCode = loadAR(airlines, sizeAirlines);
     if (errorCode == LOADER_OK)
         printf("<%d> airline records imported\n", sizeAirlines);
