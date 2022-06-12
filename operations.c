@@ -57,7 +57,7 @@ void showF(PtList flights, char airport[4])
     for (int i = 0; i < size; i++)
     {
         Flight f;
-        listGet(flights, i, f);
+        listGet(flights, i, &f);
         if (f.originAirport == airport)
         {
             count++;
