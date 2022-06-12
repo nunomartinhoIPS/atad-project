@@ -1,12 +1,6 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
-
 #include "time.h"
-#include "input.h"
 
-Time createTime(int hour, int min){
+Time timeCreate(int hour, int min){
     Time t;
     t.hour=hour;
     t.min=min;
@@ -33,6 +27,6 @@ int timeDiffSpecial(Time time1,Time time2) {
     return aux;
 }
 
-void printTime(Time t){
+void timePrint(Time t){
     printf("%d:%d", t.hour, t.min);
 }

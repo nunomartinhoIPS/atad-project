@@ -1,8 +1,4 @@
 #include "flight.h"
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "stringCode.h"
 
 void flightPrint(PtFlight f){
     printf(
@@ -15,14 +11,14 @@ void flightPrint(PtFlight f){
 		f->day,
 		f->dayOfWeek
 	);
-	printTime(f->scheduledDeparture);
+	timePrint(f->scheduledDeparture);
 	printf("\nDeparture Time: ");
-	printTime(f->departureTime);
+	timePrint(f->departureTime);
 	printf("\nDeparture Delay: %d, \nScheduled Travel Time: %d", f->departureDelay, f->scheduledTravelTime);
 	printf("\nScheduled Arrival: ");
-	printTime(f->scheduledArrival);
+	timePrint(f->scheduledArrival);
 	printf("\nArrival Time: ");
-	printTime(f->arrivalTime);
+	timePrint(f->arrivalTime);
 	printf("\nArrival Delay: %d", f->arrivalDelay);
 }
 

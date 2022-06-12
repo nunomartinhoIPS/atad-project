@@ -8,6 +8,7 @@
 #include <float.h>
 #include "utils.h"
 #include "map.h"
+#include "time.h"
 
 int sizeOfLoadAR(int * size){
     FILE* ptFile = fopen("./csv_data/airlines.csv", "r");
@@ -68,5 +69,65 @@ int loadAP(PtMap airports){
         if(mapPut(airports, s, a)!=MAP_OK) return LOADER_MAP_ISSUE;
     }
     fclose(ptFile);
-    return MAP_OK;
+    return LOADER_OK;
+}
+
+int loadF(PtList flights){
+    if(flights == NULL) return LOADER_LIST_ISSUE;
+    FILE * ptFile = fopen("./csv_data/flights.csv", "r");
+    if(ptFile == NULL) return LOADER_FILE_NOT_FOUND;
+    char s[256];
+    fgets(s, sizeof(s), ptFile);
+    int line = 0;
+    while(fgets(s, sizeof(s), ptFile)!=NULL){
+        char * day = strtok(s, ";");
+        if(day == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char * dayWeek = strtok(NULL, ";");
+        if(dayWeek == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * airline = strtok(NULL, ";");
+        if(airline == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * flightnum = strtok(NULL, ";");
+        if(flightnum == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * origAirport = strtok(NULL, ";");
+        if(origAirport == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * destAirport = strtok(NULL, ";");
+        if(destAirport == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * schedDep = strtok(NULL, ";");
+        if(schedDep == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * timeDep = strtok(NULL, ";");
+        if(timeDep == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * dist = strtok(NULL, ";");
+        if(dist == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * schedArr = strtok(NULL, ";");
+        if(schedArr == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * timeArr = strtok(NULL, ";");
+        if(timeArr == NULL) return LOADER_FILE_INCONSISTENCY;
+        //@todo luis, tenho que fazer para valores que sao 30 ou 33 que e' meia noite e 30 e meia noite e 33
+        printf("testing --------------- sched dep = %s\n", schedDep);
+        char * hour, * min;
+        hour = strncpy(hour, schedDep, 1);
+        min = strncpy(hour, schedDep + 2, 3-2);
+        printf("sched Dep: %s\t\t%s:%s\n", schedDep, hour, min);
+    }
+    fclose(ptFile);
+    return LOADER_OK;
 }

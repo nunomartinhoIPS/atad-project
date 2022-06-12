@@ -69,6 +69,14 @@ int main() {
 			//mapPrint(airports);
 			waitFunction();
 		}
+
+		if(equalsStringIgnoreCase(command, "LOADF")){
+			printf("testing --------------- equals(loadf)\n");
+			oLoadF(flights);
+			flag = false;
+			waitFunction();
+		}
+
 		if (equalsStringIgnoreCase(command, "SHOWALL")){
 			    
 			printf("\nCOMMADS: ALL, SAMPLE, \n");
