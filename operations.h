@@ -59,3 +59,18 @@ void showF(PtList flights, char airport[4]);
  * @param sizeAirlines  [in] size of array
  */
 void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int sizeAirlines);
+
+/**
+ * @brief shows N flight sorted by descending delay
+ * 
+ * @param flights [in] list of all flights
+ * @param n [in] number of flights to show
+ */
+void topN(PtList flights, int n);
+
+/**
+ * @brief sorts a list of flights by descending delay, if delay is the same sorts by flight number
+ * 
+ * @param flights [in] list of flights
+ */
+void sortByDelay(PtList flights);
