@@ -128,27 +128,31 @@ void showAllSample(PtList list) {
     }
 }
 
-void clearAll(PtAirline *airlines, PtMap ptAirports, PtList ptFlights, int sizeAirlines) {
-
-    int msize, lsize;
-
-    mapSize(ptAirports, &msize);
-    listSize(ptFlights, &lsize);
-
-    if (sizeAirlines > 0 ) {
-        for (int i = 0; i < sizeAirlines; i++) {
-            free(airlines[i]);
-        }
-    } 
+int clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int sizeAirlines) {
     
-    if (!mapIsEmpty(ptAirports)) 
-        mapDestroy(&ptAirports);
+    PtMap curMap = *ptAirports;
+    PtList curList = *ptFlights;
+    
+    if (airlines == NULL) return ARRAY_NULL;
+    if (curMap == NULL) return MAP_NULL;
+    if (curList == NULL) return LIST_NULL;
+    printf("entrei!");
+    int sizeAirports, sizeFlights;
+    
+    //airlinePrint(airlines[0]);
 
-    if (!listIsEmpty(ptFlights)) 
-        listDestroy(&ptFlights);
+    
+    mapSize(curMap, &sizeAirports);
+    mapDestroy(&curMap);   
+    curMap = NULL;
+    printf("\n<%d> records deleted from Airports\n", sizeAirports);
 
-    printf("<%d> records deleted from <Flights | Airports | Airlines>", sizeAirlines + msize + lsize);
+    listSize(curList, &sizeFlights);
+    listDestroy(&curList); 
+    curList = NULL;
+    printf("\n<%d> records deleted from Flights\n", sizeFlights);
 
+    return OPERATION_OK;
     
 }
 

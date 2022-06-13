@@ -13,6 +13,8 @@
 #include "utils.h"
 #include "loaders.h"
 
+#define OPERATION_OK				0
+
 /**
  * @brief Shows all airports with flights
  * 
@@ -65,4 +67,4 @@ void oLoadF(PtList flights);
  * @param flights       [in] ADDRESS OF pointer to the list
  * @param sizeAirlines  [in] size of array
  */
-void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int sizeAirlines);
+int clearMemory(PtAirline* airlines , PtMap *ptAirports, PtList *ptFlights, int sizeAirlines);
