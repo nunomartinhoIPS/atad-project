@@ -31,7 +31,6 @@ int main() {
 	int sizeAirports;
 	PtMap airports = mapCreate();
 	mapSize(airports, &sizeAirports);
-	//if(airports == NULL) printf("fodase");
 	
 	/* creating list for flights */
 	int sizeFlights;

@@ -133,23 +133,26 @@ int clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int s
     PtMap curMap = *ptAirports;
     PtList curList = *ptFlights;
     
-    if (airlines == NULL) return ARRAY_NULL;
+    if (airlines[0] == NULL) return ARRAY_NULL;
     if (curMap == NULL) return MAP_NULL;
     if (curList == NULL) return LIST_NULL;
-    printf("entrei!");
+
     int sizeAirports, sizeFlights;
     
-    //airlinePrint(airlines[0]);
-
+    for (int i = 0; i < sizeAirlines; i++) {
+        free(airlines[i]);
+    }
+    airlines = NULL;
+    printf("\n<%d> records deleted from Airlines\n", sizeAirlines);
     
     mapSize(curMap, &sizeAirports);
     mapDestroy(&curMap);   
-    curMap = NULL;
+    *ptAirports = NULL;
     printf("\n<%d> records deleted from Airports\n", sizeAirports);
 
     listSize(curList, &sizeFlights);
     listDestroy(&curList); 
-    curList = NULL;
+    *ptFlights = NULL;
     printf("\n<%d> records deleted from Flights\n", sizeFlights);
 
     return OPERATION_OK;
