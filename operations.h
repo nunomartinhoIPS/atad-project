@@ -67,10 +67,3 @@ void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int size
  * @param n [in] number of flights to show
  */
 void topN(PtList flights, int n);
-
-/**
- * @brief sorts a list of flights by descending delay, if delay is the same sorts by flight number
- * 
- * @param flights [in] list of flights
- */
-void sortByDelay(PtList flights);

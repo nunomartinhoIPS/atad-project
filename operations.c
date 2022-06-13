@@ -126,6 +126,33 @@ void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int size
 
 }
 
+/**
+ * @brief sorts a list of flights by descending delay, if delay is the same sorts by flight number
+ * 
+ * @param flights [in] list of flights
+ */
+void sortByDelay(PtList flights){
+    int size = 0;
+    listSize(flights, &size);
+    Flight f1;
+    Flight f2;
+
+    for(int i = 0; i<size-1; i++){
+        int indexMin = i;
+        for(int j = i; j<size-1; j++){
+            listGet(flights, j, &f1);
+            listGet(flights, indexMin, &f2);
+            if(timeDiffSpecial(f1.scheduledArrival, f1.arrivalTime) == timeDiffSpecial(f2.scheduledArrival, f2.arrivalTime)){
+                if(f1.flightNumber < f2.flightNumber){ indexMin = j; }
+            }
+            if(timeDiffSpecial(f1.scheduledArrival, f1.arrivalTime)>timeDiffSpecial(f2.scheduledArrival, f2.arrivalTime)){ indexMin = j; }
+        }
+        Flight fAux;
+        listSet(flights, i, f1, &fAux);
+        listSet(flights, i, fAux, &f2);
+    }
+}
+
 void topN(PtList flights, int n){
     PtList flightsCopy = listCreate();
     int size = 0;
@@ -140,27 +167,5 @@ void topN(PtList flights, int n){
         listGet(flightsCopy, i, &aux);
         PtFlight PtAux = &aux;
         flightPrint(PtAux);
-    }
-}
-
-void sortByDelay(PtList flights){
-    int size = 0;
-    listSize(flights, &size);
-    Flight f1;
-    Flight f2;
-    
-    for(int i = 0; i<size-1; i++){
-        int indexMin = i;
-        for(int j = i; j<size-1; j++){
-            listGet(flights, j, &f1);
-            listGet(flights, indexMin, &f2);
-            if(timeDiffSpecial(f1.scheduledArrival, f1.arrivalTime) == timeDiffSpecial(f2.scheduledArrival, f2.arrivalTime)){
-                if(f1.flightNumber < f2.flightNumber){ indexMin = j; }
-            }
-            if(timeDiffSpecial(f1.scheduledArrival, f1.arrivalTime)>timeDiffSpecial(f2.scheduledArrival, f2.arrivalTime)){ indexMin = j; }
-        }
-        Flight fAux;
-        listSet(flights, i, f1, &fAux);
-        listSet(flights, i, fAux, &f2);
     }
 }
