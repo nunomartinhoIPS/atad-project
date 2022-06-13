@@ -202,6 +202,7 @@ void topN(PtList flights, int n){
         flightPrint(PtAux);
     }
 }
+
 void oLoadF(PtList flights){
     int size, errorCode = loadF(flights), listErrorCode = listSize(flights, &size);
     if(listErrorCode != LIST_OK){
@@ -228,14 +229,14 @@ void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
         for(int j = 0; j<sizeList; j++){
             listGet(flights, j, &f);
             if(equalsStringIgnoreCase(f.airline, airlines[i]->iatacode)){
-                if(f.arrivalDelay == 0) chegadaHPrev[i] += 1;
-                if(f.departureDelay == 0) saidaHPrev[i] += 1;
+                if(f.arrivalDelay <= 0) chegadaHPrev[i] = chegadaHPrev[i] + 1;
+                if(f.departureDelay <= 0) saidaHPrev[i] = saidaHPrev[i] + 1;
             }
         }
     }
 
+    printf("Airline\t\tOT_Departures\t\tOT_Arrivals\n");
     for(int i = 0; i<sizeAirlines; i++){
-        airlinePrint(airlines[i]);
-        printf("Partidas a tempo: %d\tChegadas a tempo: %d\n", saidaHPrev[i], chegadaHPrev[i]);
+        printf("%s\t\t%d\t\t%d\n", airlines[i]->iatacode, saidaHPrev[i], chegadaHPrev[i]);
     }
 }

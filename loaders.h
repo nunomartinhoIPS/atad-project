@@ -20,6 +20,7 @@
 #include "utils.h"
 #include "map.h"
 #include "time.h"
+#include <ctype.h>
 
 int sizeOfLoadAR(int * size);
 
