@@ -177,4 +177,5 @@ int loadF(PtList flights){
                 return LOADER_LIST_ISSUE;
         line++;
     }
+    fclose(ptFile);
 }

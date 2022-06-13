@@ -2,9 +2,11 @@
 
 void printFlightsMenu()
 {
-    printf("\n===================================================================================");
-    printf("\n                          ALL FLIGHTS");
-    printf("\n===================================================================================");
+    printf("\n\t===================================================================================");
+    printf("\n\t\t\t\t\t\tFLIGHTS");
+    printf("\n\t===================================================================================");
+    printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay\n");
+    
 }
 
 void listAP(PtMap airports, PtList flights)
@@ -67,50 +69,60 @@ void showF(PtList flights, char airport[4]) {
     }
 }
 
-void showAllPaged(PtList list) {
+void showAll(PtList list) {
+    String command;
+    int quit = 0;
+    while (!quit){
+        printf("\n--SHOWALL MENU--\n<PAGES> Show all flights (paginated by 20)\n<RANDOM> Show 100 random flight data\n<BACK> Return Main Menu\n\n");
+        printf("COMMAND>");
+			
+        fgets(command, sizeof(command), stdin);
+		command[strlen(command) - 1] = '\0';
 
+        if (equalsStringIgnoreCase(command, "PAGES")){
+        		showAllPaged(list);
+    	}
+			
+		if (equalsStringIgnoreCase(command, "RANDOM")){
+        		showAllSample(list);
+    	}
+        
+        if (equalsStringIgnoreCase(command, "BACK")){
+        		quit = 1;
+    	}
+
+    }
+}
+
+void showAllPaged(PtList list) {
     String command;
     int page = 0;
     int exit = 0;
     Flight flight;
     while (!exit) {
         system("clear"); // clear console.
-        printFlightsMenu();
-        printf("\nCommands  (NEXT, PREV, EXIT)");
-
         /*
          * Starts the index in the previous element (page = 0 * 20 = 0 starts in 0 element, page = 1 * 20 starts in the element 20)
          * To show only 20 pages, we do: page (0) + 1 * 20 = 20 pages in page 0, page (1) + 1 * 20 = 40 starts in the element 20 to element 40 (more 20 pages).
          */
+        printFlightsMenu();
         for (int i = page * 20; i < (page + 1) * 20; i++)
         {
             listGet(list, i, &flight);
             listElemPrint(flight);
         }
+        printf("\n<------------BACK------------- PAGE [%d] ------------NEXT-------------> ", page);
 
-        if (page > 0)
-            printf("\n<------------PREV------------- PAGE [%d] ------------NEXT-------------> ", page);
-        else
-            printf("\n<------------EXIT------------- PAGE [%d] ------------NEXT-------------> ", page);
 
         printf("\ncommand> ");
         fgets(command, sizeof(command), stdin);
         command[strlen(command) - 1] = '\0';
         // problema e se chegar na ultima pagina?
-        if (equalsStringIgnoreCase(command, "NEXT"))
-        {
-            page++;
-        }
+        if (equalsStringIgnoreCase(command, "NEXT")) page++;
 
-        if (equalsStringIgnoreCase(command, "PREV"))
-        {
-            if (page > 0)
-                page--;
-        }
-
-        if (equalsStringIgnoreCase(command, "EXIT"))
-        {
-            exit = 1;
+        if (equalsStringIgnoreCase(command, "BACK")) {
+            if (page == 0) exit = 1;
+            else if (page > 0) page--;
         }
     }
 }
@@ -120,42 +132,37 @@ void showAllSample(PtList list) {
     int size;
     listSize(list, &size);
     Flight flight;
-    for (int i = 0; i < 100; i++)
-    {
+    for (int i = 0; i < 100; i++) {
         int number = (rand() % ((size - 1) - 0 + 1)) + 0;
         listGet(list, number, &flight);
         listElemPrint(flight);
     }
+
+    printf("\nPress enter to continue ...");
+	getchar();
+	system("clear");
 }
 
-int clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int sizeAirlines) {
+void clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int sizeAirlines) {
     
     PtMap curMap = *ptAirports;
     PtList curList = *ptFlights;
-    
-    if (airlines[0] == NULL) return ARRAY_NULL;
-    if (curMap == NULL) return MAP_NULL;
-    if (curList == NULL) return LIST_NULL;
 
-    int sizeAirports, sizeFlights;
-    
-    for (int i = 0; i < sizeAirlines; i++) {
-        free(airlines[i]);
+    if (airlines[0] != NULL) {
+        for (int i = 0; i < sizeAirlines; i++) {
+            free(airlines[i]);
+        }
+        airlines = NULL;
     }
-    airlines = NULL;
-    printf("\n<%d> records deleted from Airlines\n", sizeAirlines);
-    
-    mapSize(curMap, &sizeAirports);
-    mapDestroy(&curMap);   
-    *ptAirports = NULL;
-    printf("\n<%d> records deleted from Airports\n", sizeAirports);
 
-    listSize(curList, &sizeFlights);
-    listDestroy(&curList); 
-    *ptFlights = NULL;
-    printf("\n<%d> records deleted from Flights\n", sizeFlights);
+    if (mapDestroy(&curMap) == MAP_OK) {
+        *ptAirports = NULL;
+    }
+       
+    if (listDestroy(&curList) == LIST_OK) {
+        *ptFlights = NULL;
+    }
 
-    return OPERATION_OK;
     
 }
 

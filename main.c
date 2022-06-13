@@ -26,7 +26,8 @@ int main() {
 	int sizeAirlines;
 	sizeOfLoadAR(&sizeAirlines);
 	PtAirline airlines[sizeAirlines];
-
+	memset( airlines, '\0', sizeof( airlines ) );
+	
 	/* creating map for Airports */
 	int sizeAirports;
 	PtMap airports = mapCreate();
@@ -65,26 +66,16 @@ int main() {
 
 		if (equalsStringIgnoreCase(command, "SHOWALL")){
 			    
-			printf("\n< COMMADS: ALL, SAMPLE >\n");
-    		printf("COMMAND>");
-			
-			fgets(command, sizeof(command), stdin);
-			command[strlen(command) - 1] = '\0';
-
-    		if (equalsStringIgnoreCase(command, "ALL")){
-        		showAllPaged(flights);
-    		}
-			
-			if (equalsStringIgnoreCase(command, "SAMPLE")){
-        		showAllSample(flights);
-    		}
+			showAll(flights);
 
 			flag = false;
-			waitFunction();
 		}
 		
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			clearMemory(airlines, &airports, &flights, sizeAirlines);
+			printf("\n<%d> records deleted from Airlines\n", sizeAirlines); //não gosto de ti luis >:(
+			printf("\n<%d> records deleted from Airports\n", sizeAirports);
+			printf("\n<%d> records deleted from Flights\n", sizeFlights);
 			flag = false;
 			waitFunction();
 		}
