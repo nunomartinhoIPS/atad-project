@@ -83,6 +83,26 @@ int main() {
 			flag = false;
 			waitFunction();
 		}
+		if (equalsStringIgnoreCase(command, "LISTAR")){
+			printf("\nAirlines: \n\n");
+			listAR(airlines, sizeAirlines, flights);
+			flag = false;
+			waitFunction();
+		}
+		if (equalsStringIgnoreCase(command, "TOPN")){
+			int n=0;
+			printf("\nInsira um numero positivo menor que 11515: ");
+			scanf("%d", &n);
+			while(n<1 || n>11515){
+				printf("\nNumero Invalido Tente Novamente: ");
+				scanf("%d", &n);
+			}
+			
+			printf("\n----------TOPN---------- \n\n");
+			topN(flights, n);
+			flag = false;
+			waitFunction();
+		}
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);
 			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
@@ -109,7 +129,7 @@ int main() {
 
 void printCommandsMenu(){
 	printf("\n===================================================================================");
-	printf("\n                          PROJECT: United States Domestics Flight Data");
+	printf("\n\t\t\tPROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");
 	printf("\nA. Base commands (LOADAR, LOADAP, LOADF, CLEAR).");
 	printf("\nB. Aggregated info about flights (SHOWALL, SHOWF, LISTAR, LISTAP, ONTIME, AVERAGE,");

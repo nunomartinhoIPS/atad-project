@@ -26,9 +26,10 @@ void listAP(PtMap airports, PtList flights);
  * @brief Shows all airlines with flights
  * 
  * @param airlines  [in] array of airlines
+ * @param aSize     [in] size of the array
  * @param flights   [in] list of all flights
  */
-void listAR(PtAirline airlines[], PtList flights);
+void listAR(PtAirline airlines[], int aSize, PtList flights);
 
 /**
  * @brief Shows all flights in a paged form.

@@ -1,25 +1,15 @@
 #include "flight.h"
 
 void flightPrint(PtFlight f){
-    printf(
-		"Flight: %d, \nOrigin: %s, \nDestination: %s, \nAirline: %s, \nDistance: %d, \nDay: %d, \nDay of the Week: %d, \nScheduled Departure: ", 
-		f->flightNumber,
-		f->originAirport,
-		f->destinationAirport,
-		f->airline,
-		f->distance,
-		f->day,
-		f->dayOfWeek
-	);
-	timePrint(f->scheduledDeparture);
-	printf("\nDeparture Time: ");
-	timePrint(f->departureTime);
-	printf("\nDeparture Delay: %d, \nScheduled Travel Time: %d", f->departureDelay, f->scheduledTravelTime);
-	printf("\nScheduled Arrival: ");
-	timePrint(f->scheduledArrival);
-	printf("\nArrival Time: ");
-	timePrint(f->arrivalTime);
-	printf("\nArrival Delay: %d", f->arrivalDelay);
+    printf("\n%d\t\t%d\t\t%s\t\t%d\t\t%s\t\t%s\t\t", f->day, f->dayOfWeek, f->airline, f->flightNumber, f->originAirport, f->destinationAirport);
+    timePrint(f->scheduledDeparture);
+    printf("\t\t");
+    timePrint(f->departureTime);
+    printf("\t\t%d\t\t%d\t\t", f->scheduledTravelTime, f->distance);
+    timePrint(f->scheduledArrival);
+    printf("\t\t");
+    timePrint(f->arrivalTime);
+    printf("\t\t%d\t\t", f->arrivalDelay);
 }
 
 Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, char* originAirport, char* destinationAirport, Time scheduledDeparture, Time departureTime, 

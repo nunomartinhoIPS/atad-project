@@ -28,18 +28,15 @@ void listAP(PtMap airports, PtList flights){
     }
 }
 
-void listAR(PtAirline airlines[], PtList flights){
-    int aSize = sizeof(*airlines) / sizeof(*airlines[0]);
+void listAR(PtAirline airlines[], int aSize, PtList flights){
     int fSize;
     Flight f;
     listSize(flights, &fSize);
-    for (int i = 0; i < aSize; i++)
-    {
-        for (int j = 0; j < fSize; j++)
-        {
+    for (int i = 0; i < aSize; i++){
+        for (int j = 0; j < fSize; j++){
             listGet(flights, j, &f);
-            if (f.airline == airlines[i]->iatacode)
-            {
+            if (equalsStringIgnoreCase(f.airline, airlines[i]->iatacode)){
+                printf("\t");
                 airlinePrint(airlines[i]);
                 break;
             }
@@ -164,7 +161,7 @@ void oLoadAP(PtMap airports){
  * 
  * @param flights [in] list of flights
  */
-void sortByDelay(PtList flights){
+PtList sortByDelay(PtList flights){
     int size = 0;
     listSize(flights, &size);
     Flight f1;
@@ -176,14 +173,24 @@ void sortByDelay(PtList flights){
             listGet(flights, j, &f1);
             listGet(flights, indexMin, &f2);
             if(timeDiffSpecial(f1.scheduledArrival, f1.arrivalTime) == timeDiffSpecial(f2.scheduledArrival, f2.arrivalTime)){
-                if(f1.flightNumber < f2.flightNumber){ indexMin = j; }
+                if(f1.flightNumber < f2.flightNumber){ 
+                    indexMin = j;
+                }
             }
-            if(timeDiffSpecial(f1.scheduledArrival, f1.arrivalTime)>timeDiffSpecial(f2.scheduledArrival, f2.arrivalTime)){ indexMin = j; }
+            if(timeDiffSpecial(f1.scheduledArrival, f1.arrivalTime)>timeDiffSpecial(f2.scheduledArrival, f2.arrivalTime)){ 
+                indexMin = j; 
+            }
         }
         Flight fAux;
-        listSet(flights, i, f1, &fAux);
-        listSet(flights, i, fAux, &f2);
+        Flight fAux2;
+
+        listGet(flights, i, &fAux);
+        listGet(flights, indexMin, &fAux2);
+
+        listSet(flights, i, fAux2, &fAux2);
+        listSet(flights, indexMin, fAux, &fAux);
     }
+    return flights;
 }
 
 void topN(PtList flights, int n){
@@ -195,8 +202,8 @@ void topN(PtList flights, int n){
         listGet(flights, i, &aux);
         listAdd(flightsCopy, i, aux);
     }
-    sortByDelay(flightsCopy);
-    for(int i = 0; i <= n; i++){
+    flightsCopy = sortByDelay(flightsCopy);
+    for(int i = 0; i < n; i++){
         listGet(flightsCopy, i, &aux);
         PtFlight PtAux = &aux;
         flightPrint(PtAux);
