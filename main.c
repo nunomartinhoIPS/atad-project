@@ -6,13 +6,14 @@
 #include "list.h"
 #include "map.h"
 #include "input.h"
+#include "loaders.h"
+#include "operations.h"
 
 void printCommandsMenu();
 void waitFunction();
 
-int main()
-{
 
+int main() {
 	srand(time(NULL));
 
 	/* commands interpreter */
@@ -21,21 +22,83 @@ int main()
 
 	setlocale(LC_ALL, "PT");
 
-	while (!quit)
-	{
+	/* creating airlines array */
+	int sizeAirlines;
+	sizeOfLoadAR(&sizeAirlines);
+	PtAirline airlines[sizeAirlines];
 
+	/* creating map for Airports */
+	int sizeAirports;
+	PtMap airports = mapCreate();
+	mapSize(airports, &sizeAirports);
+	//if(airports == NULL) printf("fodase");
+	
+	/* creating list for flights */
+	int sizeFlights;
+	PtList flights = listCreate();
+	listSize(flights, &sizeFlights);
+
+	while (!quit){
 		printCommandsMenu();
+		bool flag = true;
 		fgets(command, sizeof(command), stdin);
 		/* descartar 'newline'. Utilizar esta técnica sempre que for lida uma
 		 * string para ser utilizada, e.g., nome de ficheiro, chave, etc.. */
 		command[strlen(command) - 1] = '\0';
-
-		if (equalsStringIgnoreCase(command, "QUIT"))
-		{
-			quit = 1; /* vai provocar a saída do interpretador */
+		if (equalsStringIgnoreCase(command, "LOADAR")){
+			oLoadAR(airlines, sizeAirlines);
+			flag = false;
+			waitFunction();
 		}
-		else
-		{
+		if(equalsStringIgnoreCase(command, "LOADAP")){
+			oLoadAP(airports);
+			mapSize(airports, &sizeAirports);
+			flag = false;
+			waitFunction();
+		}
+
+		if(equalsStringIgnoreCase(command, "LOADF")){
+			oLoadF(flights);
+			listSize(flights, &sizeFlights);
+			flag = false;
+			waitFunction();
+		}
+
+		if (equalsStringIgnoreCase(command, "SHOWALL")){
+			    
+			printf("\nCOMMADS: ALL, SAMPLE, \n");
+    		printf("COMMAND>");
+			
+			fgets(command, sizeof(command), stdin);
+			command[strlen(command) - 1] = '\0';
+
+    		if (equalsStringIgnoreCase(command, "ALL")){
+        		//showAllPaged();
+    		}
+			
+			if (equalsStringIgnoreCase(command, "SAMPLE")){
+        		//showAllSample();
+    		}
+
+			flag = false;
+			waitFunction();
+		}
+		if (equalsStringIgnoreCase(command, "CLEAR")){
+			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);
+			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
+				clearAll(airlines, airports, flights, sizeAirlines);
+			}
+			flag = false;
+			waitFunction();
+		}
+		if (equalsStringIgnoreCase(command, "QUIT")){
+			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
+				clearAll(airlines, airports, flights, sizeAirlines);
+			}
+			quit = 1; /* vai provocar a saída do interpretador */
+			flag = false;
+		}
+		if(flag){
 			printf("Command not found!\n");
 			waitFunction();
 		}
@@ -44,8 +107,7 @@ int main()
 	printf("Good Bye! ...\n");
 }
 
-void printCommandsMenu()
-{
+void printCommandsMenu(){
 	printf("\n===================================================================================");
 	printf("\n                          PROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");
@@ -57,8 +119,7 @@ void printCommandsMenu()
 	printf("COMMAND> ");
 }
 
-void waitFunction()
-{
+void waitFunction(){
 	printf("\nPress enter to continue ...");
 	getchar();
 }

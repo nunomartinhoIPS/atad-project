@@ -34,7 +34,7 @@ typedef struct mapImpl *PtMap;
  * @return PtMap pointer to allocated data structure, or
  * @return NULL if unsufficient memory for allocation
  */
-PtMap mapCreate(unsigned int initialCapacity);
+PtMap mapCreate();
 
 /**
  * @brief Free all resources of a map.

@@ -7,3 +7,6 @@
 # Ignore attr files
 
 **/*.attr
+
+.vscode/*
+.vscode/settings.json

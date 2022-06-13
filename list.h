@@ -24,7 +24,7 @@
 struct listImpl;
 
 /** Definition of pointer to the  data stucture. */
-typedef struct listImpl *PtList;
+typedef struct listImpl * PtList;
 
 /**
  * @brief Creates a new empty list.
