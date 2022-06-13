@@ -4,7 +4,10 @@
         "string.h": "c",
         "flight.h": "c",
         "mapelem.h": "c",
-        "stringcode.h": "c"
+        "stringcode.h": "c",
+        "random": "c",
+        "limits": "c"
     },
-    "C_Cpp.errorSquiggles": "Enabled"
+    "C_Cpp.errorSquiggles": "Enabled",
+    "kite.codefinder.enableLineDecoration": true
 }

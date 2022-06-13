@@ -72,6 +72,38 @@ int loadAP(PtMap airports){
     return LOADER_OK;
 }
 
+void formatTime(char * from, char * toHour, char * toMin){
+    /**
+     * im really not proud of this method but there was no other way to do it, i really tried big braining it
+     */
+    if(strlen(from) == 1){
+        char s [3]= "0";
+        strcat(s, from);
+        strcpy(toMin, s);
+        strcpy(toHour, "00");
+    }
+    
+    if(strlen(from) == 2) {
+        strcpy(toMin, from);
+        strcpy(toHour, "00");
+    }
+    
+    if(strlen(from) == 3){
+        strncpy(toHour, from, 1);
+        toHour[1] = '\0';
+        strncpy(toMin, from + 1, 2);
+        toMin[2] = '\0';
+    }
+    
+    if(strlen(from) == 4){
+        strncpy(toHour, from, 2);
+        toHour[2] = '\0';
+        strncpy(toMin, from + 2, 2);
+        toMin[2] = '\0';
+    }
+}
+
+
 int loadF(PtList flights){
     if(flights == NULL) return LOADER_LIST_ISSUE;
     FILE * ptFile = fopen("./csv_data/flights.csv", "r");
@@ -120,11 +152,29 @@ int loadF(PtList flights){
         
         char * timeArr = strtok(NULL, ";");
         if(timeArr == NULL) return LOADER_FILE_INCONSISTENCY;
-        //@todo luis, tenho que fazer para valores que sao 30 ou 33 que e' meia noite e 30 e meia noite e 33
-        printf("testing --------------- sched dep = %s\n", schedDep);
-        char * hour, * min;
-        hour = strncpy(hour, schedDep, 1);
-        min = strncpy(hour, schedDep + 2, 3-2);
-        printf("sched Dep: %s\t\t%s:%s\n", schedDep, hour, min);
+        
+        char hour[3], min[3];
+
+        formatTime(schedDep, hour, min);
+        Time tschedDep = timeCreate(atoi(hour), atoi(min));
+        
+        formatTime(timeDep, hour, min);
+        Time ttimeDep = timeCreate(atoi(hour), atoi(min));
+
+        formatTime(schedArr, hour, min);
+        Time tschedArr = timeCreate(atoi(hour), atoi(min));
+
+        formatTime(timeArr, hour, min);
+        Time ttimeArr = timeCreate(atoi(hour), atoi(min));
+
+        int depDelay = timeDiff(tschedDep, ttimeDep);
+        int schedTravTime = timeDiff(tschedArr, tschedDep);
+        int arrDelay = timeDiff(tschedArr, ttimeArr);
+
+        if(listAdd(flights, line, 
+                flightCreate(atoi(day), atoi(dayWeek), airline, atoi(flightnum), origAirport, destAirport, tschedDep, ttimeDep, depDelay, schedTravTime, atoi(dist), tschedArr, ttimeArr, arrDelay))
+                !=LIST_OK) 
+                return LOADER_LIST_ISSUE;
+        line++;
     }
 }
