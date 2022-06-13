@@ -3,6 +3,7 @@
 #include "airport.h"
 #include "flight.h"
 #include "airline.h"
+#include "time.h"
 #include "map.h"
 #include "list.h"
 #include <string.h>
@@ -68,3 +69,11 @@ void oLoadF(PtList flights);
 void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int sizeAirlines);
 
 void onTime(PtAirline * airlines, int sizeAirlines, PtList flights);
+
+/**
+ * @brief shows N flight sorted by descending delay
+ * 
+ * @param flights [in] list of all flights
+ * @param n [in] number of flights to show
+ */
+void topN(PtList flights, int n);
