@@ -179,3 +179,29 @@ void oLoadF(PtList flights){
     if(errorCode == LOADER_FILE_NOT_FOUND)
         printf("File not found\n");
 }
+
+void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
+    int saidaHPrev [sizeAirlines], chegadaHPrev [sizeAirlines], sizeList;
+    if(listSize(flights, &sizeList) != LIST_OK) return;
+    Flight f;
+
+    for(int i = 0 ; i<sizeAirlines; i++){
+        saidaHPrev[i] = 0;
+        chegadaHPrev[i] = 0;
+    }
+
+    for(int i = 0; i<sizeAirlines; i++){
+        for(int j = 0; j<sizeList; j++){
+            listGet(flights, j, &f);
+            if(equalsStringIgnoreCase(f.airline, airlines[i]->iatacode)){
+                if(f.arrivalDelay == 0) chegadaHPrev[i] += 1;
+                if(f.departureDelay == 0) saidaHPrev[i] += 1;
+            }
+        }
+    }
+
+    for(int i = 0; i<sizeAirlines; i++){
+        airlinePrint(airlines[i]);
+        printf("Partidas a tempo: %d\tChegadas a tempo: %d\n", saidaHPrev[i], chegadaHPrev[i]);
+    }
+}

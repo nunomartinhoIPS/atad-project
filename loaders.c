@@ -1,14 +1,4 @@
 #include "loaders.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "airline.h"
-#include "airport.h"
-#include "list.h"
-#include <float.h>
-#include "utils.h"
-#include "map.h"
-#include "time.h"
 
 int sizeOfLoadAR(int * size){
     FILE* ptFile = fopen("./csv_data/airlines.csv", "r");

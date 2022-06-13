@@ -66,3 +66,5 @@ void oLoadF(PtList flights);
  * @param sizeAirlines  [in] size of array
  */
 void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int sizeAirlines);
+
+void onTime(PtAirline * airlines, int sizeAirlines, PtList flights);
