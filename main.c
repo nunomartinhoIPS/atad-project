@@ -46,29 +46,24 @@ int main() {
 		 * string para ser utilizada, e.g., nome de ficheiro, chave, etc.. */
 		command[strlen(command) - 1] = '\0';
 		if (equalsStringIgnoreCase(command, "LOADAR")){
-			int errorCode = loadAR(airlines, sizeAirlines);
-			if(errorCode == LOADER_OK)
-				printf("<%d> airline records imported\n", sizeAirlines);
-			if(errorCode == LOADER_FILE_NOT_FOUND)
-				printf("File not found");
+			oLoadAR(airlines, sizeAirlines);
 			flag = false;
 			waitFunction();
 		}
 		if(equalsStringIgnoreCase(command, "LOADAP")){
-			int errorCode = loadAP(airports);
-			int mapErrorcode = mapSize(airports, &sizeAirports);
-			if(mapErrorcode!=MAP_OK) {
-				printf("Something went wrong with the Map of StringCode to Airports, error: %d\n", mapErrorcode);
-				continue;
-			}
-			if(errorCode == LOADER_OK)
-				printf("<%d> airport records imported\n", sizeAirports);
-			if(errorCode == LOADER_FILE_NOT_FOUND)
-				printf("File not found");
+			oLoadAP(airports);
+			mapSize(airports, &sizeAirports);
 			flag = false;
-			//mapPrint(airports);
 			waitFunction();
 		}
+
+		if(equalsStringIgnoreCase(command, "LOADF")){
+			oLoadF(flights);
+			listSize(flights, &sizeFlights);
+			flag = false;
+			waitFunction();
+		}
+
 		if (equalsStringIgnoreCase(command, "SHOWALL")){
 			    
 			printf("\nCOMMADS: ALL, SAMPLE, \n");
@@ -90,12 +85,16 @@ int main() {
 		}
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);
-			clearAll(airlines, airports, flights, sizeAirlines);
+			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
+				clearAll(airlines, airports, flights, sizeAirlines);
+			}
 			flag = false;
 			waitFunction();
 		}
 		if (equalsStringIgnoreCase(command, "QUIT")){
-			clearAll(airlines, airports, flights, sizeAirlines);
+			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
+				clearAll(airlines, airports, flights, sizeAirlines);
+			}
 			quit = 1; /* vai provocar a saída do interpretador */
 			flag = false;
 		}

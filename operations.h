@@ -1,4 +1,5 @@
 #pragma once
+
 #include "airport.h"
 #include "flight.h"
 #include "airline.h"
@@ -11,6 +12,7 @@
 #include "mapElem.h"
 #include "stringCode.h"
 #include "utils.h"
+#include "loaders.h"
 
 /**
  * @brief Shows all airports with flights
@@ -49,6 +51,12 @@ void showAllSample(PtList list);
  * @param airport [in] airport iata
  */
 void showF(PtList flights, char airport[4]);
+
+void oLoadAR(PtAirline *airlines, int sizeAirlines);
+
+void oLoadAP(PtMap airports);
+
+void oLoadF(PtList flights);
 
 /**
  * @brief Free all resources of map, list and array

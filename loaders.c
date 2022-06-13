@@ -8,6 +8,7 @@
 #include <float.h>
 #include "utils.h"
 #include "map.h"
+#include "time.h"
 
 int sizeOfLoadAR(int * size){
     FILE* ptFile = fopen("./csv_data/airlines.csv", "r");
@@ -68,5 +69,112 @@ int loadAP(PtMap airports){
         if(mapPut(airports, s, a)!=MAP_OK) return LOADER_MAP_ISSUE;
     }
     fclose(ptFile);
-    return MAP_OK;
+    return LOADER_OK;
+}
+
+void formatTime(char * from, char * toHour, char * toMin){
+    /**
+     * im really not proud of this method but there was no other way to do it, i really tried big braining it
+     */
+    if(strlen(from) == 1){
+        char s [3]= "0";
+        strcat(s, from);
+        strcpy(toMin, s);
+        strcpy(toHour, "00");
+    }
+    
+    if(strlen(from) == 2) {
+        strcpy(toMin, from);
+        strcpy(toHour, "00");
+    }
+    
+    if(strlen(from) == 3){
+        strncpy(toHour, from, 1);
+        toHour[1] = '\0';
+        strncpy(toMin, from + 1, 2);
+        toMin[2] = '\0';
+    }
+    
+    if(strlen(from) == 4){
+        strncpy(toHour, from, 2);
+        toHour[2] = '\0';
+        strncpy(toMin, from + 2, 2);
+        toMin[2] = '\0';
+    }
+}
+
+
+int loadF(PtList flights){
+    if(flights == NULL) return LOADER_LIST_ISSUE;
+    FILE * ptFile = fopen("./csv_data/flights.csv", "r");
+    if(ptFile == NULL) return LOADER_FILE_NOT_FOUND;
+    char s[256];
+    fgets(s, sizeof(s), ptFile);
+    int line = 0;
+    while(fgets(s, sizeof(s), ptFile)!=NULL){
+        char * day = strtok(s, ";");
+        if(day == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char * dayWeek = strtok(NULL, ";");
+        if(dayWeek == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * airline = strtok(NULL, ";");
+        if(airline == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * flightnum = strtok(NULL, ";");
+        if(flightnum == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * origAirport = strtok(NULL, ";");
+        if(origAirport == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * destAirport = strtok(NULL, ";");
+        if(destAirport == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * schedDep = strtok(NULL, ";");
+        if(schedDep == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * timeDep = strtok(NULL, ";");
+        if(timeDep == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * dist = strtok(NULL, ";");
+        if(dist == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char * schedArr = strtok(NULL, ";");
+        if(schedArr == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        
+        char * timeArr = strtok(NULL, ";");
+        if(timeArr == NULL) return LOADER_FILE_INCONSISTENCY;
+        
+        char hour[3], min[3];
+
+        formatTime(schedDep, hour, min);
+        Time tschedDep = timeCreate(atoi(hour), atoi(min));
+        
+        formatTime(timeDep, hour, min);
+        Time ttimeDep = timeCreate(atoi(hour), atoi(min));
+
+        formatTime(schedArr, hour, min);
+        Time tschedArr = timeCreate(atoi(hour), atoi(min));
+
+        formatTime(timeArr, hour, min);
+        Time ttimeArr = timeCreate(atoi(hour), atoi(min));
+
+        int depDelay = timeDiff(tschedDep, ttimeDep);
+        int schedTravTime = timeDiff(tschedArr, tschedDep);
+        int arrDelay = timeDiff(tschedArr, ttimeArr);
+
+        if(listAdd(flights, line, 
+                flightCreate(atoi(day), atoi(dayWeek), airline, atoi(flightnum), origAirport, destAirport, tschedDep, ttimeDep, depDelay, schedTravTime, atoi(dist), tschedArr, ttimeArr, arrDelay))
+                !=LIST_OK) 
+                return LOADER_LIST_ISSUE;
+        line++;
+    }
 }
