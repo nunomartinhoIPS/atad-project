@@ -2,8 +2,6 @@
 
 void printFlightsMenu()
 {
-
-    system("cls"); // clear console.
     printf("\n===================================================================================");
     printf("\n                          ALL FLIGHTS");
     printf("\n===================================================================================");
@@ -69,15 +67,14 @@ void showF(PtList flights, char airport[4]) {
     }
 }
 
-void showAllPaged(PtList list)
-{
+void showAllPaged(PtList list) {
 
     String command;
     int page = 0;
     int exit = 0;
     Flight flight;
-    while (!exit)
-    {
+    while (!exit) {
+        system("clear"); // clear console.
         printFlightsMenu();
         printf("\nCommands  (NEXT, PREV, EXIT)");
 
@@ -118,8 +115,7 @@ void showAllPaged(PtList list)
     }
 }
 
-void showAllSample(PtList list)
-{
+void showAllSample(PtList list) {
     printFlightsMenu();
     int size;
     listSize(list, &size);
@@ -132,16 +128,28 @@ void showAllSample(PtList list)
     }
 }
 
-void clearAll(PtAirline *airlines, PtMap ptAirports, PtList ptFlights, int sizeAirlines)
-{
+void clearAll(PtAirline *airlines, PtMap ptAirports, PtList ptFlights, int sizeAirlines) {
 
-    for (int i = 0; i < sizeAirlines; i++)
-    {
-        free(airlines[i]);
-    }
+    int msize, lsize;
 
-    mapDestroy(&ptAirports);
-    listDestroy(&ptFlights);
+    mapSize(ptAirports, &msize);
+    listSize(ptFlights, &lsize);
+
+    if (sizeAirlines > 0 ) {
+        for (int i = 0; i < sizeAirlines; i++) {
+            free(airlines[i]);
+        }
+    } 
+    
+    if (!mapIsEmpty(ptAirports)) 
+        mapDestroy(&ptAirports);
+
+    if (!listIsEmpty(ptFlights)) 
+        listDestroy(&ptFlights);
+
+    printf("<%d> records deleted from <Flights | Airports | Airlines>", sizeAirlines + msize + lsize);
+
+    
 }
 
 void oLoadAR(PtAirline *airlines, int sizeAirlines) {

@@ -66,25 +66,26 @@ int main() {
 
 		if (equalsStringIgnoreCase(command, "SHOWALL")){
 			    
-			printf("\nCOMMADS: ALL, SAMPLE, \n");
+			printf("\n< COMMADS: ALL, SAMPLE >\n");
     		printf("COMMAND>");
 			
 			fgets(command, sizeof(command), stdin);
 			command[strlen(command) - 1] = '\0';
 
     		if (equalsStringIgnoreCase(command, "ALL")){
-        		//showAllPaged();
+        		showAllPaged(flights);
     		}
 			
 			if (equalsStringIgnoreCase(command, "SAMPLE")){
-        		//showAllSample();
+        		showAllSample(flights);
     		}
 
 			flag = false;
 			waitFunction();
 		}
+		
 		if (equalsStringIgnoreCase(command, "CLEAR")){
-			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);
+			printf("<%d> records deleted from <Flights | Airports | Airlines>", sizeAirlines + sizeAirports + sizeFlights);
 			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
 				clearAll(airlines, airports, flights, sizeAirlines);
 			}
@@ -122,4 +123,5 @@ void printCommandsMenu(){
 void waitFunction(){
 	printf("\nPress enter to continue ...");
 	getchar();
+	system("clear");
 }

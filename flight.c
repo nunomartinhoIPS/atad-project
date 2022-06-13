@@ -2,7 +2,7 @@
 
 void flightPrint(PtFlight f){
     printf(
-		"Flight: %d, \nOrigin: %s, \nDestination: %s, \nAirline: %s, \nDistance: %d, \nDay: %d, \nDay of the Week: %d, \nScheduled Departure: ", 
+		"\nFlight: %d, \nOrigin: %s, \nDestination: %s, \nAirline: %s, \nDistance: %d, \nDay: %d, \nDay of the Week: %d, \nScheduled Departure: ", 
 		f->flightNumber,
 		f->originAirport,
 		f->destinationAirport,
@@ -20,6 +20,7 @@ void flightPrint(PtFlight f){
 	printf("\nArrival Time: ");
 	timePrint(f->arrivalTime);
 	printf("\nArrival Delay: %d", f->arrivalDelay);
+  printf("\n---------------------------------------------------------\n");
 }
 
 Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, char* originAirport, char* destinationAirport, Time scheduledDeparture, Time departureTime, 
@@ -40,5 +41,4 @@ Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, cha
     f.arrivalTime = arrivalTime;
     f.arrivalDelay = arrivalDelay;
     return f;
-
 }
