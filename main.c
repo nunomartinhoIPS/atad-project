@@ -91,17 +91,35 @@ int main() {
 		}
 		if (equalsStringIgnoreCase(command, "TOPN")){
 			int n=0;
-			printf("\nInsira um numero positivo menor que 11515: ");
+			printf("\nInsert a number between 1 and 11515: ");
 			scanf("%d", &n);
 			while(n<1 || n>11515){
-				printf("\nNumero Invalido Tente Novamente: ");
+				printf("\nInvalid Number Try Again: ");
 				scanf("%d", &n);
 			}
 			
 			printf("\n----------TOPN---------- \n\n");
+			printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
 			topN(flights, n);
 			flag = false;
 			waitFunction();
+		}
+		if (equalsStringIgnoreCase(command, "SHOWF")){
+			char airport[4];
+			if(listIsEmpty(flights)){
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else{
+				printf("\nInsert Airport Iata Code: ");
+				scanf("%s", airport);
+
+				printf("\n----------SHOWF---------- \n\n");
+				printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
+				showF(flights, airport);
+				flag = false;
+				waitFunction();
+			}
 		}
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);

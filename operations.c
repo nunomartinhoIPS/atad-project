@@ -48,17 +48,17 @@ void showF(PtList flights, char* airport){
     int count = 0;
     int size;
     listSize(flights, &size);
-    for(int i = 0; i<size; i++){
+        for(int i = 0; i<size; i++){
         Flight f;
         listGet(flights, i, &f);
-        if(f.originAirport == airport){
+        if(equalsStringIgnoreCase(f.originAirport, airport)){
             count++;
             flightPrint(&f);
         }
-    }
-    if (count == 0){
-        printf("Flight data not available for %s.", airport);
-    }
+        }
+        if (count == 0){
+            printf("\n\n\t\t\t\t\t--Flight data not available for %s--\n", airport);
+        }
 }
 
 void showAllPaged(PtList list){
