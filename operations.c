@@ -278,8 +278,7 @@ static bool apcmp(Airport a, Airport b, int compVersion){
 }
 
 void airport_s(PtMap airports){
-    int size;
-    char cmpChar;
+    int size, cmp;
     if(mapSize(airports, &size)!=MAP_OK) return;
 
     printf("AIRPORT_S Menu\n");
@@ -289,9 +288,8 @@ void airport_s(PtMap airports){
     printf("4. Sort by Longitude from E to W\n");
     printf("5. Return Main Menu\n");
 
-    scanf("%c", &cmpChar);
-    if(cmpChar < '1' || '4'<cmpChar) return;
-    int cmp = cmpChar - '0';
+    readInteger(&cmp);
+    if(cmp < 1 || 4<cmp) return;
     Airport * l = mapValues(airports);
     for(int i = 0; i < size; i++){
         for( int j = 0; j < size-i-1; j++){
@@ -305,11 +303,59 @@ void airport_s(PtMap airports){
 
     printf("\n---- Airports -----------------\n");
     printf("%-15s %-60s %-35s %-10s %-15s %-15s %-s\n", "Iata Code", "Name", "City", "State", "Latitude", "Longitude", "Timezone");
-    printf("----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
     for(int i = 0; i<size; i++){
         airportPrint(l[i]);
     }    
 
+    free(l);   
+}
+
+/**
+ * @brief departures from each airport
+ * 
+ * @param airports 
+ * @param flights 
+ */
+void funcAirports(PtMap airports, PtList flights){
+    int sizeMap, sizeList;
+    if(mapSize(airports, &sizeMap)!= MAP_OK) return;
+    if(listSize(flights, &sizeList)!=LIST_OK) return;
+    Airport * l = mapValues(airports);
+    Flight f;
+    int numFlights[sizeMap], numDepDelays[sizeMap];
+    float avgDepDelays[sizeMap];
+
+    for(int i = 0; i<sizeMap; i++){
+        numFlights[i] = 0;
+        numDepDelays[i] = 0;
+        avgDepDelays[i] = 0;
+    }
+
+    for (int i = 0; i<sizeList; i++){
+        if(listGet(flights, i, &f)!=LIST_OK) return;
+        for(int j = 0; j<sizeMap; j++){
+            if(equalsStringIgnoreCase(l[j].iataCode, f.originAirport)){
+                numFlights[j] += 1;
+                if(f.departureDelay>0) numDepDelays[j]+=1;
+                avgDepDelays[j] += f.departureDelay;
+            }
+        }
+    }
+
+    printf("\n---- Airports ----------\n\n");
+    printf("%-15s %-60s %-35s %-25s %-25s %-25s\n", "Iata Code", "Name", "City", "Number Flights", "Num. Departure Delays", "Avg. Departure Delays");
+    printf("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    int numPrinted = 0, numDepDel = 0;
+    float totalDepDel = 0;
+    for(int i = 0; i<sizeMap; i++){
+        if(numFlights[i]==0) continue;
+        avgDepDelays[i] /= (float)numFlights[i];
+        printf("%-15s %-60s %-35s %-25d %-25d %-25f\n", l[i].iataCode, l[i].airport, l[i].city, numFlights[i], numDepDelays[i], avgDepDelays[i]);
+        numDepDel+=numDepDelays[i];
+        totalDepDel+=avgDepDelays[i];
+        numPrinted++;
+    }
+    printf("\n%-15s %-60s %-35s %-25s %-25d %-25f\n", "", "ALL AIRPORTS", "", "", numDepDel, totalDepDel/(float)numPrinted);
     free(l);
-    
 }

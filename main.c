@@ -122,6 +122,12 @@ int main() {
 			waitFunction();
 		}
 
+		if (equalsStringIgnoreCase(command, "AIRPORTS")){
+			funcAirports(airports, flights);
+			flag = false;
+			waitFunction();
+		}
+
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			clearMemory(airlines, &airports, &flights, sizeAirlines);
 			printf("\n<%d> records deleted from Airlines\n", sizeAirlines); //não gosto de ti luis >:(

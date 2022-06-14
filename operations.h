@@ -13,6 +13,7 @@
 #include "stringCode.h"
 #include "utils.h"
 #include "loaders.h"
+#include "input.h"
 
 /**
  * @brief Shows all airports with flights
@@ -82,3 +83,5 @@ void oLoadAP(PtMap airports);
 void oLoadF(PtList flights);
 
 void airport_s(PtMap airports);
+
+void funcAirports(PtMap airports, PtList flights);
