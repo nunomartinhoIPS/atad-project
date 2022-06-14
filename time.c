@@ -28,5 +28,5 @@ int timeDiffSpecial(Time time1,Time time2) {
 }
 
 void timePrint(Time t){
-    printf("%d:%d", t.hour, t.min);
+    printf("%2d:%2d", t.hour, t.min);
 }

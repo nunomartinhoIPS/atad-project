@@ -70,7 +70,58 @@ int main() {
 
 			flag = false;
 		}
-		
+
+		if (equalsStringIgnoreCase(command, "LISTAR")){
+			printf("\nAirlines: \n\n");
+			listAR(airlines, sizeAirlines, flights);
+			flag = false;
+			waitFunction();
+		}
+		if (equalsStringIgnoreCase(command, "TOPN")){
+			int n=0;
+			printf("\nInsert a number between 1 and 11515: ");
+			scanf("%d", &n);
+			while(n<1 || n>11515){
+				printf("\nInvalid Number Try Again: ");
+				scanf("%d", &n);
+			}
+			
+			printf("\n----------TOPN---------- \n\n");
+			printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
+			topN(flights, n);
+			flag = false;
+			waitFunction();
+		}
+		if (equalsStringIgnoreCase(command, "SHOWF")){
+			char airport[4];
+			if(listIsEmpty(flights)){
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else{
+				printf("\nInsert Airport Iata Code: ");
+				scanf("%s", airport);
+
+				printf("\n----------SHOWF---------- \n\n");
+				printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
+				showF(flights, airport);
+				flag = false;
+				waitFunction();
+			}
+		}
+
+		if (equalsStringIgnoreCase(command, "ONTIME")){
+			onTime(airlines, sizeAirlines, flights);
+			flag = false;
+			waitFunction();
+		}
+
+		if (equalsStringIgnoreCase(command, "AIRPORT_S")){
+			airport_s(airports);
+			flag = false;
+			waitFunction();
+		}
+
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			clearMemory(airlines, &airports, &flights, sizeAirlines);
 			printf("\n<%d> records deleted from Airlines\n", sizeAirlines); //não gosto de ti luis >:(
@@ -95,7 +146,7 @@ int main() {
 
 void printCommandsMenu(){
 	printf("\n===================================================================================");
-	printf("\n                          PROJECT: United States Domestics Flight Data");
+	printf("\n\t\t\tPROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");
 	printf("\nA. Base commands (LOADAR, LOADAP, LOADF, CLEAR).");
 	printf("\nB. Aggregated info about flights (SHOWALL, SHOWF, LISTAR, LISTAP, ONTIME, AVERAGE,");
