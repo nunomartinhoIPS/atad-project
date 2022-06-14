@@ -63,6 +63,15 @@ int main() {
 			flag = false;
 			waitFunction();
 		}
+		if(equalsStringIgnoreCase(command, "LOADALL")){
+			oLoadAR(airlines, sizeAirlines);
+			oLoadAP(airports);
+			oLoadF(flights);
+			mapSize(airports, &sizeAirports);
+			listSize(flights, &sizeFlights);
+			flag = false;
+			waitFunction();
+		}
 
 		if (equalsStringIgnoreCase(command, "SHOWALL")){
 			    
@@ -80,10 +89,10 @@ int main() {
 		if (equalsStringIgnoreCase(command, "TOPN")){
 			int n=0;
 			printf("\nInsert a number between 1 and 11515: ");
-			scanf("%d", &n);
+			readInteger(&n);
 			while(n<1 || n>11515){
 				printf("\nInvalid Number Try Again: ");
-				scanf("%d", &n);
+				readInteger(&n);
 			}
 			
 			printf("\n----------TOPN---------- \n\n");
@@ -93,15 +102,15 @@ int main() {
 			waitFunction();
 		}
 		if (equalsStringIgnoreCase(command, "SHOWF")){
-			char airport[4];
+			String airport;
 			if(listIsEmpty(flights)){
 				printf("No Data Imported");
 				flag = false;
 				waitFunction();
 			}else{
 				printf("\nInsert Airport Iata Code: ");
-				scanf("%s", airport);
-
+				fgets(airport, sizeof(airport), stdin);
+				airport[strlen(airport) - 1] = '\0';
 				printf("\n----------SHOWF---------- \n\n");
 				printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
 				showF(flights, airport);
@@ -124,9 +133,9 @@ int main() {
 
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			clearMemory(airlines, &airports, &flights, sizeAirlines);
-			printf("\n<%d> records deleted from Airlines\n", sizeAirlines); //não gosto de ti luis >:(
-			printf("\n<%d> records deleted from Airports\n", sizeAirports);
-			printf("\n<%d> records deleted from Flights\n", sizeFlights);
+			printf("\n<%d> records deleted from Airlines", sizeAirlines); //não gosto de ti luis >:(
+			printf("\n<%d> records deleted from Airports", sizeAirports);
+			printf("\n<%d> records deleted from Flights", sizeFlights);
 			flag = false;
 			waitFunction();
 		}
@@ -145,10 +154,11 @@ int main() {
 }
 
 void printCommandsMenu(){
+	system("clear");
 	printf("\n===================================================================================");
 	printf("\n\t\t\tPROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");
-	printf("\nA. Base commands (LOADAR, LOADAP, LOADF, CLEAR).");
+	printf("\nA. Base commands (LOADAR, LOADAP, LOADF, LOADALL, CLEAR).");
 	printf("\nB. Aggregated info about flights (SHOWALL, SHOWF, LISTAR, LISTAP, ONTIME, AVERAGE,");
 	printf("\n   SHOWAP, TOPN, TSP).");
 	printf("\nC. Complex Indicators require airports and flights data (AIRPORT_S, AIRPORTS).");
@@ -159,5 +169,4 @@ void printCommandsMenu(){
 void waitFunction(){
 	printf("\nPress enter to continue ...");
 	getchar();
-	system("clear");
 }

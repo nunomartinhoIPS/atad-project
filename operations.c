@@ -58,6 +58,7 @@ void showAll(PtList list) {
     String command;
     int quit = 0;
     while (!quit){
+        system("clear");
         printf("\n--SHOWALL MENU--\n<PAGES> Show all flights (paginated by 20)\n<RANDOM> Show 100 random flight data\n<BACK> Return Main Menu\n\n");
         printf("COMMAND>");
 			
@@ -90,14 +91,14 @@ void showAllPaged(PtList list) {
          * Starts the index in the previous element (page = 0 * 20 = 0 starts in 0 element, page = 1 * 20 starts in the element 20)
          * To show only 20 pages, we do: page (0) + 1 * 20 = 20 pages in page 0, page (1) + 1 * 20 = 40 starts in the element 20 to element 40 (more 20 pages).
          */
-        printf("\n---------- FLIGHTS ---------- \n\n");
+        printf("\n---------- FLIGHTS ---------- \n");
         printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
         for (int i = page * 20; i < (page + 1) * 20; i++)
         {
             listGet(list, i, &flight);
             listElemPrint(flight);
         }
-        printf("\n<------------BACK------------- PAGE [%d] ------------NEXT-------------> ", page);
+        printf("\n\t\t\t\t<------------BACK------------- PAGE [%d] ------------NEXT-------------> ", page);
 
 
         printf("\ncommand> ");
@@ -115,7 +116,7 @@ void showAllPaged(PtList list) {
 
 void showAllSample(PtList list){
 
-    printf("\n---------- FLIGHTS ---------- \n\n");
+    printf("\n---------- FLIGHTS ---------- \n");
     printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
     int size;
     listSize(list, &size);
@@ -140,14 +141,14 @@ void clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int 
         for (int i = 0; i < sizeAirlines; i++) {
             free(airlines[i]);
         }
-        airlines = NULL;
+        memset( airlines, '\0', sizeof( airlines ) );
     }
 
-    if (mapDestroy(&curMap) == MAP_OK) {
+    if (curMap != NULL && mapDestroy(&curMap) == MAP_OK) {
         *ptAirports = NULL;
     }
        
-    if (listDestroy(&curList) == LIST_OK) {
+    if (curList != NULL && listDestroy(&curList) == LIST_OK) {
         *ptFlights = NULL;
     }
 
