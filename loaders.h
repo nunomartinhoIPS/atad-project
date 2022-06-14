@@ -9,12 +9,18 @@
 #define LOADER_FLIGHT_CREATION_ISSUE    6
 
 
-#include "airline.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "map.h"
+#include "airline.h"
+#include "airport.h"
 #include "list.h"
+#include <float.h>
+#include "utils.h"
+#include "map.h"
+#include "time.h"
+#include <ctype.h>
 
 int sizeOfLoadAR(int * size);
 

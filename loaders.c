@@ -1,14 +1,4 @@
 #include "loaders.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "airline.h"
-#include "airport.h"
-#include "list.h"
-#include <float.h>
-#include "utils.h"
-#include "map.h"
-#include "time.h"
 
 int sizeOfLoadAR(int * size){
     FILE* ptFile = fopen("./csv_data/airlines.csv", "r");
@@ -72,35 +62,50 @@ int loadAP(PtMap airports){
     return LOADER_OK;
 }
 
+int digitNum(char * s){
+    int digitLen=0;
+    for (int i = 0; i<strlen(s); i++)
+        if(isdigit(s[i])) digitLen++;
+    return digitLen;
+}
+
 void formatTime(char * from, char * toHour, char * toMin){
     /**
      * im really not proud of this method but there was no other way to do it, i really tried big braining it
      */
-    if(strlen(from) == 1){
+    
+    int numOfDigits = digitNum(from);
+
+    if(numOfDigits == 1){
         char s [3]= "0";
-        strcat(s, from);
+        s[1] = from[0];
+        s[2] = '\0';
         strcpy(toMin, s);
         strcpy(toHour, "00");
+        return;
     }
     
-    if(strlen(from) == 2) {
+    if(numOfDigits == 2) {
         strcpy(toMin, from);
         strcpy(toHour, "00");
+        return;
     }
     
-    if(strlen(from) == 3){
+    if(numOfDigits == 3){
         strncpy(toHour, from, 1);
         toHour[1] = '\0';
         strncpy(toMin, from + 1, 2);
         toMin[2] = '\0';
+        return;
     }
     
-    if(strlen(from) == 4){
+    if(numOfDigits == 4){
         strncpy(toHour, from, 2);
         toHour[2] = '\0';
         strncpy(toMin, from + 2, 2);
         toMin[2] = '\0';
     }
+
 }
 
 
@@ -118,30 +123,23 @@ int loadF(PtList flights){
         char * dayWeek = strtok(NULL, ";");
         if(dayWeek == NULL) return LOADER_FILE_INCONSISTENCY;
         
-        
         char * airline = strtok(NULL, ";");
         if(airline == NULL) return LOADER_FILE_INCONSISTENCY;
-        
         
         char * flightnum = strtok(NULL, ";");
         if(flightnum == NULL) return LOADER_FILE_INCONSISTENCY;
         
-        
         char * origAirport = strtok(NULL, ";");
         if(origAirport == NULL) return LOADER_FILE_INCONSISTENCY;
-        
         
         char * destAirport = strtok(NULL, ";");
         if(destAirport == NULL) return LOADER_FILE_INCONSISTENCY;
         
-        
         char * schedDep = strtok(NULL, ";");
         if(schedDep == NULL) return LOADER_FILE_INCONSISTENCY;
         
-        
         char * timeDep = strtok(NULL, ";");
         if(timeDep == NULL) return LOADER_FILE_INCONSISTENCY;
-        
         
         char * dist = strtok(NULL, ";");
         if(dist == NULL) return LOADER_FILE_INCONSISTENCY;
@@ -149,26 +147,28 @@ int loadF(PtList flights){
         char * schedArr = strtok(NULL, ";");
         if(schedArr == NULL) return LOADER_FILE_INCONSISTENCY;
         
-        
         char * timeArr = strtok(NULL, ";");
         if(timeArr == NULL) return LOADER_FILE_INCONSISTENCY;
         
+
         char hour[3], min[3];
+
 
         formatTime(schedDep, hour, min);
         Time tschedDep = timeCreate(atoi(hour), atoi(min));
         
         formatTime(timeDep, hour, min);
         Time ttimeDep = timeCreate(atoi(hour), atoi(min));
-
+        
         formatTime(schedArr, hour, min);
         Time tschedArr = timeCreate(atoi(hour), atoi(min));
 
         formatTime(timeArr, hour, min);
         Time ttimeArr = timeCreate(atoi(hour), atoi(min));
+        
 
         int depDelay = timeDiff(tschedDep, ttimeDep);
-        int schedTravTime = timeDiff(tschedArr, tschedDep);
+        int schedTravTime = timeDiff(tschedDep, tschedArr);
         int arrDelay = timeDiff(tschedArr, ttimeArr);
 
         if(listAdd(flights, line, 
@@ -177,4 +177,5 @@ int loadF(PtList flights){
                 return LOADER_LIST_ISSUE;
         line++;
     }
+    fclose(ptFile);
 }

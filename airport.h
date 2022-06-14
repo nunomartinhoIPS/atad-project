@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 
 typedef struct airport {
@@ -15,11 +16,9 @@ typedef struct airport {
     int timeZone;
 } Airport;
 
-typedef Airport * PtAirport;
-
 #define AIRPORT_OK      0
 #define AIRPORT_NULL    1
 
 Airport airportCreate(char * iata, char * name, char * city, char * state, float latitude, float longitude, int timezone);
 
-int airportPrint(PtAirport a);
+int airportPrint(Airport a);

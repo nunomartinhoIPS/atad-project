@@ -209,6 +209,7 @@ void topN(PtList flights, int n){
         flightPrint(PtAux);
     }
 }
+
 void oLoadF(PtList flights){
     int size, errorCode = loadF(flights), listErrorCode = listSize(flights, &size);
     if(listErrorCode != LIST_OK){
@@ -219,4 +220,75 @@ void oLoadF(PtList flights){
         printf("<%d> flight records imported\n", size);
     if(errorCode == LOADER_FILE_NOT_FOUND)
         printf("File not found\n");
+}
+
+void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
+    int saidaHPrev [sizeAirlines], chegadaHPrev [sizeAirlines], sizeList;
+    if(listSize(flights, &sizeList) != LIST_OK) return;
+    Flight f;
+
+    for(int i = 0 ; i<sizeAirlines; i++){
+        saidaHPrev[i] = 0;
+        chegadaHPrev[i] = 0;
+    }
+
+    for(int i = 0; i<sizeAirlines; i++){
+        for(int j = 0; j<sizeList; j++){
+            listGet(flights, j, &f);
+            if(equalsStringIgnoreCase(f.airline, airlines[i]->iatacode)){
+                if(f.arrivalDelay <= 0) chegadaHPrev[i] = chegadaHPrev[i] + 1;
+                if(f.departureDelay <= 0) saidaHPrev[i] = saidaHPrev[i] + 1;
+            }
+        }
+    }
+
+    printf("Airline\t\tOT_Departures\t\tOT_Arrivals\n");
+    for(int i = 0; i<sizeAirlines; i++){
+        printf("%s\t\t%d\t\t%d\n", airlines[i]->iatacode, saidaHPrev[i], chegadaHPrev[i]);
+    }
+}
+
+static bool apcmp(Airport a, Airport b, int compVersion){
+    if(compVersion == 1) return strcmp(a.city, b.city)<0;
+    if(compVersion == 2) return strcmp(a.city, b.city)>0;
+    if(compVersion == 3) return a.latitude<b.latitude;
+    if(compVersion == 4) return a.longitude<b.longitude;
+    return false;
+}
+
+void airport_s(PtMap airports){
+    int size;
+    char cmpChar;
+    if(mapSize(airports, &size)!=MAP_OK) return;
+
+    printf("AIRPORT_S Menu\n");
+    printf("1. Sort by City Ascending\n");
+    printf("2. Sort by City Descending\n");
+    printf("3. Sort by Latitude from N to S\n");
+    printf("4. Sort by Longitude from E to W\n");
+    printf("5. Return Main Menu\n");
+
+    scanf("%c", &cmpChar);
+    if(cmpChar < '1' || '4'<cmpChar) return;
+    int cmp = cmpChar - '0';
+    Airport * l = mapValues(airports);
+    for(int i = 0; i < size; i++){
+        for( int j = 0; j < size-i-1; j++){
+            if(apcmp(l[j], l[j+1], cmp)){
+                Airport aux = l[j+1];
+                l[j+1] = l[j];
+                l[j] = aux;
+            }
+        }
+    }
+
+    printf("\n---- Airports -----------------\n");
+    printf("%-15s %-60s %-35s %-10s %-15s %-15s %-s\n", "Iata Code", "Name", "City", "State", "Latitude", "Longitude", "Timezone");
+    printf("----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    for(int i = 0; i<size; i++){
+        airportPrint(l[i]);
+    }    
+
+    free(l);
+    
 }
