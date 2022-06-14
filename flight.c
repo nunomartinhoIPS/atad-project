@@ -32,5 +32,4 @@ Flight flightCreate(int day, int dayOfWeek, char* airline, int flightNumber, cha
     f.arrivalTime = arrivalTime;
     f.arrivalDelay = arrivalDelay;
     return f;
-
 }

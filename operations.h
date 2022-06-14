@@ -31,6 +31,8 @@ void listAP(PtMap airports, PtList flights);
  */
 void listAR(PtAirline airlines[], int aSize, PtList flights);
 
+void showAll(PtList list);
+
 /**
  * @brief Shows all flights in a paged form.
  * 
@@ -61,7 +63,7 @@ void showF(PtList flights, char airport[4]);
  * @param flights       [in] ADDRESS OF pointer to the list
  * @param sizeAirlines  [in] size of array
  */
-void clearAll(PtAirline* airlines , PtMap ptAirports, PtList ptFlights, int sizeAirlines);
+void clearMemory(PtAirline* airlines , PtMap *ptAirports, PtList *ptFlights, int sizeAirlines);
 
 /**
  * @brief shows N flight sorted by descending delay

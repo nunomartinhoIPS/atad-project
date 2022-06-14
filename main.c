@@ -26,12 +26,12 @@ int main() {
 	int sizeAirlines;
 	sizeOfLoadAR(&sizeAirlines);
 	PtAirline airlines[sizeAirlines];
-
+	memset( airlines, '\0', sizeof( airlines ) );
+	
 	/* creating map for Airports */
 	int sizeAirports;
 	PtMap airports = mapCreate();
 	mapSize(airports, &sizeAirports);
-	//if(airports == NULL) printf("fodase");
 	
 	/* creating list for flights */
 	int sizeFlights;
@@ -66,23 +66,11 @@ int main() {
 
 		if (equalsStringIgnoreCase(command, "SHOWALL")){
 			    
-			printf("\nCOMMADS: ALL, SAMPLE, \n");
-    		printf("COMMAND>");
-			
-			fgets(command, sizeof(command), stdin);
-			command[strlen(command) - 1] = '\0';
-
-    		if (equalsStringIgnoreCase(command, "ALL")){
-        		//showAllPaged();
-    		}
-			
-			if (equalsStringIgnoreCase(command, "SAMPLE")){
-        		//showAllSample();
-    		}
+			showAll(flights);
 
 			flag = false;
-			waitFunction();
 		}
+
 		if (equalsStringIgnoreCase(command, "LISTAR")){
 			printf("\nAirlines: \n\n");
 			listAR(airlines, sizeAirlines, flights);
@@ -135,17 +123,15 @@ int main() {
 		}
 
 		if (equalsStringIgnoreCase(command, "CLEAR")){
-			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);
-			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
-				clearAll(airlines, airports, flights, sizeAirlines);
-			}
+			clearMemory(airlines, &airports, &flights, sizeAirlines);
+			printf("\n<%d> records deleted from Airlines\n", sizeAirlines); //não gosto de ti luis >:(
+			printf("\n<%d> records deleted from Airports\n", sizeAirports);
+			printf("\n<%d> records deleted from Flights\n", sizeFlights);
 			flag = false;
 			waitFunction();
 		}
-		if (equalsStringIgnoreCase(command, "QUIT")){
-			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
-				clearAll(airlines, airports, flights, sizeAirlines);
-			}
+		if (equalsStringIgnoreCase(command, "QUIT")) {
+			clearMemory(airlines, &airports, &flights, sizeAirlines);
 			quit = 1; /* vai provocar a saída do interpretador */
 			flag = false;
 		}
@@ -173,4 +159,5 @@ void printCommandsMenu(){
 void waitFunction(){
 	printf("\nPress enter to continue ...");
 	getchar();
+	system("clear");
 }
