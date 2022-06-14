@@ -12,9 +12,9 @@ void listAP(PtMap airports, PtList flights){
         for (int j = 0; j < fSize; j++)
         {
             listGet(flights, j, &f);
-            if (f.destinationAirport == values[i].iataCode || f.originAirport == values[i].iataCode)
+            if (equalsStringIgnoreCase(f.destinationAirport, values[i].iataCode) || equalsStringIgnoreCase(f.originAirport, values[i].iataCode))
             {
-                mapValuePrint(values[i]);
+                printf("%s: %s %s %s\n", values[i].iataCode, values[i].airport, values[i].city, values[i].state);
                 break;
             }
         }
@@ -29,7 +29,6 @@ void listAR(PtAirline airlines[], int aSize, PtList flights){
         for (int j = 0; j < fSize; j++){
             listGet(flights, j, &f);
             if (equalsStringIgnoreCase(f.airline, airlines[i]->iatacode)){
-                printf("\t");
                 airlinePrint(airlines[i]);
                 break;
             }

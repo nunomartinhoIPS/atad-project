@@ -72,8 +72,16 @@ int main() {
 		}
 
 		if (equalsStringIgnoreCase(command, "LISTAR")){
-			printf("\nAirlines: \n\n");
+			printf("\n----------LISTAR---------- \n\n");
+			printf("\n-----List of Airlines----- \n\n");
 			listAR(airlines, sizeAirlines, flights);
+			flag = false;
+			waitFunction();
+		}
+		if (equalsStringIgnoreCase(command, "LISTAP")){
+			printf("\n----------LISTAP---------- \n\n");
+			printf("\n-----List of Airports----- \n\n");
+			listAP(airports, flights);
 			flag = false;
 			waitFunction();
 		}
