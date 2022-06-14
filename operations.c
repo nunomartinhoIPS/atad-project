@@ -1,10 +1,7 @@
 #include "operations.h"
 
-void printFlightsMenu()
-{
-    printf("\n\t===================================================================================");
-    printf("\n\t\t\t\t\t\tFLIGHTS");
-    printf("\n\t===================================================================================");
+void printFlightsMenu() {
+    printf("\n\t===================== FLIGHTS =====================");
     printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay\n");
     
 }
