@@ -75,7 +75,6 @@ void formatTime(char * from, char * toHour, char * toMin){
      */
     
     int numOfDigits = digitNum(from);
-    //digitNum(from);
 
     if(numOfDigits == 1){
         char s [3]= "0";
@@ -166,21 +165,7 @@ int loadF(PtList flights){
 
         formatTime(timeArr, hour, min);
         Time ttimeArr = timeCreate(atoi(hour), atoi(min));
-
-
-        if(equalsStringIgnoreCase(flightnum, "623")){
-            printf("schedDep: %s, timeDep: %s, schedArr: %s, timeArr: %s(%ld)\n", schedDep, timeDep, schedArr, timeArr, strlen(timeArr));
-            printf("converted:\n");
-            printf("schedDep: ");
-            timePrint(tschedDep);
-            printf(" timeDep: ");
-            timePrint(ttimeDep);
-            printf(" schedArr: ");
-            timePrint(tschedArr);
-            printf(" timeArr: ");
-            timePrint(ttimeArr);
-            printf("\n\n");
-        }
+        
 
         int depDelay = timeDiff(tschedDep, ttimeDep);
         int schedTravTime = timeDiff(tschedDep, tschedArr);

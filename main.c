@@ -90,6 +90,12 @@ int main() {
 			waitFunction();
 		}
 
+		if (equalsStringIgnoreCase(command, "AIRPORT_S")){
+			airport_s(airports);
+			flag = false;
+			waitFunction();
+		}
+
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			printf("<%d> records deleted from <Flights | Airports |Airlines>", sizeAirlines + sizeAirports + sizeFlights);
 			if (sizeAirlines > 0 && !mapIsEmpty(airports) && !listIsEmpty(flights)) {
