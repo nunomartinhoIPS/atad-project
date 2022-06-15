@@ -85,3 +85,5 @@ void oLoadF(PtList flights);
 void airport_s(PtMap airports);
 
 void funcAirports(PtMap airports, PtList flights);
+
+void showAP(PtAirline airlines[], PtList flights, int sizeAirlines);

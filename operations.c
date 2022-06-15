@@ -359,3 +359,35 @@ void funcAirports(PtMap airports, PtList flights){
     printf("\n%-15s %-60s %-35s %-25s %-25d %-25f\n", "", "ALL AIRPORTS", "", "", numDepDel, totalDepDel/(float)numPrinted);
     free(l);
 }
+
+
+void showAP(PtAirline *airlines, PtList flights, int sizeAirlines){
+    PtMap airports = mapCreate();
+    int sizeFligths;
+    listSize(flights, &sizeFligths);
+
+    for(int i = 0; i < sizeAirlines; i++){
+        int counter = 0;
+        Flight f;
+        for(int j = 0; j < sizeFligths; j++){
+            listGet(flights, j, &f);
+            StringCode s = stringCodeCreate(f.originAirport);
+            if(!mapContains(airports, s)){
+                Airport a = airportCreate(f.originAirport, NULL, NULL, NULL, 0.0, 0.0, 0);
+                mapPut(airports, s, a);
+                counter++;
+            }
+            s = stringCodeCreate(f.destinationAirport);
+            if(!mapContains(airports, s)){
+                Airport a = airportCreate(f.destinationAirport, NULL, NULL, NULL, 0.0, 0.0, 0);
+                mapPut(airports, s, a);
+                counter++;
+            }
+        }
+        airlinePrint(airlines[i]);
+        printf("passes through %d airports", counter);
+        mapPrint(airports);
+    }
+    mapDestroy(&airports);
+}
+

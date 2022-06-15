@@ -147,6 +147,11 @@ int main() {
 				waitFunction();
 			}
 		}
+		if (equalsStringIgnoreCase(command, "SHOWAP")){
+			showAP(airlines, flights, sizeAirlines);
+			flag = false;
+			waitFunction();
+		}
 
 		if (equalsStringIgnoreCase(command, "ONTIME")){
 			onTime(airlines, sizeAirlines, flights);
