@@ -311,12 +311,7 @@ void airport_s(PtMap airports){
     free(l);   
 }
 
-/**
- * @brief departures from each airport
- * 
- * @param airports 
- * @param flights 
- */
+
 void funcAirports(PtMap airports, PtList flights){
     int sizeMap, sizeList;
     if(mapSize(airports, &sizeMap)!= MAP_OK) return;
@@ -358,4 +353,8 @@ void funcAirports(PtMap airports, PtList flights){
     }
     printf("\n%-15s %-60s %-35s %-25s %-25d %-25f\n", "", "ALL AIRPORTS", "", "", numDepDel, totalDepDel/(float)numPrinted);
     free(l);
+}
+
+void tsp(PtList flights){
+    //help aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 }
