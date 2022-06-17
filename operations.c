@@ -367,14 +367,16 @@ void showAP(PtAirline *airlines, PtList flights, int sizeAirlines){
     listSize(flights, &sizeFligths);
     Airport Departure;
     Airport Destination;
+    int quantAirport[sizeAirlines];
+    int counter = 0;
 
     for(int i = 0; i < sizeAirlines; i++){
-        int counter = 0;
+        
         Flight f;
         Airline airline;
-        airline = airlines[i];
-
+        airline = *(airlines[i]);
         for(int j = 0; j < sizeFligths; j++){
+            listGet(flights, j, &f);
             if(strcmp(airline.iatacode, f.airline) == 0){
                 listGet(flights, j, &f);
                 StringCode s = stringCodeCreate(f.originAirport);
@@ -386,14 +388,18 @@ void showAP(PtAirline *airlines, PtList flights, int sizeAirlines){
                 s = stringCodeCreate(f.destinationAirport);
                 if(!mapContains(airports, s)){
                     mapGet(airports, stringCodeCreate(f.destinationAirport), &Destination);
-                    mapPut(airports, stringCodeCreate(f.destinationAirport), Destination);
+                    mapPut(airports, stringCodeCreate(f.originAirport), Destination);
                     counter++;
                 }
             }
+            
         }
-        airlinePrint(airlines[i]);
-        printf("passes through %d airports", counter);
-        mapPrint(airports);
-        mapClear(&airports);
+        quantAirport[i] = counter;
     }
+        for(int i = 0; i < sizeAirlines; i++){
+            printf("%s",airlines[i]->name);
+            printf("passes through %d airports\n", quantAirport[i]);
+            mapPrint(airports);
+        }
+    mapDestroy(&airports);
 }
