@@ -365,29 +365,35 @@ void showAP(PtAirline *airlines, PtList flights, int sizeAirlines){
     PtMap airports = mapCreate();
     int sizeFligths;
     listSize(flights, &sizeFligths);
+    Airport Departure;
+    Airport Destination;
 
     for(int i = 0; i < sizeAirlines; i++){
         int counter = 0;
         Flight f;
+        Airline airline;
+        airline = airlines[i];
+
         for(int j = 0; j < sizeFligths; j++){
-            listGet(flights, j, &f);
-            StringCode s = stringCodeCreate(f.originAirport);
-            if(!mapContains(airports, s)){
-                Airport a = airportCreate(f.originAirport, NULL, NULL, NULL, 0.0, 0.0, 0);
-                mapPut(airports, s, a);
-                counter++;
-            }
-            s = stringCodeCreate(f.destinationAirport);
-            if(!mapContains(airports, s)){
-                Airport a = airportCreate(f.destinationAirport, NULL, NULL, NULL, 0.0, 0.0, 0);
-                mapPut(airports, s, a);
-                counter++;
+            if(strcmp(airline.iatacode, f.airline) == 0){
+                listGet(flights, j, &f);
+                StringCode s = stringCodeCreate(f.originAirport);
+                if(!mapContains(airports, s)){
+                    mapGet(airports, stringCodeCreate(f.originAirport), &Departure);
+                    mapPut(airports, stringCodeCreate(f.originAirport), Departure);
+                    counter++;
+                }
+                s = stringCodeCreate(f.destinationAirport);
+                if(!mapContains(airports, s)){
+                    mapGet(airports, stringCodeCreate(f.destinationAirport), &Destination);
+                    mapPut(airports, stringCodeCreate(f.destinationAirport), Destination);
+                    counter++;
+                }
             }
         }
         airlinePrint(airlines[i]);
         printf("passes through %d airports", counter);
         mapPrint(airports);
+        mapClear(&airports);
     }
-    mapDestroy(&airports);
 }
-
