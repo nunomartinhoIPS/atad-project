@@ -108,9 +108,15 @@ void formatTime(char * from, char * toHour, char * toMin){
 
 }
 
+static int getTimezone(PtMap airports, char* iata){
+    Airport a;
+    if(mapGet(airports, stringCodeCreate(iata), &a)!=MAP_OK) return -999;
+    return a.timeZone;
+}
 
-int loadF(PtList flights){
+int loadF(PtList flights, PtMap airports){
     if(flights == NULL) return LOADER_LIST_ISSUE;
+    if(airports == NULL) return LOADER_MAP_ISSUE;
     FILE * ptFile = fopen("./csv_data/flights.csv", "r");
     if(ptFile == NULL) return LOADER_FILE_NOT_FOUND;
     char s[256];
@@ -167,9 +173,11 @@ int loadF(PtList flights){
         Time ttimeArr = timeCreate(atoi(hour), atoi(min));
         
 
-        int depDelay = timeDiffSpecial(tschedDep, ttimeDep);
-        int schedTravTime = timeDiff(tschedDep, tschedArr);
-        int arrDelay = timeDiff(tschedArr, ttimeArr);
+        int depDelay = timeDiffSpecial(tschedDep, ttimeDep), 
+            timezoneO = getTimezone(airports, origAirport), 
+            timezoneD = getTimezone(airports, destAirport),
+            schedTravTime = timeDiffSpecial(tschedDep, tschedArr)+((timezoneO-timezoneD)*60),
+            arrDelay = timeDiffSpecial(tschedArr, ttimeArr);
 
         if(listAdd(flights, line, 
                 flightCreate(atoi(day), atoi(dayWeek), airline, atoi(flightnum), origAirport, destAirport, tschedDep, ttimeDep, depDelay, schedTravTime, atoi(dist), tschedArr, ttimeArr, arrDelay))

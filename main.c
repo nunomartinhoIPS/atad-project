@@ -58,7 +58,7 @@ int main() {
 		}
 
 		if(equalsStringIgnoreCase(command, "LOADF")){
-			oLoadF(flights);
+			oLoadF(flights, airports);
 			listSize(flights, &sizeFlights);
 			flag = false;
 			waitFunction();
@@ -66,7 +66,7 @@ int main() {
 		if(equalsStringIgnoreCase(command, "LOADALL")){
 			oLoadAR(airlines, sizeAirlines);
 			oLoadAP(airports);
-			oLoadF(flights);
+			oLoadF(flights, airports);
 			mapSize(airports, &sizeAirports);
 			listSize(flights, &sizeFlights);
 			flag = false;

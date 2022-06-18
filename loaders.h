@@ -49,9 +49,10 @@ int loadAR(PtAirline * airlines, int size);
 int loadAP(PtMap airports);
 
 /**
- * @brief Method to load the Flights from './csv_data/flights.csv'
+ * @brief Method to load the Flights from  './csv_data/flights.csv'
  * 
  * @param flights   [out]   pointer to the list in which to put the flights loaded 
+ * @param airports  [in]    pointer to the list of airports because we need the 
  * @return int error code if an error does occur, LOADER_OK if no error occurs
  */
-int loadF(PtList flights);
+int loadF(PtList flights, PtMap airports);

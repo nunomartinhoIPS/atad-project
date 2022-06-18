@@ -19,7 +19,7 @@ void oLoadAR(PtAirline *airlines, int sizeAirlines);
 
 void oLoadAP(PtMap airports);
 
-void oLoadF(PtList flights);
+void oLoadF(PtList flights, PtMap airports);
 
 /**
  * @brief Shows all airports with flights
