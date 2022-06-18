@@ -147,6 +147,11 @@ int main() {
 				waitFunction();
 			}
 		}
+		if (equalsStringIgnoreCase(command, "SHOWAP")){
+			showAP(airlines, flights, sizeAirlines);
+			flag = false;
+			waitFunction();
+		}
 
 		if (equalsStringIgnoreCase(command, "ONTIME")){
 			onTime(airlines, sizeAirlines, flights);
@@ -162,6 +167,16 @@ int main() {
 
 		if (equalsStringIgnoreCase(command, "AIRPORTS")){
 			funcAirports(airports, flights);
+			flag = false;
+			waitFunction();
+		}
+
+		if (equalsStringIgnoreCase(command, "AVERAGE")){
+			String airport;
+			printf("\nInsert Airport Iata Code: ");
+			fgets(airport, sizeof(airport), stdin);
+			airport[strlen(airport) - 1] = '\0';
+			Average(flights, airport);
 			flag = false;
 			waitFunction();
 		}

@@ -363,6 +363,151 @@ void funcAirports(PtMap airports, PtList flights){
     free(l);
 }
 
+
+void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
+    
+    PtMap airports = mapCreate();
+    int sizeFlights;
+    listSize(flights, &sizeFlights);
+    int sizeMap;
+    MapKey* keys[sizeMap];
+    
+    for (int i = 0; i < sizeAirlines; i++) {
+        int count = 0;
+        for (int j = 0; j < sizeFlights; j++) {
+            Flight f;
+            listGet(flights, j, &f);
+            if (equalsStringIgnoreCase(airlines[i]->iatacode, f.airline)) {
+                if (!mapContains(airports, stringCodeCreate(f.originAirport))) {
+                    mapPut(airports, stringCodeCreate(f.originAirport), airportCreate(f.originAirport, "", "", "", 0, 0, 0));
+                    count++;
+                }
+            }
+        }
+        printf("%s passes through %d airports\n", airlines[i]->name, count);
+        mapSize(airports, &sizeMap);
+        if (count == 0) {
+            printf("( no airports )\n");
+        }
+        else {    
+            for (int k = 0; k < sizeMap; k++) {
+                    mapKeyPrint(mapKeys(airports)[k]);
+                    printf("\n");
+            }
+        }
+        
+        mapClear(airports);
+    }
+    mapDestroy(&airports);
+}
+
+double AverageGlobal(PtList flights){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            sum += f.distance;
+        }
+        return (sum/(double)size); 
+}
+
+double AverageWeek(PtList flights){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if(f.dayOfWeek == 1 || f.dayOfWeek == 2 || f.dayOfWeek == 3 || f.dayOfWeek == 4 || f.dayOfWeek == 5){
+                sum += f.distance;
+                count++;
+            }
+        }
+        return (sum/(double)count); 
+}
+
+double AverageWeekend(PtList flights){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if(f.dayOfWeek == 6 || f.dayOfWeek == 7){
+                sum += f.distance;
+                count++;
+            }
+        }
+        return (sum/(double)count); 
+}
+
+double AverageGlobalAirports(PtList flights, String airport){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if (equalsStringIgnoreCase(f.originAirport, airport)){
+                sum += f.distance;
+                count++;
+            }
+        }
+        return (sum/(double)count); 
+}
+
+double AverageWeekAirports(PtList flights, String airport){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if(f.dayOfWeek == 1 || f.dayOfWeek == 2 || f.dayOfWeek == 3 || f.dayOfWeek == 4 || f.dayOfWeek == 5){
+                if (equalsStringIgnoreCase(f.originAirport, airport)){
+                    sum += f.distance;
+                    count++;
+                }
+            }
+        }
+        return (sum/(double)count); 
+}
+
+double AverageWeekendAirports(PtList flights, String airport){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if(f.dayOfWeek == 6 || f.dayOfWeek == 7){
+                if (equalsStringIgnoreCase(f.originAirport, airport)){
+                sum += f.distance;
+                count++;
+                }
+            }
+        }
+        return (sum/(double)count); 
+}
+
+void Average(PtList flights, String airport){
+    printf("Airport | All Days | Only Days of Week | Weekend\n");
+    printf("   *       %.2f\t  %.2f\t %.2f\n", AverageGlobal(flights), AverageWeek(flights), AverageWeekend(flights));
+    printf("  %s      %.2f\t  %.2f\t %.2f\n", airport, AverageGlobalAirports(flights, airport), AverageWeekAirports(flights, airport), AverageWeekendAirports(flights, airport));
+}
 void tsp(PtList flights){
     //help aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 }
