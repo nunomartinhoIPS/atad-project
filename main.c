@@ -171,6 +171,16 @@ int main() {
 			waitFunction();
 		}
 
+		if (equalsStringIgnoreCase(command, "AVERAGE")){
+			String airport;
+			printf("\nInsert Airport Iata Code: ");
+			fgets(airport, sizeof(airport), stdin);
+			airport[strlen(airport) - 1] = '\0';
+			Average(flights, airport);
+			flag = false;
+			waitFunction();
+		}
+
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			clearMemory(airlines, &airports, &flights, sizeAirlines);
 			printf("\n<%d> records deleted from Airlines", sizeAirlines); //não gosto de ti luis >:(
