@@ -28,5 +28,12 @@ int timeDiffSpecial(Time time1,Time time2) {
 }
 
 void timePrint(Time t){
-    printf("%2d:%2d", t.hour, t.min);
+    if(t.hour>=10 && t.min>=10)
+        printf("%d:%d", t.hour, t.min);
+    else if(t.hour>=10 && t.min<10)   
+        printf("%d:0%d", t.hour, t.min);
+    else if(t.hour<10 && t.min>=10)
+        printf("0%d:%d", t.hour, t.min);
+    else
+        printf("0%d:0%d", t.hour, t.min);
 }

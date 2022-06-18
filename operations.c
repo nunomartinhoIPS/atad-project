@@ -244,9 +244,11 @@ void oLoadF(PtList flights){
 }
 
 void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
-    int saidaHPrev [sizeAirlines], chegadaHPrev [sizeAirlines], sizeList;
+    int saidaHPrev [sizeAirlines], chegadaHPrev [sizeAirlines], sizeList, tolerancia;
     if(listSize(flights, &sizeList) != LIST_OK) return;
     Flight f;
+    printf("\nItroduce a tolerance between 0 and 30 minutes:...");
+    readInteger(&tolerancia);
 
     for(int i = 0 ; i<sizeAirlines; i++){
         saidaHPrev[i] = 0;
@@ -263,9 +265,10 @@ void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
         }
     }
 
-    printf("Airline\t\tOT_Departures\t\tOT_Arrivals\n");
+    printf("\n\n%-15s %-15s %-15s\n", "Airline", "OT_Departures", "OT_Arrivals");
     for(int i = 0; i<sizeAirlines; i++){
-        printf("%s\t\t%d\t\t%d\n", airlines[i]->iatacode, saidaHPrev[i], chegadaHPrev[i]);
+        if(saidaHPrev[i] != 0 && chegadaHPrev!=0)
+            printf("%-15s %-15d %-15d\n", airlines[i]->iatacode, saidaHPrev[i], chegadaHPrev[i]);
     }
 }
 
@@ -311,12 +314,7 @@ void airport_s(PtMap airports){
     free(l);   
 }
 
-/**
- * @brief departures from each airport
- * 
- * @param airports 
- * @param flights 
- */
+
 void funcAirports(PtMap airports, PtList flights){
     int sizeMap, sizeList;
     if(mapSize(airports, &sizeMap)!= MAP_OK) return;
@@ -379,7 +377,6 @@ void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
                     mapPut(airports, stringCodeCreate(f.originAirport), airportCreate(f.originAirport, "", "", "", 0, 0, 0));
                     count++;
                 }
-
             }
         }
         printf("%s passes through %d airports\n", airlines[i]->name, count);
@@ -425,7 +422,6 @@ double AverageWeek(PtList flights){
                 sum += f.distance;
                 count++;
             }
-            
         }
         return (sum/(double)count); 
 }
@@ -443,7 +439,6 @@ double AverageWeekend(PtList flights){
                 sum += f.distance;
                 count++;
             }
-            
         }
         return (sum/(double)count); 
 }
@@ -461,7 +456,6 @@ double AverageGlobalAirports(PtList flights, String airport){
                 sum += f.distance;
                 count++;
             }
-            
         }
         return (sum/(double)count); 
 }
@@ -481,7 +475,6 @@ double AverageWeekAirports(PtList flights, String airport){
                     count++;
                 }
             }
-            
         }
         return (sum/(double)count); 
 }
@@ -501,7 +494,6 @@ double AverageWeekendAirports(PtList flights, String airport){
                 count++;
                 }
             }
-            
         }
         return (sum/(double)count); 
 }
@@ -510,4 +502,7 @@ void Average(PtList flights, String airport){
     printf("Airport | All Days | Only Days of Week | Weekend\n");
     printf("   *       %.2f\t  %.2f\t %.2f\n", AverageGlobal(flights), AverageWeek(flights), AverageWeekend(flights));
     printf("  %s      %.2f\t  %.2f\t %.2f\n", airport, AverageGlobalAirports(flights, airport), AverageWeekAirports(flights, airport), AverageWeekendAirports(flights, airport));
+}
+void tsp(PtList flights){
+    //help aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 }
