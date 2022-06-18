@@ -361,45 +361,44 @@ void funcAirports(PtMap airports, PtList flights){
 }
 
 
-void showAP(PtAirline *airlines, PtList flights, int sizeAirlines){
+void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
+    
     PtMap airports = mapCreate();
-    int sizeFligths;
-    listSize(flights, &sizeFligths);
-    Airport Departure;
-    Airport Destination;
-    int quantAirport[sizeAirlines];
-    int counter = 0;
-
-    for(int i = 0; i < sizeAirlines; i++){
-        
-        Flight f;
-        Airline airline;
-        airline = *(airlines[i]);
-        for(int j = 0; j < sizeFligths; j++){
+    int sizeFlights;
+    listSize(flights, &sizeFlights);
+    int sizeMap;
+    MapKey* keys[sizeMap];
+    
+    for (int i = 0; i < sizeAirlines; i++) {
+        int count = 0;
+        for (int j = 0; j < sizeFlights; j++) {
+            Flight f;
             listGet(flights, j, &f);
-            if(strcmp(airline.iatacode, f.airline) == 0){
-                listGet(flights, j, &f);
-                StringCode s = stringCodeCreate(f.originAirport);
-                if(!mapContains(airports, s)){
-                    mapGet(airports, stringCodeCreate(f.originAirport), &Departure);
-                    mapPut(airports, stringCodeCreate(f.originAirport), Departure);
-                    counter++;
+            if (equalsStringIgnoreCase(airlines[i]->iatacode, f.airline)) {
+                if (!mapContains(airports, stringCodeCreate(f.originAirport))) {
+                    mapPut(airports, stringCodeCreate(f.originAirport), airportCreate(f.originAirport, "", "", "", 0, 0, 0));
+                    count++;
                 }
-                s = stringCodeCreate(f.destinationAirport);
-                if(!mapContains(airports, s)){
-                    mapGet(airports, stringCodeCreate(f.destinationAirport), &Destination);
-                    mapPut(airports, stringCodeCreate(f.originAirport), Destination);
-                    counter++;
-                }
+
             }
-            
         }
-        quantAirport[i] = counter;
+        printf("%s passes through %d airports\n", airlines[i]->name, count);
+        mapSize(airports, &sizeMap);
+        if (count == 0) {
+            printf("( no airports )\n");
+        }
+        else {    
+            for (int k = 0; k < sizeMap; k++) {
+                    mapKeyPrint(mapKeys(airports)[k]);
+                    printf("\n");
+            }
+        }
+        
+        mapClear(airports);
     }
-        for(int i = 0; i < sizeAirlines; i++){
-            printf("%s",airlines[i]->name);
-            printf("passes through %d airports\n", quantAirport[i]);
-            mapPrint(airports);
-        }
     mapDestroy(&airports);
+}
+
+void Average(PtList flights){
+
 }
