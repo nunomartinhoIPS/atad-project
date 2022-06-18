@@ -244,9 +244,11 @@ void oLoadF(PtList flights){
 }
 
 void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
-    int saidaHPrev [sizeAirlines], chegadaHPrev [sizeAirlines], sizeList;
+    int saidaHPrev [sizeAirlines], chegadaHPrev [sizeAirlines], sizeList, tolerancia;
     if(listSize(flights, &sizeList) != LIST_OK) return;
     Flight f;
+    printf("\nItroduce a tolerance between 0 and 30 minutes:...");
+    readInteger(&tolerancia);
 
     for(int i = 0 ; i<sizeAirlines; i++){
         saidaHPrev[i] = 0;
@@ -263,9 +265,10 @@ void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
         }
     }
 
-    printf("Airline\t\tOT_Departures\t\tOT_Arrivals\n");
+    printf("\n\n%-15s %-15s %-15s\n", "Airline", "OT_Departures", "OT_Arrivals");
     for(int i = 0; i<sizeAirlines; i++){
-        printf("%s\t\t%d\t\t%d\n", airlines[i]->iatacode, saidaHPrev[i], chegadaHPrev[i]);
+        if(saidaHPrev[i] != 0 && chegadaHPrev!=0)
+            printf("%-15s %-15d %-15d\n", airlines[i]->iatacode, saidaHPrev[i], chegadaHPrev[i]);
     }
 }
 
