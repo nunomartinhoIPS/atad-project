@@ -30,7 +30,11 @@ void listAP(PtMap airports, PtList flights);
  * @param flights   [in] list of all flights
  */
 void listAR(PtAirline airlines[], int aSize, PtList flights);
-
+/**
+ * @brief shows menu for the paginated form or for the sample
+ * 
+ * @param list [in] list of flights
+ */
 void showAll(PtList list);
 
 /**
@@ -82,3 +86,4 @@ void oLoadAP(PtMap airports);
 void oLoadF(PtList flights);
 
 void airport_s(PtMap airports);
+void showap(PtAirline * airlines, PtList flights, int sizeAirlines);

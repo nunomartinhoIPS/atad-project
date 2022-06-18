@@ -79,6 +79,13 @@ int main() {
 
 			flag = false;
 		}
+		if (equalsStringIgnoreCase(command, "SHOWAP")){
+			    
+			showap(airlines, flights, sizeAirlines);
+
+			flag = false;
+			waitFunction();
+		}
 
 		if (equalsStringIgnoreCase(command, "LISTAR")){
 			printf("\nAirlines: \n\n");
