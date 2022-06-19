@@ -13,6 +13,29 @@
 #include "stringCode.h"
 #include "utils.h"
 #include "loaders.h"
+#include "input.h"
+
+/**
+ * @brief loads arlines
+ * 
+ * @param airlines      [in] array of airlines
+ * @param sizeAirlines  [in] size of array
+ */
+void oLoadAR(PtAirline *airlines, int sizeAirlines);
+
+/**
+ * @brief loads airports
+ * 
+ * @param airports  [in] map of all airports
+ */
+void oLoadAP(PtMap airports);
+
+/**
+ * @brief loads flights
+ * 
+ * @param flights  [in] list of all flights
+ */
+void oLoadF(PtList flights);
 
 /**
  * @brief Shows all airports with flights
@@ -77,13 +100,47 @@ void clearMemory(PtAirline* airlines , PtMap *ptAirports, PtList *ptFlights, int
  */
 void topN(PtList flights, int n);
 
+/**
+ * @brief Method to show from each airline ne number of flights that departed
+ * and arrived at the scheduled time.
+ * 
+ * @param airlines      [in]    pointer to the array of airlines 
+ * @param sizeAirlines  [in]    size of airlines array
+ * @param flights       [in]    pointer to the list of flights
+ */
 void onTime(PtAirline * airlines, int sizeAirlines, PtList flights);
 
-void oLoadAR(PtAirline *airlines, int sizeAirlines);
-
-void oLoadAP(PtMap airports);
-
-void oLoadF(PtList flights);
-
+/**
+ * @brief Shows data from airports ordered by:
+ *  - city      ASC
+ *  - city      DESC
+ *  - Latitude  DESC
+ *  - Longitude ASC
+ * 
+ * @param airports  [in]    map of airports
+ */
 void airport_s(PtMap airports);
-void showap(PtAirline * airlines, PtList flights, int sizeAirlines);
+
+/**
+ * @brief Method to show how many flights, departure delays and average 
+ * departure delays of flights departed from each airport
+ * 
+ * @param airports  [in]    pointer to the map of airports
+ * @param flights   [in]    pointer to the list of flights
+ */
+void funcAirports(PtMap airports, PtList flights);
+/**
+ * @brief shows all airports that each flight passes through
+ * 
+ * @param airlines      [in]    array of airlines
+ * @param flights       [in]    pointer to the list of flights
+ * @param sizeAirlines  [in]    size of airlines array
+ */
+void showAP(PtAirline *airlines, PtList flights, int sizeAirlines);
+/**
+ * @brief calculates the average of all flight distances.
+ * 
+ * @param airport      [in]     String of the iatacode
+ * @param flights      [in]    pointer to the list of flights
+ */
+void Average(PtList flights, String airport);

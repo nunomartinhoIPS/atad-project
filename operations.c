@@ -12,9 +12,9 @@ void listAP(PtMap airports, PtList flights){
         for (int j = 0; j < fSize; j++)
         {
             listGet(flights, j, &f);
-            if (f.destinationAirport == values[i].iataCode || f.originAirport == values[i].iataCode)
+            if (equalsStringIgnoreCase(f.destinationAirport, values[i].iataCode) || equalsStringIgnoreCase(f.originAirport, values[i].iataCode))
             {
-                mapValuePrint(values[i]);
+                printf("%s: %s %s %s\n", values[i].iataCode, values[i].airport, values[i].city, values[i].state);
                 break;
             }
         }
@@ -29,7 +29,6 @@ void listAR(PtAirline airlines[], int aSize, PtList flights){
         for (int j = 0; j < fSize; j++){
             listGet(flights, j, &f);
             if (equalsStringIgnoreCase(f.airline, airlines[i]->iatacode)){
-                printf("\t");
                 airlinePrint(airlines[i]);
                 break;
             }
@@ -245,9 +244,11 @@ void oLoadF(PtList flights){
 }
 
 void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
-    int saidaHPrev [sizeAirlines], chegadaHPrev [sizeAirlines], sizeList;
+    int saidaHPrev [sizeAirlines], chegadaHPrev [sizeAirlines], sizeList, tolerancia;
     if(listSize(flights, &sizeList) != LIST_OK) return;
     Flight f;
+    printf("\nItroduce a tolerance between 0 and 30 minutes:...");
+    readInteger(&tolerancia);
 
     for(int i = 0 ; i<sizeAirlines; i++){
         saidaHPrev[i] = 0;
@@ -264,9 +265,10 @@ void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
         }
     }
 
-    printf("Airline\t\tOT_Departures\t\tOT_Arrivals\n");
+    printf("\n\n%-15s %-15s %-15s\n", "Airline", "OT_Departures", "OT_Arrivals");
     for(int i = 0; i<sizeAirlines; i++){
-        printf("%s\t\t%d\t\t%d\n", airlines[i]->iatacode, saidaHPrev[i], chegadaHPrev[i]);
+        if(saidaHPrev[i] != 0 && chegadaHPrev!=0)
+            printf("%-15s %-15d %-15d\n", airlines[i]->iatacode, saidaHPrev[i], chegadaHPrev[i]);
     }
 }
 
@@ -279,8 +281,7 @@ static bool apcmp(Airport a, Airport b, int compVersion){
 }
 
 void airport_s(PtMap airports){
-    int size;
-    char cmpChar;
+    int size, cmp;
     if(mapSize(airports, &size)!=MAP_OK) return;
 
     printf("AIRPORT_S Menu\n");
@@ -290,9 +291,8 @@ void airport_s(PtMap airports){
     printf("4. Sort by Longitude from E to W\n");
     printf("5. Return Main Menu\n");
 
-    scanf("%c", &cmpChar);
-    if(cmpChar < '1' || '4'<cmpChar) return;
-    int cmp = cmpChar - '0';
+    readInteger(&cmp);
+    if(cmp < 1 || 4<cmp) return;
     Airport * l = mapValues(airports);
     for(int i = 0; i < size; i++){
         for( int j = 0; j < size-i-1; j++){
@@ -306,11 +306,236 @@ void airport_s(PtMap airports){
 
     printf("\n---- Airports -----------------\n");
     printf("%-15s %-60s %-35s %-10s %-15s %-15s %-s\n", "Iata Code", "Name", "City", "State", "Latitude", "Longitude", "Timezone");
-    printf("----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
     for(int i = 0; i<size; i++){
         airportPrint(l[i]);
     }    
 
+    free(l);   
+}
+
+
+void funcAirports(PtMap airports, PtList flights){
+    int sizeMap, sizeList;
+    if(mapSize(airports, &sizeMap)!= MAP_OK) return;
+    if(listSize(flights, &sizeList)!=LIST_OK) return;
+    Airport * l = mapValues(airports);
+    Flight f;
+    int numFlights[sizeMap], numDepDelays[sizeMap];
+    float avgDepDelays[sizeMap];
+
+    for(int i = 0; i<sizeMap; i++){
+        numFlights[i] = 0;
+        numDepDelays[i] = 0;
+        avgDepDelays[i] = 0;
+    }
+
+    for (int i = 0; i<sizeList; i++){
+        if(listGet(flights, i, &f)!=LIST_OK) return;
+        for(int j = 0; j<sizeMap; j++){
+            if(equalsStringIgnoreCase(l[j].iataCode, f.originAirport)){
+                numFlights[j] += 1;
+                if(f.departureDelay>0) numDepDelays[j]+=1;
+                avgDepDelays[j] += f.departureDelay;
+            }
+        }
+    }
+
+    printf("\n---- Airports ----------\n\n");
+    printf("%-15s %-60s %-35s %-25s %-25s %-25s\n", "Iata Code", "Name", "City", "Number Flights", "Num. Departure Delays", "Avg. Departure Delays");
+    printf("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    int numPrinted = 0, numDepDel = 0;
+    float totalDepDel = 0;
+    for(int i = 0; i<sizeMap; i++){
+        if(numFlights[i]==0) continue;
+        avgDepDelays[i] /= (float)numFlights[i];
+        printf("%-15s %-60s %-35s %-25d %-25d %-25f\n", l[i].iataCode, l[i].airport, l[i].city, numFlights[i], numDepDelays[i], avgDepDelays[i]);
+        numDepDel+=numDepDelays[i];
+        totalDepDel+=avgDepDelays[i];
+        numPrinted++;
+    }
+    printf("\n%-15s %-60s %-35s %-25s %-25d %-25f\n", "", "ALL AIRPORTS", "", "", numDepDel, totalDepDel/(float)numPrinted);
     free(l);
+}
+
+
+void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
     
+    PtMap airports = mapCreate();
+    int sizeFlights;
+    listSize(flights, &sizeFlights);
+    int sizeMap;
+    MapKey* keys[sizeMap];
+    
+    for (int i = 0; i < sizeAirlines; i++) {
+        int count = 0;
+        for (int j = 0; j < sizeFlights; j++) {
+            Flight f;
+            listGet(flights, j, &f);
+            if (equalsStringIgnoreCase(airlines[i]->iatacode, f.airline)) {
+                if (!mapContains(airports, stringCodeCreate(f.originAirport))) {
+                    mapPut(airports, stringCodeCreate(f.originAirport), airportCreate(f.originAirport, "", "", "", 0, 0, 0));
+                    count++;
+                }
+            }
+        }
+        printf("%s passes through %d airports\n", airlines[i]->name, count);
+        mapSize(airports, &sizeMap);
+        if (count == 0) {
+            printf("( no airports )\n");
+        }
+        else {    
+            for (int k = 0; k < sizeMap; k++) {
+                    mapKeyPrint(mapKeys(airports)[k]);
+                    printf("\n");
+            }
+        }
+        
+        mapClear(airports);
+    }
+    mapDestroy(&airports);
+}
+/**
+ * @brief calculates the average of all flights distances
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @return double average of the sum of all distances
+ */
+double AverageGlobal(PtList flights){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            sum += f.distance;
+        }
+        return (sum/(double)size); 
+}
+/**
+ * @brief calculates the average of all flights distances only for week days
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @return double average of the sum of all distances
+ */
+double AverageWeek(PtList flights){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if(f.dayOfWeek == 1 || f.dayOfWeek == 2 || f.dayOfWeek == 3 || f.dayOfWeek == 4 || f.dayOfWeek == 5){
+                sum += f.distance;
+                count++;
+            }
+        }
+        return (sum/(double)count); 
+}
+/**
+ * @brief calculates the average of all flights distances only for weekend
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @return double average of the sum of all distances
+ */
+double AverageWeekend(PtList flights){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if(f.dayOfWeek == 6 || f.dayOfWeek == 7){
+                sum += f.distance;
+                count++;
+            }
+        }
+        return (sum/(double)count); 
+}
+/**
+ * @brief calculates the average of all flights distances for a specific airport
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @param airport      [in]     String of the iatacode
+ * @return double average of the sum of all distances
+ */
+double AverageGlobalAirports(PtList flights, String airport){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if (equalsStringIgnoreCase(f.originAirport, airport)){
+                sum += f.distance;
+                count++;
+            }
+        }
+        return (sum/(double)count); 
+}
+/**
+ * @brief calculates the average of all flights distances for a specific airport for week days
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @param airport      [in]     String of the iatacode
+ * @return double average of the sum of all distances
+ */
+double AverageWeekAirports(PtList flights, String airport){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if(f.dayOfWeek == 1 || f.dayOfWeek == 2 || f.dayOfWeek == 3 || f.dayOfWeek == 4 || f.dayOfWeek == 5){
+                if (equalsStringIgnoreCase(f.originAirport, airport)){
+                    sum += f.distance;
+                    count++;
+                }
+            }
+        }
+        return (sum/(double)count); 
+}
+/**
+ * @brief calculates the average of all flights distances for a specific airport for weekend
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @param airport      [in]     String of the iatacode
+ * @return double average of the sum of all distances
+ */
+double AverageWeekendAirports(PtList flights, String airport){
+    int size;
+    listSize(flights, &size);
+    int sum = 0;
+    int count = 0;
+
+        for(int i = 0; i < size; i++){
+            Flight f;
+            listGet(flights, i, &f);
+            if(f.dayOfWeek == 6 || f.dayOfWeek == 7){
+                if (equalsStringIgnoreCase(f.originAirport, airport)){
+                sum += f.distance;
+                count++;
+                }
+            }
+        }
+        return (sum/(double)count); 
+}
+
+void Average(PtList flights, String airport){
+    printf("Airport | All Days | Only Days of Week | Weekend\n");
+    printf("   *       %.2f\t  %.2f\t %.2f\n", AverageGlobal(flights), AverageWeek(flights), AverageWeekend(flights));
+    printf("  %s      %.2f\t  %.2f\t %.2f\n", airport, AverageGlobalAirports(flights, airport), AverageWeekAirports(flights, airport), AverageWeekendAirports(flights, airport));
+}
+void tsp(PtList flights){
+    //help aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 }

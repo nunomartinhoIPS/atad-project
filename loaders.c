@@ -167,7 +167,7 @@ int loadF(PtList flights){
         Time ttimeArr = timeCreate(atoi(hour), atoi(min));
         
 
-        int depDelay = timeDiff(tschedDep, ttimeDep);
+        int depDelay = timeDiffSpecial(tschedDep, ttimeDep);
         int schedTravTime = timeDiff(tschedDep, tschedArr);
         int arrDelay = timeDiff(tschedArr, ttimeArr);
 

@@ -8,6 +8,7 @@
 #include "input.h"
 #include "loaders.h"
 #include "operations.h"
+#include <ctype.h>
 
 void printCommandsMenu();
 void waitFunction();
@@ -81,32 +82,61 @@ int main() {
 		}
 		if (equalsStringIgnoreCase(command, "SHOWAP")){
 			    
-			showap(airlines, flights, sizeAirlines);
+			showAP(airlines, flights, sizeAirlines);
 
 			flag = false;
 			waitFunction();
 		}
 
 		if (equalsStringIgnoreCase(command, "LISTAR")){
-			printf("\nAirlines: \n\n");
-			listAR(airlines, sizeAirlines, flights);
-			flag = false;
-			waitFunction();
+			if(listIsEmpty(flights)){
+				int n=0;
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else{
+				printf("\n----------LISTAR---------- \n\n");
+				printf("\n-----List of Airlines----- \n\n");
+				listAR(airlines, sizeAirlines, flights);
+				flag = false;
+				waitFunction();
+			}
+		}
+		if (equalsStringIgnoreCase(command, "LISTAP")){
+			if(listIsEmpty(flights) || mapIsEmpty(airports)){
+				int n=0;
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else{
+				printf("\n----------LISTAP---------- \n\n");
+				printf("\n-----List of Airports----- \n\n");
+				listAP(airports, flights);
+				flag = false;
+				waitFunction();
+			}
 		}
 		if (equalsStringIgnoreCase(command, "TOPN")){
-			int n=0;
-			printf("\nInsert a number between 1 and 11515: ");
-			readInteger(&n);
-			while(n<1 || n>11515){
-				printf("\nInvalid Number Try Again: ");
+			if(listIsEmpty(flights)){
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else{
+				int n=0;
+				printf("\nInsert a number between 1 and 11515: ");
 				readInteger(&n);
+				while(n<1 || n>11515){
+					printf("\nInvalid Number Try Again: ");
+					readInteger(&n);
+				}
+				
+				printf("\n----------TOPN---------- \n\n");
+				
+				printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
+				topN(flights, n);
+				flag = false;
+				waitFunction();
 			}
-			
-			printf("\n----------TOPN---------- \n\n");
-			printf("\nDay  Day of Week  Airline  Flight Number  Origin  Destination  Scheduled Departure  Departure Time  Scheduled Time  Distance  Scheduled Arrival  Arrival Time  Arrival Delay");
-			topN(flights, n);
-			flag = false;
-			waitFunction();
 		}
 		if (equalsStringIgnoreCase(command, "SHOWF")){
 			String airport;
@@ -125,6 +155,11 @@ int main() {
 				waitFunction();
 			}
 		}
+		if (equalsStringIgnoreCase(command, "SHOWAP")){
+			showAP(airlines, flights, sizeAirlines);
+			flag = false;
+			waitFunction();
+		}
 
 		if (equalsStringIgnoreCase(command, "ONTIME")){
 			onTime(airlines, sizeAirlines, flights);
@@ -138,9 +173,39 @@ int main() {
 			waitFunction();
 		}
 
+		if (equalsStringIgnoreCase(command, "AIRPORTS")){
+			funcAirports(airports, flights);
+			flag = false;
+			waitFunction();
+		}
+
+		if (equalsStringIgnoreCase(command, "AVERAGE")){
+			String airport, upper;
+			printf("\nInsert Airport Iata Code: ");
+			fgets(airport, sizeof(airport), stdin);
+			airport[strlen(airport) - 1] = '\0';
+
+			for(int i=0; i<strlen(airport); i++) {
+    			upper[i] = toupper(airport[i]);
+  			} 
+
+			while (!mapContains(airports, stringCodeCreate(upper))) {
+				printf("\nInvalid Iata Code please insert another: ");
+				fgets(airport, sizeof(airport), stdin);
+				airport[strlen(airport) - 1] = '\0';
+				for(int i=0; i<strlen(airport); i++) {
+    				upper[i] = toupper(airport[i]);
+  				} 
+			}
+			
+			Average(flights, airport);
+			flag = false;
+			waitFunction();
+		}
+
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			clearMemory(airlines, &airports, &flights, sizeAirlines);
-			printf("\n<%d> records deleted from Airlines", sizeAirlines); //não gosto de ti luis >:(
+			printf("\n<%d> records deleted from Airlines", sizeAirlines);
 			printf("\n<%d> records deleted from Airports", sizeAirports);
 			printf("\n<%d> records deleted from Flights", sizeFlights);
 			flag = false;
