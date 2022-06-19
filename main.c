@@ -260,7 +260,7 @@ int main() {
 }
 
 void printCommandsMenu(){
-	system("clear");
+	//system("clear");
 	printf("\n===================================================================================");
 	printf("\n\t\t\tPROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");

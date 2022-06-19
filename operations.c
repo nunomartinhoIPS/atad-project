@@ -59,6 +59,7 @@ void listAP(PtMap airports, PtList flights){
             }
         }
     }
+    free(values);
 }
 
 void listAR(PtAirline airlines[], int aSize, PtList flights){
@@ -245,6 +246,7 @@ void topN(PtList flights, int n){
         PtFlight PtAux = &aux;
         flightPrint(PtAux);
     }
+    listDestroy(&flightsCopy);
 }
 
 void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
@@ -369,8 +371,6 @@ void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
     int sizeFlights;
     listSize(flights, &sizeFlights);
     int sizeMap;
-    MapKey* keys[sizeMap];
-    
     for (int i = 0; i < sizeAirlines; i++) {
         int count = 0;
         for (int j = 0; j < sizeFlights; j++) {
@@ -383,18 +383,19 @@ void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
                 }
             }
         }
-        printf("%s passes through %d airports\n", airlines[i]->name, count);
+        printf("%s passes through %d airportspilas\n", airlines[i]->name, count);
         mapSize(airports, &sizeMap);
         if (count == 0) {
             printf("( no airports )\n");
         }
         else {    
+            MapKey *keys = mapKeys(airports);
             for (int k = 0; k < sizeMap; k++) {
-                    mapKeyPrint(mapKeys(airports)[k]);
+                    mapKeyPrint(keys[k]);
                     printf("\n");
             }
+            free(keys);
         }
-        
         mapClear(airports);
     }
     mapDestroy(&airports);
