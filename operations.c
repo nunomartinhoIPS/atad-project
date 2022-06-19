@@ -59,6 +59,7 @@ void listAP(PtMap airports, PtList flights){
             }
         }
     }
+    free(values);
 }
 
 void listAR(PtAirline airlines[], int aSize, PtList flights){
@@ -140,7 +141,7 @@ void showAllPaged(PtList list) {
         printf("\n\t\t\t\t<------------BACK------------- PAGE [%d] ------------NEXT-------------> ", page);
 
 
-        printf("\ncommand> ");
+        printf("\n\n<EXIT> Return to Menu \ncommand> ");
         fgets(command, sizeof(command), stdin);
         command[strlen(command) - 1] = '\0';
         // problema e se chegar na ultima pagina?
@@ -150,6 +151,7 @@ void showAllPaged(PtList list) {
             if (page == 0) exit = 1;
             else if (page > 0) page--;
         }
+        if (equalsStringIgnoreCase(command, "EXIT")) exit = 1;
     }
 }
 
@@ -171,8 +173,7 @@ void showAllSample(PtList list){
 	system("clear");
 }
 
-void clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int sizeAirlines) {
-    
+void clearMemory(PtAirline *airlines, PtMap *ptAirports, PtList* ptFlights, int sizeAirlines) {
     PtMap curMap = *ptAirports;
     PtList curList = *ptFlights;
 
@@ -183,14 +184,13 @@ void clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int 
         memset( airlines, '\0', sizeof( airlines ) );
     }
 
-    if (curMap != NULL && mapDestroy(&curMap) == MAP_OK) {
-        *ptAirports = NULL;
+    if (!mapIsEmpty(curMap)) {
+        if (mapDestroy(&curMap) == MAP_OK) *ptAirports = NULL;
     }
        
-    if (curList != NULL && listDestroy(&curList) == LIST_OK) {
-        *ptFlights = NULL;
+    if (!listIsEmpty(curList)) {
+        if (listDestroy(&curList) == LIST_OK) *ptFlights = NULL;
     }
-
     
 }
 
@@ -246,6 +246,7 @@ void topN(PtList flights, int n){
         PtFlight PtAux = &aux;
         flightPrint(PtAux);
     }
+    listDestroy(&flightsCopy);
 }
 
 void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
@@ -370,8 +371,6 @@ void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
     int sizeFlights;
     listSize(flights, &sizeFlights);
     int sizeMap;
-    MapKey* keys[sizeMap];
-    
     for (int i = 0; i < sizeAirlines; i++) {
         int count = 0;
         for (int j = 0; j < sizeFlights; j++) {
@@ -384,23 +383,29 @@ void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
                 }
             }
         }
-        printf("%s passes through %d airports\n", airlines[i]->name, count);
+        printf("%s passes through %d airportspilas\n", airlines[i]->name, count);
         mapSize(airports, &sizeMap);
         if (count == 0) {
             printf("( no airports )\n");
         }
         else {    
+            MapKey *keys = mapKeys(airports);
             for (int k = 0; k < sizeMap; k++) {
-                    mapKeyPrint(mapKeys(airports)[k]);
+                    mapKeyPrint(keys[k]);
                     printf("\n");
             }
+            free(keys);
         }
-        
         mapClear(airports);
     }
     mapDestroy(&airports);
 }
-
+/**
+ * @brief calculates the average of all flights distances
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @return double average of the sum of all distances
+ */
 double AverageGlobal(PtList flights){
     int size;
     listSize(flights, &size);
@@ -413,7 +418,12 @@ double AverageGlobal(PtList flights){
         }
         return (sum/(double)size); 
 }
-
+/**
+ * @brief calculates the average of all flights distances only for week days
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @return double average of the sum of all distances
+ */
 double AverageWeek(PtList flights){
     int size;
     listSize(flights, &size);
@@ -430,7 +440,12 @@ double AverageWeek(PtList flights){
         }
         return (sum/(double)count); 
 }
-
+/**
+ * @brief calculates the average of all flights distances only for weekend
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @return double average of the sum of all distances
+ */
 double AverageWeekend(PtList flights){
     int size;
     listSize(flights, &size);
@@ -447,7 +462,13 @@ double AverageWeekend(PtList flights){
         }
         return (sum/(double)count); 
 }
-
+/**
+ * @brief calculates the average of all flights distances for a specific airport
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @param airport      [in]     String of the iatacode
+ * @return double average of the sum of all distances
+ */
 double AverageGlobalAirports(PtList flights, String airport){
     int size;
     listSize(flights, &size);
@@ -464,7 +485,13 @@ double AverageGlobalAirports(PtList flights, String airport){
         }
         return (sum/(double)count); 
 }
-
+/**
+ * @brief calculates the average of all flights distances for a specific airport for week days
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @param airport      [in]     String of the iatacode
+ * @return double average of the sum of all distances
+ */
 double AverageWeekAirports(PtList flights, String airport){
     int size;
     listSize(flights, &size);
@@ -483,7 +510,13 @@ double AverageWeekAirports(PtList flights, String airport){
         }
         return (sum/(double)count); 
 }
-
+/**
+ * @brief calculates the average of all flights distances for a specific airport for weekend
+ * 
+ * @param flights      [in]    pointer to the list of flights
+ * @param airport      [in]     String of the iatacode
+ * @return double average of the sum of all distances
+ */
 double AverageWeekendAirports(PtList flights, String airport){
     int size;
     listSize(flights, &size);
@@ -505,8 +538,8 @@ double AverageWeekendAirports(PtList flights, String airport){
 
 void Average(PtList flights, String airport){
     printf("Airport | All Days | Only Days of Week | Weekend\n");
-    printf("   *       %.2f\t  %.2f\t %.2f\n", AverageGlobal(flights), AverageWeek(flights), AverageWeekend(flights));
-    printf("  %s      %.2f\t  %.2f\t %.2f\n", airport, AverageGlobalAirports(flights, airport), AverageWeekAirports(flights, airport), AverageWeekendAirports(flights, airport));
+    printf("%3s%14.2f\t  %.2f\t %.2f\n", "*", AverageGlobal(flights), AverageWeek(flights), AverageWeekend(flights));
+    printf("%4s%13.2f\t  %.2f\t %.2f\n", airport, AverageGlobalAirports(flights, airport), AverageWeekAirports(flights, airport), AverageWeekendAirports(flights, airport));
 }
 void tsp(PtList flights){
     //help aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
