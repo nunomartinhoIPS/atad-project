@@ -131,8 +131,7 @@ void showAllSample(PtList list){
 	system("clear");
 }
 
-void clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int sizeAirlines) {
-    
+void clearMemory(PtAirline *airlines, PtMap *ptAirports, PtList* ptFlights, int sizeAirlines) {
     PtMap curMap = *ptAirports;
     PtList curList = *ptFlights;
 
@@ -143,14 +142,13 @@ void clearMemory(PtAirline *airlines, PtMap* ptAirports, PtList* ptFlights, int 
         memset( airlines, '\0', sizeof( airlines ) );
     }
 
-    if (curMap != NULL && mapDestroy(&curMap) == MAP_OK) {
-        *ptAirports = NULL;
+    if (!mapIsEmpty(curMap)) {
+        if (mapDestroy(&curMap) == MAP_OK) *ptAirports = NULL;
     }
        
-    if (curList != NULL && listDestroy(&curList) == LIST_OK) {
-        *ptFlights = NULL;
+    if (!listIsEmpty(curList)) {
+        if (listDestroy(&curList) == LIST_OK) *ptFlights = NULL;
     }
-
     
 }
 
