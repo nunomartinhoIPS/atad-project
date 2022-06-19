@@ -30,14 +30,12 @@ int main() {
 	memset( airlines, '\0', sizeof( airlines ) );
 	
 	/* creating map for Airports */
-	int sizeAirports;
-	PtMap airports = mapCreate();
-	mapSize(airports, &sizeAirports);
+	int sizeAirports = 0;
+	PtMap airports = NULL;
 	
 	/* creating list for flights */
-	int sizeFlights;
-	PtList flights = listCreate();
-	listSize(flights, &sizeFlights);
+	int sizeFlights = 0;
+	PtList flights = NULL;
 
 	while (!quit){
 		printCommandsMenu();
@@ -52,28 +50,46 @@ int main() {
 			waitFunction();
 		}
 		if(equalsStringIgnoreCase(command, "LOADAP")){
-			airports = mapCreate();
-			oLoadAP(airports);
-			mapSize(airports, &sizeAirports);
+			if (!mapIsEmpty(airports)) {
+				printf("Airports already loaded.");
+			}
+			else {
+				if (mapDestroy(&airports) == MAP_NULL) {
+					airports = mapCreate();
+				}
+					oLoadAP(airports);
+					mapSize(airports, &sizeAirports);
+			}
 			flag = false;
 			waitFunction();
 		}
 
 		if(equalsStringIgnoreCase(command, "LOADF")){
-			flights = listCreate();
-			oLoadF(flights);
-			listSize(flights, &sizeFlights);
+			if (mapIsEmpty(airports)) {
+				printf("Load airports first (COMMAND: LOADAP).\n");
+			}
+			else {
+				if (!listIsEmpty(flights)) printf("Flights already loaded.");
+				else {
+					if (listDestroy(&flights) == LIST_NULL) flights = listCreate();
+					oLoadF(flights, airports);
+					listSize(flights, &sizeFlights);
+				}
+			}
 			flag = false;
 			waitFunction();
 		}
 		if(equalsStringIgnoreCase(command, "LOADALL")){
-			airports = mapCreate();
-			flights = listCreate();
-			oLoadAR(airlines, sizeAirlines);
-			oLoadAP(airports);
-			oLoadF(flights);
-			mapSize(airports, &sizeAirports);
-			listSize(flights, &sizeFlights);
+			if (!listIsEmpty(flights) || !mapIsEmpty(airports)) printf("Files already loaded.");
+			else {
+				airports = mapCreate();
+				flights = listCreate();
+				oLoadAR(airlines, sizeAirlines);
+				oLoadAP(airports);
+				oLoadF(flights, airports);
+				mapSize(airports, &sizeAirports);
+				listSize(flights, &sizeFlights);
+			}
 			flag = false;
 			waitFunction();
 		}
@@ -191,7 +207,7 @@ int main() {
 		}
 
 		if (equalsStringIgnoreCase(command, "AVERAGE")){
-			if(listIsEmpty(flights)){
+			if(listIsEmpty(flights) || mapIsEmpty(airports)){
 				printf("No Data Imported");
 			}else {
 				String airport, upper;
@@ -221,9 +237,11 @@ int main() {
 
 		if (equalsStringIgnoreCase(command, "CLEAR")){
 			clearMemory(airlines, &airports, &flights, sizeAirlines);
-			printf("\n<%d> records deleted from Airlines", sizeAirlines);
+			printf("\n<%d> records deleted from Airlineds", sizeAirlines);
         	printf("\n<%d> records deleted from Airports", sizeAirports);
         	printf("\n<%d> records deleted from Flights", sizeFlights);
+			mapSize(airports, &sizeAirports);
+			listSize(flights, &sizeFlights);
 			flag = false;
 			waitFunction();
 		}
@@ -246,7 +264,7 @@ void printCommandsMenu(){
 	printf("\n===================================================================================");
 	printf("\n\t\t\tPROJECT: United States Domestics Flight Data");
 	printf("\n===================================================================================");
-	printf("\nA. Base commands (LOADAR, LOADAP, LOADF, LOADALL, CLEAR).");
+	printf("\nA. Base commands (LOADAR, LOADAP, LOADF, CLEAR).");
 	printf("\nB. Aggregated info about flights (SHOWALL, SHOWF, LISTAR, LISTAP, ONTIME, AVERAGE,");
 	printf("\n   SHOWAP, TOPN, TSP).");
 	printf("\nC. Complex Indicators require airports and flights data (AIRPORT_S, AIRPORTS).");

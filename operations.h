@@ -35,7 +35,7 @@ void oLoadAP(PtMap airports);
  * 
  * @param flights  [in] list of all flights
  */
-void oLoadF(PtList flights);
+void oLoadF(PtList flights, PtMap airports);
 
 /**
  * @brief Shows all airports with flights

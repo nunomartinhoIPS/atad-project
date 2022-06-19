@@ -1,5 +1,45 @@
 #include "operations.h"
 
+
+void oLoadAR(PtAirline *airlines, int sizeAirlines) {
+    int errorCode = loadAR(airlines, sizeAirlines);
+    if (errorCode == LOADER_OK)
+        printf("<%d> airline records imported\n", sizeAirlines);
+    if (errorCode == LOADER_FILE_NOT_FOUND)
+        printf("File not found\n");
+}
+
+void oLoadAP(PtMap airports){
+    int sizeAirports;
+    int errorCode = loadAP(airports);
+    int mapErrorcode = mapSize(airports, &sizeAirports);
+    if (mapErrorcode != MAP_OK)
+    {
+        printf("Something went wrong with the Map of StringCode to Airports, error: %d\n", mapErrorcode);
+        return;
+    }
+    if (errorCode == LOADER_OK)
+        printf("<%d> airport records imported\n", sizeAirports);
+    if (errorCode == LOADER_FILE_NOT_FOUND)
+        printf("File not found\n");
+}
+
+void oLoadF(PtList flights, PtMap airports){
+    if(airports == NULL){
+        printf("Import airports first.\n");
+        return;
+    }
+    int size, errorCode = loadF(flights, airports), listErrorCode = listSize(flights, &size);
+    if(listErrorCode != LIST_OK){
+        printf("Something went wrong with the list of flights, error: %d\n", listErrorCode);
+        return;
+    }
+    if(errorCode == LOADER_OK)
+        printf("<%d> flight records imported\n", size);
+    if(errorCode == LOADER_FILE_NOT_FOUND)
+        printf("File not found\n");
+}
+
 void listAP(PtMap airports, PtList flights){
     int aSize;
     int fSize;
@@ -100,7 +140,7 @@ void showAllPaged(PtList list) {
         printf("\n\t\t\t\t<------------BACK------------- PAGE [%d] ------------NEXT-------------> ", page);
 
 
-        printf("\ncommand> ");
+        printf("\n\n<EXIT> Return to Menu \ncommand> ");
         fgets(command, sizeof(command), stdin);
         command[strlen(command) - 1] = '\0';
         // problema e se chegar na ultima pagina?
@@ -110,6 +150,7 @@ void showAllPaged(PtList list) {
             if (page == 0) exit = 1;
             else if (page > 0) page--;
         }
+        if (equalsStringIgnoreCase(command, "EXIT")) exit = 1;
     }
 }
 
@@ -152,35 +193,12 @@ void clearMemory(PtAirline *airlines, PtMap *ptAirports, PtList* ptFlights, int 
     
 }
 
-void oLoadAR(PtAirline *airlines, int sizeAirlines) {
-    int errorCode = loadAR(airlines, sizeAirlines);
-    if (errorCode == LOADER_OK)
-        printf("<%d> airline records imported\n", sizeAirlines);
-    if (errorCode == LOADER_FILE_NOT_FOUND)
-        printf("File not found\n");
-}
-
-void oLoadAP(PtMap airports){
-    int sizeAirports;
-    int errorCode = loadAP(airports);
-    int mapErrorcode = mapSize(airports, &sizeAirports);
-    if (mapErrorcode != MAP_OK)
-    {
-        printf("Something went wrong with the Map of StringCode to Airports, error: %d\n", mapErrorcode);
-        return;
-    }
-    if (errorCode == LOADER_OK)
-        printf("<%d> airport records imported\n", sizeAirports);
-    if (errorCode == LOADER_FILE_NOT_FOUND)
-        printf("File not found\n");
-}
-
 /**
  * @brief sorts a list of flights by descending delay, if delay is the same sorts by flight number
  * 
  * @param flights [in] list of flights
  */
-PtList sortByDelay(PtList flights){
+static PtList sortByDelay(PtList flights){
     int size = 0;
     listSize(flights, &size);
     Flight f1;
@@ -227,18 +245,6 @@ void topN(PtList flights, int n){
         PtFlight PtAux = &aux;
         flightPrint(PtAux);
     }
-}
-
-void oLoadF(PtList flights){
-    int size, errorCode = loadF(flights), listErrorCode = listSize(flights, &size);
-    if(listErrorCode != LIST_OK){
-        printf("Something went wrong with the list of flights, error: %d\n", listErrorCode);
-        return;
-    }
-    if(errorCode == LOADER_OK)
-        printf("<%d> flight records imported\n", size);
-    if(errorCode == LOADER_FILE_NOT_FOUND)
-        printf("File not found\n");
 }
 
 void onTime(PtAirline * airlines, int sizeAirlines, PtList flights){
