@@ -533,8 +533,8 @@ double AverageWeekendAirports(PtList flights, String airport){
 
 void Average(PtList flights, String airport){
     printf("Airport | All Days | Only Days of Week | Weekend\n");
-    printf("   *       %.2f\t  %.2f\t %.2f\n", AverageGlobal(flights), AverageWeek(flights), AverageWeekend(flights));
-    printf("  %s      %.2f\t  %.2f\t %.2f\n", airport, AverageGlobalAirports(flights, airport), AverageWeekAirports(flights, airport), AverageWeekendAirports(flights, airport));
+    printf("%3s%14.2f\t  %.2f\t %.2f\n", "*", AverageGlobal(flights), AverageWeek(flights), AverageWeekend(flights));
+    printf("%4s%13.2f\t  %.2f\t %.2f\n", airport, AverageGlobalAirports(flights, airport), AverageWeekAirports(flights, airport), AverageWeekendAirports(flights, airport));
 }
 void tsp(PtList flights){
     //help aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

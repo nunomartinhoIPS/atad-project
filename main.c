@@ -75,21 +75,29 @@ int main() {
 		}
 
 		if (equalsStringIgnoreCase(command, "SHOWALL")){
-			    
-			showAll(flights);
-
-			flag = false;
+			if (listIsEmpty(flights)) {
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else {
+				showAll(flights);
+				flag = false;
+			} 
 		}
 		if (equalsStringIgnoreCase(command, "SHOWAP")){
-			    
-			showAP(airlines, flights, sizeAirlines);
-
-			flag = false;
-			waitFunction();
+			if (listIsEmpty(flights) || airlines[0] == '\0') {
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else {
+				showAP(airlines, flights, sizeAirlines);
+				flag = false;
+				waitFunction();	
+			}
 		}
 
 		if (equalsStringIgnoreCase(command, "LISTAR")){
-			if(listIsEmpty(flights)){
+			if(listIsEmpty(flights) || airlines[0] == '\0'){
 				int n=0;
 				printf("No Data Imported");
 				flag = false;
@@ -155,52 +163,74 @@ int main() {
 				waitFunction();
 			}
 		}
-		if (equalsStringIgnoreCase(command, "SHOWAP")){
-			showAP(airlines, flights, sizeAirlines);
-			flag = false;
-			waitFunction();
-		}
 
 		if (equalsStringIgnoreCase(command, "ONTIME")){
-			onTime(airlines, sizeAirlines, flights);
-			flag = false;
-			waitFunction();
+			if(listIsEmpty(flights) || airlines[0] == '\0'){
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}
+			else {
+				onTime(airlines, sizeAirlines, flights);
+				flag = false;
+				waitFunction();
+			}
 		}
 
 		if (equalsStringIgnoreCase(command, "AIRPORT_S")){
-			airport_s(airports);
-			flag = false;
-			waitFunction();
+			if(mapIsEmpty(airports)){
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}
+			else {
+				airport_s(airports);
+				flag = false;
+				waitFunction();
+			}
 		}
 
 		if (equalsStringIgnoreCase(command, "AIRPORTS")){
-			funcAirports(airports, flights);
-			flag = false;
-			waitFunction();
+			if(listIsEmpty(flights) || mapIsEmpty(airports)){
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else {
+				funcAirports(airports, flights);
+				flag = false;
+				waitFunction();
+			}
 		}
 
 		if (equalsStringIgnoreCase(command, "AVERAGE")){
-			String airport, upper;
-			printf("\nInsert Airport Iata Code: ");
-			fgets(airport, sizeof(airport), stdin);
-			airport[strlen(airport) - 1] = '\0';
-
-			for(int i=0; i<strlen(airport); i++) {
-    			upper[i] = toupper(airport[i]);
-  			} 
-
-			while (!mapContains(airports, stringCodeCreate(upper))) {
-				printf("\nInvalid Iata Code please insert another: ");
+			if(listIsEmpty(flights)){
+				printf("No Data Imported");
+				flag = false;
+				waitFunction();
+			}else {
+				String airport, upper;
+				printf("\nInsert Airport Iata Code: ");
 				fgets(airport, sizeof(airport), stdin);
 				airport[strlen(airport) - 1] = '\0';
+
 				for(int i=0; i<strlen(airport); i++) {
-    				upper[i] = toupper(airport[i]);
-  				} 
+					upper[i] = toupper(airport[i]);
+				} 
+
+				while (!mapContains(airports, stringCodeCreate(upper))) {
+					printf("\nInvalid Iata Code please insert another: ");
+					fgets(airport, sizeof(airport), stdin);
+					airport[strlen(airport) - 1] = '\0';
+					for(int i=0; i<strlen(airport); i++) {
+						upper[i] = toupper(airport[i]);
+					} 
+				}
+				
+				Average(flights, airport);
+				flag = false;
+				waitFunction();
 			}
 			
-			Average(flights, airport);
-			flag = false;
-			waitFunction();
 		}
 
 		if (equalsStringIgnoreCase(command, "CLEAR")){
