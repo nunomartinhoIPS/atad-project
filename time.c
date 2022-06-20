@@ -37,3 +37,24 @@ void timePrint(Time t){
     else
         printf("0%d:0%d", t.hour, t.min);
 }
+
+bool timePassedDay(Time t1, Time t2){
+    return t1.hour>t2.hour;
+}
+
+int timeSum(Time * t1, Time t2){
+    t1->hour+=t2.hour;
+    t1->min+=t2.min;
+    int hpassed=0;
+    while(t1->min>=60){
+        hpassed++;
+        t1->min-=60;
+    }
+    t1->hour+=hpassed;
+    int daysPassed=0;
+    while(t1->hour>=24){
+        daysPassed++;
+        t1->hour-=24;
+    }
+    return daysPassed;
+}

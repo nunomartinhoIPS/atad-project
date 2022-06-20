@@ -8,6 +8,7 @@
 #include "input.h"
 #include "loaders.h"
 #include "operations.h"
+#include "tsp.h"
 
 void printCommandsMenu();
 void waitFunction();
@@ -177,6 +178,12 @@ int main() {
 			fgets(airport, sizeof(airport), stdin);
 			airport[strlen(airport) - 1] = '\0';
 			Average(flights, airport);
+			flag = false;
+			waitFunction();
+		}
+
+		if (equalsStringIgnoreCase(command, "TSP")){
+			tsp(flights, airports);
 			flag = false;
 			waitFunction();
 		}

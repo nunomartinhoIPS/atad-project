@@ -113,3 +113,4 @@ void funcAirports(PtMap airports, PtList flights);
 void showAP(PtAirline airlines[], PtList flights, int sizeAirlines);
 
 void Average(PtList flights, String airport);
+

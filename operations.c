@@ -340,21 +340,26 @@ void funcAirports(PtMap airports, PtList flights){
         for(int j = 0; j<sizeMap; j++){
             if(equalsStringIgnoreCase(l[j].iataCode, f.originAirport)){
                 numFlights[j] += 1;
-                if(f.departureDelay>0) numDepDelays[j]+=1;
-                avgDepDelays[j] += f.departureDelay;
+                if(f.departureDelay>15){
+                    numDepDelays[j]+=1;
+                    avgDepDelays[j] += f.departureDelay;
+                }
+            }
+            if(equalsStringIgnoreCase(l[j].iataCode, f.destinationAirport)){
+                numFlights[j] += 1;
             }
         }
     }
 
     printf("\n---- Airports ----------\n\n");
-    printf("%-15s %-60s %-35s %-25s %-25s %-25s\n", "Iata Code", "Name", "City", "Number Flights", "Num. Departure Delays", "Avg. Departure Delays");
-    printf("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("%-15s %-60s %-35s %25s %25s %25s\n", "Iata Code", "Name", "City", "Number Flights", "Num. Departure Delays", "Avg. Departure Delays");
+    printf("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
     int numPrinted = 0, numDepDel = 0;
     float totalDepDel = 0;
     for(int i = 0; i<sizeMap; i++){
         if(numFlights[i]==0) continue;
-        avgDepDelays[i] /= (float)numFlights[i];
-        printf("%-15s %-60s %-35s %-25d %-25d %-25f\n", l[i].iataCode, l[i].airport, l[i].city, numFlights[i], numDepDelays[i], avgDepDelays[i]);
+        avgDepDelays[i] /= (float)numDepDelays[i];
+        printf("%-15s %-60s %-35s %21d %25d %25f\n", l[i].iataCode, l[i].airport, l[i].city, numFlights[i], numDepDelays[i], avgDepDelays[i]);
         numDepDel+=numDepDelays[i];
         totalDepDel+=avgDepDelays[i];
         numPrinted++;
@@ -507,7 +512,4 @@ void Average(PtList flights, String airport){
     printf("Airport | All Days | Only Days of Week | Weekend\n");
     printf("   *       %.2f\t  %.2f\t %.2f\n", AverageGlobal(flights), AverageWeek(flights), AverageWeekend(flights));
     printf("  %s      %.2f\t  %.2f\t %.2f\n", airport, AverageGlobalAirports(flights, airport), AverageWeekAirports(flights, airport), AverageWeekendAirports(flights, airport));
-}
-void tsp(PtList flights){
-    //help aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 }

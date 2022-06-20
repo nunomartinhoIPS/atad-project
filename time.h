@@ -17,3 +17,7 @@ int timeDiff(Time time1,Time time2);
 int timeDiffSpecial(Time time1,Time time2);
 
 void timePrint(Time t);
+
+bool timePassedDay(Time t1, Time t2);
+
+int timeSum(Time * t1, Time t2);
