@@ -137,13 +137,6 @@ void airport_s(PtMap airports);
  * @param flights   [in]    pointer to the list of flights
  */
 void funcAirports(PtMap airports, PtList flights);
-<<<<<<< HEAD
-
-void showAP(PtAirline airlines[], PtList flights, int sizeAirlines);
-
-void Average(PtList flights, String airport);
-
-=======
 /**
  * @brief shows all airports that each flight passes through
  * 
@@ -159,4 +152,3 @@ void showAP(PtAirline *airlines, PtList flights, int sizeAirlines);
  * @param flights      [in]    pointer to the list of flights
  */
 void Average(PtList flights, String airport);
->>>>>>> 5e1d84457ca84a357e7cd7a0763233f9383d8b8b

@@ -365,7 +365,7 @@ void funcAirports(PtMap airports, PtList flights){
         totalDepDel+=avgDepDelays[i];
         numPrinted++;
     }
-    printf("\n%-15s %-60s %-35s %-25s %-25d %-25f\n", "", "ALL AIRPORTS", "", "", numDepDel, totalDepDel/(float)numPrinted);
+    printf("%-15s %-60s %-35s %21s %25d %25f\n", "", "ALL AIRPORTS", "", "", numDepDel, totalDepDel/(float)numPrinted);
     free(l);
 }
 
@@ -388,7 +388,7 @@ void showAP(PtAirline * airlines, PtList flights, int sizeAirlines) {
                 }
             }
         }
-        printf("%s passes through %d airportspilas\n", airlines[i]->name, count);
+        printf("%s passes through %d airports\n", airlines[i]->name, count);
         mapSize(airports, &sizeMap);
         if (count == 0) {
             printf("( no airports )\n");
