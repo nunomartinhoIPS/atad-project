@@ -1,3 +1,11 @@
+/**
+ * @file loaders.h
+ * @brief Definition of the Loaders in C.
+ * 
+ * Provides the loading methods and associated operations.
+ * 
+ * 
+ */
 #pragma once
 
 #define LOADER_OK                       0

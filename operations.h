@@ -1,3 +1,11 @@
+/**
+ * @file operations.h
+ *
+ * @brief Definition of the Operations methods in C
+ * 
+ * Provides the operations needed for this project
+ * 
+ */
 #pragma once
 
 #include "airport.h"
@@ -15,10 +23,26 @@
 #include "loaders.h"
 #include "input.h"
 
+/**
+ * @brief loads arlines
+ * 
+ * @param airlines      [in] array of airlines
+ * @param sizeAirlines  [in] size of array
+ */
 void oLoadAR(PtAirline *airlines, int sizeAirlines);
 
+/**
+ * @brief loads airports
+ * 
+ * @param airports  [in] map of all airports
+ */
 void oLoadAP(PtMap airports);
 
+/**
+ * @brief loads flights
+ * 
+ * @param flights  [in] list of all flights
+ */
 void oLoadF(PtList flights, PtMap airports);
 
 /**
@@ -37,7 +61,11 @@ void listAP(PtMap airports, PtList flights);
  * @param flights   [in] list of all flights
  */
 void listAR(PtAirline airlines[], int aSize, PtList flights);
-
+/**
+ * @brief shows menu for the paginated form or for the sample
+ * 
+ * @param list [in] list of flights
+ */
 void showAll(PtList list);
 
 /**
@@ -109,8 +137,26 @@ void airport_s(PtMap airports);
  * @param flights   [in]    pointer to the list of flights
  */
 void funcAirports(PtMap airports, PtList flights);
+<<<<<<< HEAD
 
 void showAP(PtAirline airlines[], PtList flights, int sizeAirlines);
 
 void Average(PtList flights, String airport);
 
+=======
+/**
+ * @brief shows all airports that each flight passes through
+ * 
+ * @param airlines      [in]    array of airlines
+ * @param flights       [in]    pointer to the list of flights
+ * @param sizeAirlines  [in]    size of airlines array
+ */
+void showAP(PtAirline *airlines, PtList flights, int sizeAirlines);
+/**
+ * @brief calculates the average of all flight distances.
+ * 
+ * @param airport      [in]     String of the iatacode
+ * @param flights      [in]    pointer to the list of flights
+ */
+void Average(PtList flights, String airport);
+>>>>>>> 5e1d84457ca84a357e7cd7a0763233f9383d8b8b
