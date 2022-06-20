@@ -12,7 +12,7 @@ Airport airportCreate(char * iata, char * name, char * city, char * state, float
     return a;
 }
 
-int airportPrint(Airport a){
+void airportPrint(Airport a){
     printf("%-15s %-60s %-35s %-10s %-15f %-15f %-d\n",a.iataCode, a.airport, a.city, a.state, a.latitude, a.longitude, a.timeZone);
-    return AIRPORT_OK;
+    //return AIRPORT_OK;
 }

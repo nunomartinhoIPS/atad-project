@@ -1,3 +1,11 @@
+/**
+ * @file operations.h
+ *
+ * @brief Definition of the Operations methods in C
+ * 
+ * Provides the operations needed for this project
+ * 
+ */
 #pragma once
 
 #include "airport.h"
